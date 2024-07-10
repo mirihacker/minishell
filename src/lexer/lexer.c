@@ -6,11 +6,11 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:35:11 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/10 13:12:03 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/10 16:09:02 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
+#include "../../include/minishell.h"
 
 int	is_delimiter(char c)
 {
