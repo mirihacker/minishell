@@ -6,11 +6,44 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/11 19:34:35 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/15 16:02:50 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+
+bool is_assignment(const char *str)
+{
+    return strchr(str, '=') != NULL;
+}
+
+void	classify_tokens(t_token *tokens, int token_count)
+{
+	bool	is_command;
+	int		i;
+
+	is_command = true;
+	i = 0;
+	while (i < token_count)
+	{
+		if (tokens[i].type == TOKEN_STRING)
+		{
+			if (is_command)
+			{
+				tokens[i].type = TOKEN_COMMAND;
+				is_command = false;
+			}
+			else if (is_assignment(tokens[i].value))
+				tokens[i].type = TOKEN_ASSIGNMENT;
+			else
+				tokens[i].type = TOKEN_ARGUMENT;
+		}
+		else if (tokens[i].type == TOKEN_PIPE)
+			is_command = true; // Reset for the next command after the pipe
+		i++;
+	}
+}
 
 bool	is_delimiter(char c)
 {
@@ -112,13 +145,29 @@ void	handle_special_tokens(const char *input, t_token *tokens,
 		handle_quote_token(input, tokens, token_count, i, '"');
 }
 
+void	handle_assignment(t_token *token)
+{
+	int			i;
+	const char	*string;
+
+	i = 0;
+	if (token->type != TOKEN_STRING)
+		return ;
+	else
+	{
+		string = token->value;
+		while (string[i] != '=')
+			i++;
+		if (string[i] == '=')
+			token->type = TOKEN_ASSIGNMENT;
+	}
+}
+
 void	handle_token_creation(const char *input, t_token *tokens,
 		int *token_count, int *i)
 {
-	int		start;
-	bool	is_first_token;
+	int	start;
 
-	is_first_token = true;
 	while (input[*i])
 	{
 		if (is_delimiter(input[*i]))
@@ -131,18 +180,12 @@ void	handle_token_creation(const char *input, t_token *tokens,
 			start = *i;
 			while (!is_delimiter(input[*i]))
 				(*i)++;
-			if (is_first_token)
-			{
-				tokens[(*token_count)++] = create_token(TOKEN_COMMAND, input
-						+ start, *i - start);
-				is_first_token = false;
-			}
-			else
-				tokens[(*token_count)++] = create_token(TOKEN_ARGUMENT, input
-						+ start, *i - start);
+			tokens[(*token_count)++] = create_token(TOKEN_STRING, input + start,
+					*i - start);
 		}
 	}
 }
+
 
 t_token	*lexer(const char *input, int *token_count)
 {
@@ -156,12 +199,13 @@ t_token	*lexer(const char *input, int *token_count)
 		return (NULL);
 	handle_token_creation(input, tokens, token_count, &i);
 	tokens[(*token_count)++] = create_token(TOKEN_EOF, "", 0);
+	classify_tokens(tokens, *token_count);
 	return (tokens);
 }
 
 int	main(void)
 {
-	const char *input = "cat file.txt | grep 'search term'";
+	const char *input = "cat file.txt | grep 'search term' | export SIRIA=sister";
 	int token_count;
 	t_token *tokens;
 	int i;

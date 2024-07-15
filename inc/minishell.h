@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/11 12:48:24 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/15 15:56:03 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@
 
 typedef enum e_token_type
 {
-    TOKEN_COMMAND, // ls
+    TOKEN_STRING,
+    TOKEN_COMMAND,
     TOKEN_ARGUMENT, // -la, "hello world", 'hello world'
+    TOKEN_ASSIGNMENT, // export SIRIA=sister
     TOKEN_IN, // <
     TOKEN_OUT, // >
     TOKEN_DIN,	// <<
@@ -54,5 +56,20 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 }					t_token;
+
+// typedef struct s_token_list t_token_list;
+
+// typedef struct s_token_list
+// {
+//     t_token_list	    *head;
+//     t_token				token;
+//     struct s_token_list	*next;
+// }						t_token_list;
+
+// // typedef struct s_lexer
+// {
+// 	t_token_list	*head;
+// }	t_lexer;
+
 
 #endif
