@@ -6,220 +6,198 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/15 16:02:50 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/18 17:38:00 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-
-bool is_assignment(const char *str)
+void	free_token(t_token *tokens)
 {
-    return strchr(str, '=') != NULL;
-}
+	t_token	*tmp;
 
-void	classify_tokens(t_token *tokens, int token_count)
-{
-	bool	is_command;
-	int		i;
-
-	is_command = true;
-	i = 0;
-	while (i < token_count)
+	while (tokens)
 	{
-		if (tokens[i].type == TOKEN_STRING)
+		tmp = tokens->next;
+		if (tokens->value)
 		{
-			if (is_command)
-			{
-				tokens[i].type = TOKEN_COMMAND;
-				is_command = false;
-			}
-			else if (is_assignment(tokens[i].value))
-				tokens[i].type = TOKEN_ASSIGNMENT;
-			else
-				tokens[i].type = TOKEN_ARGUMENT;
+			free(tokens->value);
+			tokens->value = NULL;
 		}
-		else if (tokens[i].type == TOKEN_PIPE)
-			is_command = true; // Reset for the next command after the pipe
-		i++;
+		free(tokens);
+		tokens = tmp;
 	}
 }
 
-bool	is_delimiter(char c)
-{
-	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>'
-		|| c == '$' || c == '\0');
-}
+// void	free_token(t_token *tokens)
+// {
+// 	t_token	*tmp;
 
-char	*handle_quotes(const char *input, char quote_type, int *i,
-		int *is_double_quote)
-{
-	int		start;
-	int		length;
-	char	*quoted_str;
+// 	tmp = tokens;
+// 	while (tokens)
+// 	{
 
-	start = *i;
-	(*i)++;
-	*is_double_quote = (quote_type == '"');
-	while (input[*i] != quote_type && input[*i] != '\0')
+// 		tmp = tokens->next;
+// 		free(tokens->value);
+// 		tokens->value = NULL;
+// 		free(tokens);
+// 		tokens = tmp;
+// 	}
+// }
+
+bool	check_quote(char **end, t_token *tokens)
+{
+	char	quote;
+
+	if (ft_strchr("'\"'", **end))
 	{
-		if (input[*i] == '\\' && input[*i + 1] == quote_type)
-			(*i)++; // Skip escaped quote
-		(*i)++;
+		quote = **end;
+		(*end)++;
+		while (**end != quote && **end)
+			(*end)++;
+		if (**end != quote)
+		{
+			free_token(tokens);
+			ft_putendl_fd("syntax error: unmatched quote", STDERR_FILENO);
+			return (false);
+		}
 	}
-	if (input[*i] == '\0')
-		return (NULL); // Error: unmatched quote
-						// todo: error handling with stderr
-	length = *i - start;
-	quoted_str = (char *)malloc(length);
-	if (!quoted_str)
-		return (NULL); // Error: memory allocation failed
-	strncpy(quoted_str, input + start + 1, length - 1);
-	quoted_str[length - 1] = '\0';
-	(*i)++;
-	return (quoted_str);
+	return (true);
 }
 
-t_token	create_token(t_token_type type, const char *value, int length)
+char	*tokenization(char **input, t_token *tokens)
 {
-	t_token	token;
+	char	*end;
+	bool	result;
+	char	*token;
 
-	token.type = type;
-	token.value = (char *)malloc(length + 1);
-	if (!token.value)
-		token.type = TOKEN_ERROR;
+	while (ft_strchr("\t\n\v\f\r ", **input) && **input)
+		(*input)++;
+	end = *input;
+	while (!ft_strchr("\t\n\v\f\r |<>", *end) && *end)
+	{
+		result = check_quote(&end, tokens);
+		if (!result)
+			return (NULL); // Error: unmatched quote
+		end++;
+	}
+	if (ft_strchr("|<>", **input) && *end)
+		if (*++end == **input && **input != '|')
+			end++;
+	if (end > *input)
+	{
+		token = ft_substr(*input, 0, (end - *input));
+		*input = end;
+		return (token);
+	}
+	*input = end;
+	return (NULL);
+}
+
+static t_token	*create_token(char *token_value)
+{
+	t_token	*new_token;
+
+	new_token = ft_calloc(1, sizeof(t_token));
+	if (!new_token)
+		return (NULL);
+	if (ft_strchr("<>|", *token_value))
+	{
+		if (*token_value == '|')
+			new_token->type = TOKEN_PIPE;
+		else if (*token_value == '<' || *token_value == '>')
+			new_token->type = TOKEN_SYMBOL;
+		new_token->value = token_value;
+	}
 	else
 	{
-		strncpy(token.value, value, length);
-		token.value[length] = '\0';
+		new_token->type = TOKEN_STRING;
+		new_token->value = token_value;
 	}
-	return (token);
+	return (new_token);
 }
 
-void	handle_quote_token(const char *input, t_token *tokens, int *token_count,
-		int *i, char quote_type)
+static void	get_token(t_token **tokens, t_token *new_token)
 {
-	int		is_double_quote;
-	char	*quoted_str;
+	t_token	*tmp;
 
-	quoted_str = handle_quotes(input, quote_type, i, &is_double_quote);
-	if (!quoted_str)
-		tokens[(*token_count)++] = create_token(TOKEN_ERROR, "Unmatched quote",
-				15);
-	else
+	if (!*tokens)
 	{
-		if (quote_type == '\'')
-			tokens[(*token_count)++] = create_token(TOKEN_SINGLE_QUOTE,
-					quoted_str, strlen(quoted_str));
-		else if (is_double_quote)
-			tokens[(*token_count)++] = create_token(TOKEN_DOUBLE_QUOTE,
-					quoted_str, strlen(quoted_str));
-		free(quoted_str);
-	}
-}
-
-void	handle_special_tokens(const char *input, t_token *tokens,
-		int *token_count, int *i)
-{
-	if (input[*i] == '|')
-		tokens[(*token_count)++] = create_token(TOKEN_PIPE, "|", 1);
-	else if (input[*i] == '<' && input[*i + 1] == '<')
-	{
-		tokens[(*token_count)++] = create_token(TOKEN_DIN, input + *i, 2);
-		(*i)++;
-	}
-	else if (input[*i] == '>' && input[*i + 1] == '>')
-	{
-		tokens[(*token_count)++] = create_token(TOKEN_DOUT, ">>", 2);
-		(*i)++;
-	}
-	else if (input[*i] == '<')
-		tokens[(*token_count)++] = create_token(TOKEN_IN, "<", 1);
-	else if (input[*i] == '>')
-		tokens[(*token_count)++] = create_token(TOKEN_OUT, ">", 1);
-	else if (input[*i] == '$')
-		tokens[(*token_count)++] = create_token(TOKEN_VARIABLE, "$", 1);
-	else if (input[*i] == '\'')
-		handle_quote_token(input, tokens, token_count, i, '\'');
-	else if (input[*i] == '"')
-		handle_quote_token(input, tokens, token_count, i, '"');
-}
-
-void	handle_assignment(t_token *token)
-{
-	int			i;
-	const char	*string;
-
-	i = 0;
-	if (token->type != TOKEN_STRING)
+		*tokens = new_token;
 		return ;
-	else
-	{
-		string = token->value;
-		while (string[i] != '=')
-			i++;
-		if (string[i] == '=')
-			token->type = TOKEN_ASSIGNMENT;
 	}
+	tmp = *tokens;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_token;
 }
 
-void	handle_token_creation(const char *input, t_token *tokens,
-		int *token_count, int *i)
+static void	add_tokens(t_token **tokens, char *input)
 {
-	int	start;
+	char	*token_value;
+	t_token	*new_token;
 
-	while (input[*i])
+	while (*input)
 	{
-		if (is_delimiter(input[*i]))
+		token_value = tokenization(&input, *tokens);
+		if (token_value)
 		{
-			handle_special_tokens(input, tokens, token_count, i);
-			(*i)++;
-		}
-		else
-		{
-			start = *i;
-			while (!is_delimiter(input[*i]))
-				(*i)++;
-			tokens[(*token_count)++] = create_token(TOKEN_STRING, input + start,
-					*i - start);
+			new_token = create_token(token_value);
+			get_token(tokens, new_token);
 		}
 	}
 }
 
-
-t_token	*lexer(const char *input, int *token_count)
+t_token	*lexer(char *input)
 {
 	t_token	*tokens;
-	int		i;
 
-	i = 0;
-	*token_count = 0;
-	tokens = (t_token *)malloc(sizeof(t_token) * strlen(input) + 1);
-	if (!tokens)
-		return (NULL);
-	handle_token_creation(input, tokens, token_count, &i);
-	tokens[(*token_count)++] = create_token(TOKEN_EOF, "", 0);
-	classify_tokens(tokens, *token_count);
+	tokens = NULL;
+	add_tokens(&tokens, input);
 	return (tokens);
 }
 
+#include "../inc/minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 int	main(void)
 {
-	const char *input = "cat file.txt | grep 'search term' | export SIRIA=sister";
-	int token_count;
-	t_token *tokens;
-	int i;
+	char	input[1024];
+	t_token	*tokens;
+	t_token	*tmp;
+	size_t	len;
 
-	tokens = lexer(input, &token_count);
-	if (!tokens)
+	// Prompt the user for input
+	printf("Enter command: ");
+	if (fgets(input, sizeof(input), stdin) == NULL)
 	{
-		printf("Lexer failed\n");
+		perror("fgets");
 		return (1);
 	}
-	for (i = 0; i < token_count; i++)
+	// Remove trailing newline character if it exists
+	len = strlen(input);
+	if (len > 0 && input[len - 1] == '\n')
+		input[len - 1] = '\0';
+	// Tokenize the input
+	tokens = lexer(input);
+	if (!tokens)
 	{
-		printf("Token type: %d, value: %s\n", tokens[i].type, tokens[i].value);
-		free(tokens[i].value); // Free each token value
+		printf("Failed to tokenize input\n");
+		return (1);
 	}
-	free(tokens); // Free the array of tokens
+	// Print the tokens
+	tmp = tokens;
+	while (tmp)
+	{
+		printf("Token: Type: %d, Value: %s\n", tmp->type, tmp->value);
+		tmp = tmp->next;
+	}
+	// Free the tokens
+	free_token(tokens);
+	return (0);
 }

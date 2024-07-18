@@ -6,70 +6,70 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/15 15:56:03 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/18 17:23:39 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <dirent.h> // opendir, readdir, closedir
-# include <errno.h> // errno
-# include <fcntl.h> // open
+# include <curses.h>            // tgetent, tgetflag, tgetnum, tgetstr, tgoto,
+# include <dirent.h>            // opendir, readdir, closedir
+# include <errno.h>             // errno
+# include <fcntl.h>             // open
 # include <readline/readline.h> // readline, rl_clear_history, rl_on_new_line
-# include <signal.h> // signal, sigaction, sigemptyset, sigaddset, kill
-# include <stdio.h> // printf, perror
-# include <stdlib.h> // malloc, free, exit, getenv
-# include <string.h> // strerror
-# include <sys/ioctl.h> // ioctl
-# include <sys/stat.h> // stat, lstat, fstat
-# include <sys/wait.h> // wait, waitpid, wait3, wait4
-# include <term.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <termios.h> // tcsetattr, tcgetattr
-# include <unistd.h> // write, access, open, read, close, fork,
-	// getcwd, chdir, unlink, execve, dup, dup2, pipe, isatty, ttyname, ttyslot
-#include <stdbool.h> // bool, true, false
+# include <signal.h>            // signal, sigaction, sigemptyset, sigaddset
+# include <stdio.h>             // printf, perror
+# include <stdlib.h>            // malloc, free, exit, getenv
+# include <string.h>            // strerror
+# include <sys/ioctl.h>         // ioctl
+# include <sys/stat.h>          // stat, lstat, fstat
+# include <sys/wait.h>          // wait, waitpid, wait3, wait4
+# include <term.h>              // tgetent, tgetflag, tgetnum, tgetstr, tgoto
+# include <termios.h>           // tcsetattr, tcgetattr
+# include <unistd.h>            // write, access, open, read, close, fork,
+								// getcwd, chdir, unlink, execve, dup, dup2,
+								// pipe, isatty, ttyname, ttyslot
+# include <stdbool.h>           // bool, true, false
 
+#include "libft.h"
 
+/* LEXER */
 typedef enum e_token_type
 {
-    TOKEN_STRING,
-    TOKEN_COMMAND,
-    TOKEN_ARGUMENT, // -la, "hello world", 'hello world'
-    TOKEN_ASSIGNMENT, // export SIRIA=sister
-    TOKEN_IN, // <
-    TOKEN_OUT, // >
-    TOKEN_DIN,	// <<
-    TOKEN_DOUT, // >>
-    TOKEN_PIPE, // |
-    TOKEN_VARIABLE, // $ 
-    TOKEN_SINGLE_QUOTE, // '
-    TOKEN_DOUBLE_QUOTE, // "
-    TOKEN_ERROR, 
-    TOKEN_EOF // End of input
-} t_token_type;
-
+	TOKEN_STRING,
+	TOKEN_SYMBOL,
+	TOKEN_PIPE
+}					t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	struct s_token	*next;
 }					t_token;
 
-// typedef struct s_token_list t_token_list;
+/* PARSER */
+typedef enum s_node_type
+{
+	SEQUENCES, // Pipesequence
+	CMD,
+	CMD_SIMPLE,
+	CMD_ARG,
+	RDR,
+	RDR_O,   // >
+	RDR_I,   // <
+	RDR_DO,  // >>
+	RDR_DI,  // <<
+	FILENAME // after RDR
+}					t_node_type;
 
-// typedef struct s_token_list
-// {
-//     t_token_list	    *head;
-//     t_token				token;
-//     struct s_token_list	*next;
-// }						t_token_list;
-
-// // typedef struct s_lexer
-// {
-// 	t_token_list	*head;
-// }	t_lexer;
-
+typedef struct s_node
+{
+	t_node_type		type;
+	char *data; // Used for WORD and ASSIGNMENT_WORD
+	struct s_node	*left;
+	struct s_node	*right;
+}					t_node;
 
 #endif

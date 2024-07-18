@@ -6,7 +6,7 @@
 #    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/07/11 18:44:38 by eahn             ###   ########.fr        #
+#    Updated: 2024/07/18 17:20:41 by eahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = minishell
 
 SRC_DIR = ./src/
+LIB_DIR	=	./libft/
+LIB		=	$(LIB_DIR)libft.a
+# LIBINC	=	./libft/
 
 SRCS = lexer.c
 
@@ -27,12 +30,16 @@ OBJS = $(NEW_SRCS:%.c=%.o)
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIB_DIR) -c $< -o $@
 
-$(NAME)	: $(OBJS)
-		@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME)	: $(OBJS) $(LIB)
+		@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
+		
+$(LIB)	:
+	@make -C $(LIB_DIR)
 
 clean:
+		@make -C $(LIB_DIR) fclean
 		@rm -f $(OBJS)
 
 fclean: clean
