@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:53 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/19 14:56:45 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:15:02 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,48 @@ t_node *node_sequence(void)
 	return (new);
 }
 
-bool sort_node(t_token *head, t_node *ptr)
+char *remove_quote (t_token_type type, char *value)
+{
+ 	char *result;
+	char quote;
+
+	result = ft_calloc(1, 1);
+	quote = 0; // Initialize quote to 0 (no quote)
+	while (*value)
+	{
+		if (!quote && ft_strchr("'\"", *value))
+			quote = *value;
+		else if (quote == *value)
+			quote = 0;
+		else
+			ft_strappend(&result, *value);
+		value++;
+	}
+}
+
+int sort_node(t_token *head, t_node *ptr)
 {
 	bool result;
+	char *word;
 
 	if (head->type == TOKEN_PIPE)
 	{
 		if (!(head)->next || head->next->type == TOKEN_PIPE
 		|| !(ptr->left->left || ptr->left->right))
-			return(false);
+			return(-1);
 		ptr->right = node_sequence();
 		ptr = ptr->right; //tbc
 	}
 	else if (head->type == TOKEN_SYMBOL)
 	{
-		
+		ptr = ptr->left;
+		if (!(head->next) || head->next->type != TOKEN_STRING)
+			return(-1); 
+		word = remove_quote(head->type, head->next->value); //tbd 
+	}
+	else // TOKEN_STRING
+	{
+		ptr = ptr->left;
 	}
 } 
 
