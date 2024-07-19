@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/18 17:23:39 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/19 14:24:58 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef enum s_node_type
 typedef struct s_node
 {
 	t_node_type		type;
-	char *data; // Used for WORD and ASSIGNMENT_WORD
+	char 			*value; // Used for WORD and ASSIGNMENT_WORD
 	struct s_node	*left;
 	struct s_node	*right;
 }					t_node;

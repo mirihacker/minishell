@@ -6,7 +6,7 @@
 #    By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/07/19 13:51:41 by smiranda         ###   ########.fr        #
+#    Updated: 2024/07/19 13:58:20 by smiranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ LIB_DIR	=	./libft/
 LIB		=	$(LIB_DIR)libft.a
 # LIBINC	=	./libft/
 
-SRCS = lexer.c
+SRCS = lexer.c \
+		parser.c \
+		main.c
 
 NEW_SRCS = $(addprefix $(SRC_DIR), $(SRCS))
 
