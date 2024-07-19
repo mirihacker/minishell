@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/18 17:38:00 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/19 13:51:11 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// write(1, "DEBUGG\n", 7);
 
 void	free_token(t_token *tokens)
 {
@@ -62,6 +64,7 @@ bool	check_quote(char **end, t_token *tokens)
 		if (**end != quote)
 		{
 			free_token(tokens);
+			write(1, "DEBUGG\n", 7);
 			ft_putendl_fd("syntax error: unmatched quote", STDERR_FILENO);
 			return (false);
 		}

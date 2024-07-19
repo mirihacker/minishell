@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
+#    By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/07/18 17:20:41 by eahn             ###   ########.fr        #
+#    Updated: 2024/07/19 13:51:41 by smiranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
 NAME = minishell
 
 SRC_DIR = ./src/
