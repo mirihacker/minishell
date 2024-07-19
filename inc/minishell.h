@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/19 14:24:58 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:12:08 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,10 @@ typedef struct s_node
 	struct s_node	*left;
 	struct s_node	*right;
 }					t_node;
+
+
+
+t_token	*lexer(char *input);
+void	free_token(t_token *tokens);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/19 13:57:47 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:09:18 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ static t_token	*create_token(char *token_value)
 	t_token	*new_token;
 
 	new_token = ft_calloc(1, sizeof(t_token));
-	if (!new_token)
-		return (NULL);
 	if (ft_strchr("<>|", *token_value))
 	{
 		if (*token_value == '|')
@@ -161,6 +159,6 @@ t_token	*lexer(char *input)
 
 	tokens = NULL;
 	add_tokens(&tokens, input);
-	parser(tokens);
+	// parser(tokens);
 	return (tokens);
 }
