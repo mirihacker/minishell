@@ -119,12 +119,28 @@ static int	init_herdoc(t_token *head, char **word)
 	return (0);
 }
 
+t_node *node_redirect(char *str, char *word)
+{
+	t_node *new;
+	t_node_type rdr;
+	
+	if (!ft_strncmp(str, "<<", 3))
+		rdr = RDR_DI;
+	else if (*str == '<')
+		rdr = RDR_I;
+	else if (*str == '>')
+		rdr = RDR_O;
+	else
+		rdr = RDR_DO;
 
+	new = create_node(RDR, NULL);
+	new->left = create_node(rdr, NULL);
+	new->right = create_node(FILENAME, word);
+}
 
 static int init_redirect(t_token *head, t_node *ptr)
 {
 	char *word;
-	char *fname;
 
 	if (!(head->next) || head->next->type != TOKEN_STRING)
 		return(-1);
@@ -141,6 +157,8 @@ static int init_redirect(t_token *head, t_node *ptr)
 		ptr->right = node_redirect(head->value, word);
 	}
 }
+
+static int init_word(t_token *head, )
 
 int	sort_node(t_token **head, t_node **ptr)
 {
@@ -159,7 +177,8 @@ int	sort_node(t_token **head, t_node **ptr)
 			*head = (*head)->next;
 	}
 	else
-		// tbd
+		result = init_word(*head, (*ptr)->left);
+	return(result);
 }
 
 static void	build_ast(t_token *tokens)
