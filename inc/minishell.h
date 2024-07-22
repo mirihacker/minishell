@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/22 17:39:36 by smiranda         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/22 15:22:56 by eahn             ###   ########.fr       */
+>>>>>>> 98ddaa9647921e408036184bb6551fbdafc12989
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +77,21 @@ typedef struct s_node
 	struct s_node	*left;
 	struct s_node	*right;
 }					t_node;
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}				t_list;
+
+
+typedef struct s_mini
+{
+	int		exit_code;
+	int		h_flag;
+	t_list	*env_list;
+	t_list	*cmd_list;
+}	t_mini;
 
 
 

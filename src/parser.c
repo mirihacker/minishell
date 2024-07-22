@@ -104,7 +104,7 @@ static int	init_pipe(t_token *head, t_node *ptr)
 	ptr = ptr->right; // tbc
 }
 
-static int	init_herdoc(t_token *head, char **word)
+static int	init_heredoc(t_token *head, char **word)
 {
 	char	*filename;
 
@@ -137,7 +137,7 @@ t_node	*node_redirect(char *str, char *word)
 	new->right = create_node(FILENAME, word);
 }
 
-static int	init_redirect(t_token *head, t_node *ptr)
+static int init_redirect(t_token *head, t_node *ptr)
 {
 	char	*word;
 
