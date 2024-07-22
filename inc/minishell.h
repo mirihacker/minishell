@@ -33,7 +33,7 @@
 								// pipe, isatty, ttyname, ttyslot
 # include <stdbool.h>           // bool, true, false
 
-#include "libft.h"
+#include "../libft/libft.h"
 
 /* LEXER */
 typedef enum e_token_type
@@ -75,12 +75,6 @@ typedef struct s_node
 	struct s_node	*right;
 }					t_node;
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}				t_list;
-
 
 typedef struct s_mini
 {
@@ -90,6 +84,11 @@ typedef struct s_mini
 	t_list	*cmd_list;
 }	t_mini;
 
+// const char *ascii_art = 
+//     " _____\n"
+//     "/     \\\n"
+//     "|  (*)  |\n"
+//     " \\_____/\n";
 
 
 t_token	*lexer(char *input);

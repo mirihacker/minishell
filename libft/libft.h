@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:24:43 by eahn              #+#    #+#             */
-/*   Updated: 2024/03/12 18:02:07 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/22 17:56:51 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <string.h>
 # include <unistd.h>
 # include <xlocale.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}				t_list;
 
 /* IS & CASE CHANGE */
 int		ft_isalnum(int c);
@@ -62,5 +68,11 @@ void	ft_putnbr_fd(int n, int fd);
 /* ETC */
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
+
+/* LIST */
+t_list *ft_lstnew (void *content);
+void ft_listadd_back(t_list **lst, t_list *new);   
+void ft_listadd_front(t_list **lst, t_list *new);
+t_list *ft_lstlast(t_list *lst);
 
 #endif

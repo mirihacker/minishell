@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/19 18:09:18 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:05:25 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// write(1, "DEBUGG\n", 7);
 
 void	free_token(t_token *tokens)
 {
@@ -35,47 +33,27 @@ void	free_token(t_token *tokens)
 	}
 }
 
-// void	free_token(t_token *tokens)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = tokens;
-// 	while (tokens)
-// 	{
-
-// 		tmp = tokens->next;
-// 		free(tokens->value);
-// 		tokens->value = NULL;
-// 		free(tokens);
-// 		tokens = tmp;
-// 	}
-// }
-
-bool	check_quote(char **end, t_token *tokens)
+int	check_quote(char **end, t_token *tokens)
 {
 	char	quote;
+	char	*str;
 
-	if (ft_strchr("'\"'", **end))
-	{
-		quote = **end;
-		(*end)++;
-		while (**end != quote && **end)
-			(*end)++;
-		if (**end != quote)
-		{
-			free_token(tokens);
-			write(1, "DEBUGG\n", 7);
-			ft_putendl_fd("syntax error: unmatched quote", STDERR_FILENO);
-			return (false);
-		}
+	quote = **end;
+	str = *end + 1;
+	while (*str != quote && *str)
+		str++;
+	*end = str;
+	if (*str == quote)
+		return 0;
+	free_token(tokens);
+	ft_putendl_fd("syntax error: unmatched quote", STDERR_FILENO);
+	return (-1);
 	}
-	return (true);
-}
 
-char	*tokenization(char **input, t_token *tokens)
+char	*extract_token(char **input, t_token *tokens)
 {
 	char	*end;
-	bool	result;
+	// bool	result;
 	char	*token;
 
 	while (ft_strchr("\t\n\v\f\r ", **input) && **input)
@@ -83,11 +61,15 @@ char	*tokenization(char **input, t_token *tokens)
 	end = *input;
 	while (!ft_strchr("\t\n\v\f\r |<>", *end) && *end)
 	{
-		result = check_quote(&end, tokens);
-		if (!result)
-			return (NULL); // Error: unmatched quote
+		if (ft_strchr("'\"", *end))
+			if (check_quote(&end, tokens))
+				return (NULL);
 		end++;
 	}
+	// result = check_quote(&end, tokens);
+	// if (!result)
+	// 	return (NULL); // Error: unmatched quote
+	// end++;
 	if (ft_strchr("|<>", **input) && *end)
 		if (*++end == **input && **input != '|')
 			end++;
@@ -144,7 +126,7 @@ static void	add_tokens(t_token **tokens, char *input)
 
 	while (*input)
 	{
-		token_value = tokenization(&input, *tokens);
+		token_value = extract_token(&input, *tokens);
 		if (token_value)
 		{
 			new_token = create_token(token_value);

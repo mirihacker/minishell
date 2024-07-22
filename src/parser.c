@@ -132,6 +132,7 @@ t_node	*node_redirect(char *str, char *word)
 		rdr = RDR_O;
 	else
 		rdr = RDR_DO;
+
 	new = create_node(RDR, NULL);
 	new->left = create_node(rdr, NULL);
 	new->right = create_node(FILENAME, word);
