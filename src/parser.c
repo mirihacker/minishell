@@ -120,7 +120,6 @@ static int	init_herdoc(t_token *head, char **word)
 }
 
 
-
 static int init_redirect(t_token *head, t_node *ptr)
 {
 	char *word;
