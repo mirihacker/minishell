@@ -94,7 +94,7 @@ char	*remove_quote(t_token *token, char *value)
 	return (result);
 }
 
-static int	case_pipe(t_token *head, t_node *ptr)
+static int	init_pipe(t_token *head, t_node *ptr)
 {
 	if (!(head)->next || head->next->type == TOKEN_PIPE)
 		return (-1);
@@ -104,6 +104,35 @@ static int	case_pipe(t_token *head, t_node *ptr)
 	ptr = ptr->right; // tbc
 }
 
+
+
+static int init_redirect(t_token *head, t_node *ptr)
+{
+	char *word;
+	char *fname;
+
+	if (!(head->next) || head->next->type != TOKEN_STRING)
+		return(-1);
+	word = remove_quote(head, head->next->value);
+	if (head->value == "<<") // { change to function and create it ---TBD----
+	{
+		fname = handler_heredoc(word);
+		free(word);
+		if (fname == NULL)
+			return (-2);
+		word = fname; // }
+	}
+	if (!ptr->left)
+		ptr->left = node_redirect(head->value, word);
+	else
+	{
+		ptr = ptr->left;
+		while (ptr->right != NULL)
+			ptr = ptr->right; //ensure that the node will be added to the last node
+		ptr->right = node_redirect(head->value, word);
+	}
+}
+
 int	sort_node(t_token **head, t_node **ptr)
 {
 	bool	result;
@@ -111,20 +140,17 @@ int	sort_node(t_token **head, t_node **ptr)
 
 	if ((*head)->type == TOKEN_PIPE)
 	{
-		result = case_pipe(*head, *ptr);
-		ptr = ptr->right;
+		result = init_pipe(*head, *ptr);
+		ptr = (*ptr)->right;
 	}
-	else if (head->type == TOKEN_SYMBOL)
+	else if ((*head)->type == TOKEN_SYMBOL)
 	{
-		ptr = ptr->left;
-		if (!(head->next) || head->next->type != TOKEN_STRING)
-			return (-1);
-		word = remove_quote(head, head->next->value);
+		result = init_redirect(*head, (*ptr)->left);
+		if (!result)
+			*head = (*head)->next;
 	}
-	else // TOKEN_STRING
-	{
-		ptr = ptr->left;
-	}
+	else
+		// tbd
 }
 
 static void	build_ast(t_token *tokens)
