@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/22 10:52:28 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:39:36 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ typedef enum s_node_type
 {
 	SEQUENCES, // Pipesequence
 	CMD,
-	CMD_SIMPLE,
+	CMD_STR,
+	CMD_NAME,
+	CMD_SUFFIX,
 	CMD_ARG,
 	RDR,
 	RDR_O,   // >
