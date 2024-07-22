@@ -104,6 +104,21 @@ static int	init_pipe(t_token *head, t_node *ptr)
 	ptr = ptr->right; // tbc
 }
 
+static int	init_herdoc(t_token *head, char **word)
+{
+	char *filename;
+
+	if (head->value == "<<")
+	{
+		filename = handler_heredoc(*word);
+		free(*word);
+		if (filename == NULL)
+			return (-2);
+		*word = filename;
+	}
+	return (0);
+}
+
 
 
 static int init_redirect(t_token *head, t_node *ptr)
@@ -114,14 +129,8 @@ static int init_redirect(t_token *head, t_node *ptr)
 	if (!(head->next) || head->next->type != TOKEN_STRING)
 		return(-1);
 	word = remove_quote(head, head->next->value);
-	if (head->value == "<<") // { change to function and create it ---TBD----
-	{
-		fname = handler_heredoc(word);
-		free(word);
-		if (fname == NULL)
-			return (-2);
-		word = fname; // }
-	}
+	if (init_herdoc(head, &word) < 0)
+		return (-2);
 	if (!ptr->left)
 		ptr->left = node_redirect(head->value, word);
 	else
