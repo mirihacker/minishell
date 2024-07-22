@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/22 15:22:56 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/22 17:58:06 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 								// pipe, isatty, ttyname, ttyslot
 # include <stdbool.h>           // bool, true, false
 
-#include "libft.h"
+#include "../libft/libft.h"
 
 /* LEXER */
 typedef enum e_token_type
@@ -72,12 +72,6 @@ typedef struct s_node
 	struct s_node	*right;
 }					t_node;
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}				t_list;
-
 
 typedef struct s_mini
 {
@@ -87,6 +81,11 @@ typedef struct s_mini
 	t_list	*cmd_list;
 }	t_mini;
 
+// const char *ascii_art = 
+//     " _____\n"
+//     "/     \\\n"
+//     "|  (*)  |\n"
+//     " \\_____/\n";
 
 
 t_token	*lexer(char *input);

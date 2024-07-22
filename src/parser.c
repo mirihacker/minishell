@@ -132,15 +132,8 @@ t_node *node_redirect(char *str, char *word)
 		rdr = RDR_O;
 	else
 		rdr = RDR_DO;
-
-<<<<<<< HEAD
-=======
-	new = create_node(RDR, NULL);
-	new->left = create_node(rdr, NULL);
-	new->right = create_node(FILENAME, word);
 }
 
->>>>>>> 84d4e1b20951b10fe533fe6e685c52e9426fd364
 static int init_redirect(t_token *head, t_node *ptr)
 {
 	char *word;
