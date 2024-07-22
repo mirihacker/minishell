@@ -104,9 +104,9 @@ static int	init_pipe(t_token *head, t_node *ptr)
 	ptr = ptr->right; // tbc
 }
 
-static int	init_herdoc(t_token *head, char **word)
+static int	init_heredoc(t_token *head, char **word)
 {
-	char *filename;
+	char	*filename;
 
 	if (head->value == "<<")
 	{
@@ -119,11 +119,11 @@ static int	init_herdoc(t_token *head, char **word)
 	return (0);
 }
 
-t_node *node_redirect(char *str, char *word)
+t_node	*node_redirect(char *str, char *word)
 {
-	t_node *new;
-	t_node_type rdr;
-	
+	t_node		*new;
+	t_node_type	rdr;
+
 	if (!ft_strncmp(str, "<<", 3))
 		rdr = RDR_DI;
 	else if (*str == '<')
@@ -132,14 +132,18 @@ t_node *node_redirect(char *str, char *word)
 		rdr = RDR_O;
 	else
 		rdr = RDR_DO;
+
+	new = create_node(RDR, NULL);
+	new->left = create_node(rdr, NULL);
+	new->right = create_node(FILENAME, word);
 }
 
 static int init_redirect(t_token *head, t_node *ptr)
 {
-	char *word;
+	char	*word;
 
 	if (!(head->next) || head->next->type != TOKEN_STRING)
-		return(-1);
+		return (-1);
 	word = remove_quote(head, head->next->value);
 	if (init_herdoc(head, &word) < 0)
 		return (-2);
@@ -149,12 +153,42 @@ static int init_redirect(t_token *head, t_node *ptr)
 	{
 		ptr = ptr->left;
 		while (ptr->right != NULL)
-			ptr = ptr->right; //ensure that the node will be added to the last node
+			ptr = ptr->right;
+		// ensure that the node will be added to the last node
 		ptr->right = node_redirect(head->value, word);
 	}
 }
 
-static int init_word(t_token *head, )
+t_node *sub_cmd(t_node_type cmd, char *str)
+{
+	t_node *new;
+	t_node_type type;
+
+	if (cmd == CMD)
+		type = CMD_NAME;
+	else
+		type = CMD_SUFFIX;
+	new = create_node(cmd, NULL);
+	new->left = create_node(type, str);
+	return (new);
+}
+
+static int	init_word(t_token *head, t_node *ptr)
+{
+	char	*word;
+
+	word = remove_quote(head->type, head->value);
+	while (ptr->right != NULL)
+		ptr = ptr->right;
+	if (ptr->type == CMD)
+	{
+		ptr->value = word;
+		ptr->right = sub_cmd(CMD_STR, word);
+	}
+	else
+		ptr->right = sub_cmd(CMD_SUFFIX, word);
+	return (0);
+}
 
 int	sort_node(t_token **head, t_node **ptr)
 {
@@ -174,16 +208,16 @@ int	sort_node(t_token **head, t_node **ptr)
 	}
 	else
 		result = init_word(*head, (*ptr)->left);
-	return(result);
+	return (result);
 }
 
-static void	build_ast(t_token *tokens)
+static t_node	*build_ast(t_token *tokens)
 {
 	t_node	*root;
 	t_node	*ptr;
 	bool	flag;
 
-	root = nsequence();
+	root = node_sequence();
 	ptr = root;
 	while (tokens)
 	{
@@ -191,6 +225,7 @@ static void	build_ast(t_token *tokens)
 		// error handler missing
 		tokens = tokens->next;
 	}
+	return (root);
 }
 
 void	parser(t_token *tokens)
