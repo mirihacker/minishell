@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/22 17:54:46 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:38:39 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -31,9 +30,8 @@
 # include <unistd.h>            // write, access, open, read, close, fork,
 								// getcwd, chdir, unlink, execve, dup, dup2,
 								// pipe, isatty, ttyname, ttyslot
-# include <stdbool.h>           // bool, true, false
-
-#include "../libft/libft.h"
+# include "../libft/libft.h"
+# include <stdbool.h> // bool, true, false
 
 /* LEXER */
 typedef enum e_token_type
@@ -70,28 +68,25 @@ typedef enum s_node_type
 typedef struct s_node
 {
 	t_node_type		type;
-	char 			*value; // Used for WORD and ASSIGNMENT_WORD
+	char *value; // Used for WORD and ASSIGNMENT_WORD
 	struct s_node	*left;
 	struct s_node	*right;
 }					t_node;
 
-
 typedef struct s_mini
 {
-	int		exit_code;
-	int		h_flag;
-	t_list	*env_list;
-	t_list	*cmd_list;
-}	t_mini;
+	int				exit_code;
+	int				h_flag;
+	t_list			*env_list;
+	t_list			*cmd_list;
+}					t_mini;
 
-// const char *ascii_art = 
+// const char *ascii_art =
 //     " _____\n"
 //     "/     \\\n"
 //     "|  (*)  |\n"
 //     " \\_____/\n";
 
-
-t_token	*lexer(char *input);
-void	free_token(t_token *tokens);
-
+t_token				*lexer(char *input);
+void				free_tokens(t_token *list);
 #endif
