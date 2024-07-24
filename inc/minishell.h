@@ -3,12 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 12:02:31 by eahn              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/22 17:58:06 by eahn             ###   ########.fr       */
+=======
+/*   Updated: 2024/07/22 17:54:46 by smiranda         ###   ########.fr       */
+>>>>>>> bfa8860edeb0aa2dddbafe93cab662c6b5080aa6
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -54,7 +59,9 @@ typedef enum s_node_type
 {
 	SEQUENCES, // Pipesequence
 	CMD,
-	CMD_SIMPLE,
+	CMD_STR,
+	CMD_NAME,
+	CMD_SUFFIX,
 	CMD_ARG,
 	RDR,
 	RDR_O,   // >
