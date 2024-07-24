@@ -159,17 +159,17 @@ static int init_redirect(t_token *head, t_node *ptr)
 	}
 }
 
-t_node *sub_cmd(t_node_type cmd, char *str)
+t_node *sub_cmd(t_node_type cmd, char *value)
 {
 	t_node *new;
 	t_node_type type;
 
-	if (cmd == CMD)
+	if (cmd == CMD_STR)
 		type = CMD_NAME;
 	else
-		type = CMD_SUFFIX;
+		type = CMD_ARG;
 	new = create_node(cmd, NULL);
-	new->left = create_node(type, str);
+	new->left = create_node(type, value);
 	return (new);
 }
 
