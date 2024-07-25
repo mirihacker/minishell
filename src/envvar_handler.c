@@ -6,25 +6,25 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/25 12:10:53 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:49:31 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_mini *mini;
+t_mini	*mini;
 
-void initialize_env(char **envp) //tb added to main
+void	initialize_env(char **envp) // tb added to main
 {
-    char *copy;
+	char *copy;
 
-    mini = (t_mini *)ft_calloc(1, sizeof(t_mini)); 
-    while (*envp)
-    {
-        copy = ft_strdup(*envp);
-        ft_lstadd_back(&(mini->env_list), ft_lstnew(copy));
-        envp++;
-    }
+	mini = (t_mini *)ft_calloc(1, sizeof(t_mini));
+	while (*envp)
+	{
+		copy = ft_strdup(*envp);
+		ft_lstadd_back(&(mini->env_list), ft_lstnew(copy));
+		envp++;
+	}
 }
 
 // int	is_same_key(char *str, char *key)
@@ -37,18 +37,18 @@ void initialize_env(char **envp) //tb added to main
 // 	return (0);
 // }
 
-char *get_env(char *key)
+char	*get_env(char *key)
 {
-   t_list	*ptr;
-   int lkey;
-   char *env_var;
+	t_list	*ptr;
+	int		lkey;
+	char	*env_var;
 
 	lkey = ft_strlen(key);
 	ptr = mini->env_list;
 	if (!ft_strncmp(key, "?", 2))
 		return (ft_itoa(mini->exit_code));
 	while (ptr)
-	{	
+	{
 		env_var = ptr->content;
 		if (!ft_strncmp(env_var, key, lkey) && env_var[lkey] == '=')
 			return (ft_strchr(ptr->content, '=') + 1);
@@ -57,12 +57,10 @@ char *get_env(char *key)
 	return (NULL);
 }
 
-char	*envvar_handler(char **start, char *str)
+char	*get_substitution(char **start)
 {
 	char	*end;
 	char	*env;
-	char	*value;
-	char	*tmp;
 
 	end = ++(*start);
 	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
@@ -72,6 +70,16 @@ char	*envvar_handler(char **start, char *str)
 			end++;
 	env = ft_substr(*start, 0, end - *start);
 	*start = --end;
+	return (env);
+}
+
+char	*envvar_handler(char **start, char *str)
+{
+	char	*value;
+	char	*tmp;
+	char	*env;
+
+	env = get_substitution(start);
 	value = get_env(env);
 	if (!value)
 		value = "";
