@@ -37,10 +37,6 @@ bool	check_param(char *str)
 	return (*str && (ft_isalnum(*str) || ft_strchr("!#$*-?@_", *str)));
 }
 
-char	*substitute_env(char **start, char *str) //---TBD----
-{
-}
-
 char	*ft_realloc(char *prev, char word)
 {
 	char	*new_buffer;
@@ -84,7 +80,7 @@ char	*remove_quote(t_token *token, char *value)
 			if (token->value != '<<')
 			{
 				if (*value == '$' && quote != '\'' && check_param(value))
-					result = substitute_env(&value, result); // ------TBD---
+					result = envvar_handler(&value, result);
 			}
 			else
 				result = ft_realloc(result, *value);
