@@ -70,6 +70,25 @@ typedef struct s_mini
 	t_list			*cmd_list;
 }					t_mini;
 
+typedef struct s_cmd
+{
+	pid_t			pid;
+	int				fd_in;
+	int				fd_out;
+}					t_cmd;
+
+typedef enum s_cmd_type
+{
+	ECHO_,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
+	GENERAL
+}					t_cmd_type;
+
 // const char *ascii_art =
 //     " _____\n"
 //     "/     \\\n"
@@ -78,4 +97,6 @@ typedef struct s_mini
 
 t_token				*lexer(char *input);
 void				free_tokens(t_token *list);
+
+t_mini				*mini(void);
 #endif
