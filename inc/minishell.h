@@ -73,8 +73,8 @@ typedef struct s_mini
 typedef struct s_cmd
 {
 	pid_t			pid;
-	int				fd_in;
-	int				fd_out;
+	int fd_in;  // read_end
+	int fd_out; // write_end
 }					t_cmd;
 
 typedef enum s_cmd_type
