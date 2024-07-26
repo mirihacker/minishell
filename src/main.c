@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/23 14:11:49 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/26 14:40:55 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,22 @@ int	main(void)
 	char	line[1024];
 	t_token	*tokens;
 
-	printf("Enter a line to tokenize: ");
-	if (fgets(line, sizeof(line), stdin) == NULL)
-	{
-		fprintf(stderr, "Error reading input\n");
-		return (1);
-	}
-	// Remove the newline character if present
-	line[strcspn(line, "\n")] = '\0';
-	tokens = lexer(line);
-	if (tokens)
-	{
-		print_tokens(tokens);
-		free_tokens(tokens);
-	}
-	return (0);
+    printf("Enter a line to tokenize: ");
+    if (fgets(line, sizeof(line), stdin) == NULL) {
+        fprintf(stderr, "Error reading input\n");
+        return 1;
+    }
+
+    // Remove the newline character if present
+    line[strcspn(line, "\n")] = '\0';
+
+    tokens = lexer(line);
+    if (tokens) {
+        print_tokens(tokens);
+        free_token(tokens);
+    }
+
+    return 0;
 }
 
 // void	init_mini(t_mini *mini, char **envp)

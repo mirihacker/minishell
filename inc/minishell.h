@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
+/*   Updated: 2024/07/26 14:50:42 by eahn             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -42,9 +54,9 @@ typedef enum s_node_type
 {
 	SEQUENCES, // Pipesequence
 	CMD,
-	CMD_STR,
-	CMD_NAME,
-	CMD_SUFFIX,
+	CMD_STR, // Structure -> Name
+	CMD_NAME, 
+	CMD_SUFFIX, // Suffix -> Arg
 	CMD_ARG,
 	RDR,
 	RDR_O,   // >
@@ -86,7 +98,8 @@ typedef enum s_cmd_type
 	UNSET,
 	ENV,
 	EXIT,
-	GENERAL
+	GENERAL,
+	NONE
 }					t_cmd_type;
 
 // const char *ascii_art =
@@ -98,5 +111,7 @@ typedef enum s_cmd_type
 t_token				*lexer(char *input);
 void				free_tokens(t_token *list);
 
-t_mini				*mini(void);
+t_token	*lexer(char *input);
+void	free_token(t_token *tokens);
+
 #endif
