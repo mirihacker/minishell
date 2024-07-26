@@ -97,7 +97,6 @@ static int	init_pipe(t_token *head, t_node *ptr)
 	if (!(ptr->left->left || ptr->left->right))
 		return (-1);
 	ptr->right = node_sequence();
-	ptr = ptr->right; // tbc
 	return(0);
 }
 
@@ -173,7 +172,7 @@ t_node *sub_cmd(t_node_type cmd, char *value)
 
 static int	init_word(t_token *head, t_node *ptr)
 {
-	char	*word;
+	char	*word; //value or string
 
 	word = remove_quote(head->type, head->value);
 	while (ptr->right != NULL)
