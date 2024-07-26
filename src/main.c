@@ -6,23 +6,26 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/24 16:43:26 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/26 14:40:55 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 // Function to print tokens (for debugging)
-void print_tokens(t_token *tokens) {
-    while (tokens) {
-        printf("Token: %s, Type: %d\n", tokens->value, tokens->type);
-        tokens = tokens->next;
-    }
+void	print_tokens(t_token *tokens)
+{
+	while (tokens)
+	{
+		printf("Token: %s, Type: %d\n", tokens->value, tokens->type);
+		tokens = tokens->next;
+	}
 }
 
-int main() {
-    char line[1024];
-    t_token *tokens;
+int	main(void)
+{
+	char	line[1024];
+	t_token	*tokens;
 
     printf("Enter a line to tokenize: ");
     if (fgets(line, sizeof(line), stdin) == NULL) {
@@ -36,12 +39,11 @@ int main() {
     tokens = lexer(line);
     if (tokens) {
         print_tokens(tokens);
-        free_tokens(tokens);
+        free_token(tokens);
     }
 
     return 0;
 }
-
 
 // void	init_mini(t_mini *mini, char **envp)
 // {
@@ -59,7 +61,8 @@ int main() {
 // void	setup_signal(void)
 // {
 //     // off_echoctl();                    // Turn off echo control
-//     // signal(SIGINT, control_sigint);   // Handle SIGINT (Ctrl-C) with control_sigint
+//     // signal(SIGINT, control_sigint);
+// Handle SIGINT (Ctrl-C) with control_sigint
 //     // signal(SIGQUIT, SIG_IGN);         // Ignore SIGQUIT (Ctrl-\)
 // }
 
@@ -111,3 +114,5 @@ int main() {
 
 // 	return (EXIT_SUCCESS);
 // }
+
+// hello

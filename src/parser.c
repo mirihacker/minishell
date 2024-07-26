@@ -37,10 +37,6 @@ bool	check_param(char *str)
 	return (*str && (ft_isalnum(*str) || ft_strchr("!#$*-?@_", *str)));
 }
 
-char	*substitute_env(char **start, char *str) //---TBD----
-{
-}
-
 char	*ft_realloc(char *prev, char word)
 {
 	char	*new_buffer;
@@ -84,7 +80,7 @@ char	*remove_quote(t_token *token, char *value)
 			if (token->value != '<<')
 			{
 				if (*value == '$' && quote != '\'' && check_param(value))
-					result = substitute_env(&value, result); // ------TBD---
+					result = envvar_handler(&value, result);
 			}
 			else
 				result = ft_realloc(result, *value);
@@ -101,7 +97,7 @@ static int	init_pipe(t_token *head, t_node *ptr)
 	if (!(ptr->left->left || ptr->left->right))
 		return (-1);
 	ptr->right = node_sequence();
-	ptr = ptr->right; // tbc
+	return(0);
 }
 
 static int	init_heredoc(t_token *head, char **word)
@@ -157,25 +153,26 @@ static int init_redirect(t_token *head, t_node *ptr)
 		// ensure that the node will be added to the last node
 		ptr->right = node_redirect(head->value, word);
 	}
+	return(0);
 }
 
-t_node *sub_cmd(t_node_type cmd, char *str)
+t_node *sub_cmd(t_node_type cmd, char *value)
 {
 	t_node *new;
 	t_node_type type;
 
-	if (cmd == CMD)
+	if (cmd == CMD_STR)
 		type = CMD_NAME;
 	else
-		type = CMD_SUFFIX;
+		type = CMD_ARG;
 	new = create_node(cmd, NULL);
-	new->left = create_node(type, str);
+	new->left = create_node(type, value);
 	return (new);
 }
 
 static int	init_word(t_token *head, t_node *ptr)
 {
-	char	*word;
+	char	*word; //value or string
 
 	word = remove_quote(head->type, head->value);
 	while (ptr->right != NULL)
@@ -190,24 +187,24 @@ static int	init_word(t_token *head, t_node *ptr)
 	return (0);
 }
 
-int	sort_node(t_token **head, t_node **ptr)
+int	sort_node(t_token **head, t_node **ptr_sort)
 {
 	bool	result;
 	char	*word;
 
 	if ((*head)->type == TOKEN_PIPE)
 	{
-		result = init_pipe(*head, *ptr);
-		ptr = (*ptr)->right;
+		result = init_pipe(*head, *ptr_sort);
+		ptr_sort = (*ptr_sort)->right;
 	}
 	else if ((*head)->type == TOKEN_SYMBOL)
 	{
-		result = init_redirect(*head, (*ptr)->left);
+		result = init_redirect(*head, (*ptr_sort)->left);
 		if (!result)
 			*head = (*head)->next;
 	}
 	else
-		result = init_word(*head, (*ptr)->left);
+		result = init_word(*head, (*ptr_sort)->left);
 	return (result);
 }
 
