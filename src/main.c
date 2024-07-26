@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/22 17:55:07 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/24 16:43:26 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main() {
     tokens = lexer(line);
     if (tokens) {
         print_tokens(tokens);
-        free_token(tokens);
+        free_tokens(tokens);
     }
 
     return 0;

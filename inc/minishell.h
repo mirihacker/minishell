@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/24 11:53:44 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:53:50 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef enum s_node_type
 {
 	SEQUENCES, // Pipesequence
 	CMD,
-	CMD_STR,
-	CMD_NAME,
-	CMD_SUFFIX,
+	CMD_STR, // Structure -> Name
+	CMD_NAME, 
+	CMD_SUFFIX, // Suffix -> Arg
 	CMD_ARG,
 	RDR,
 	RDR_O,   // >
@@ -92,6 +92,6 @@ typedef struct s_mini
 
 
 t_token	*lexer(char *input);
-void	free_token(t_token *tokens);
+void	free_tokens(t_token *tokens);
 
 #endif
