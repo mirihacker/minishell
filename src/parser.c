@@ -141,7 +141,7 @@ static int init_redirect(t_token *head, t_node *ptr)
 	if (!(head->next) || head->next->type != TOKEN_STRING)
 		return (-1);
 	word = remove_quote(head, head->next->value);
-	if (init_herdoc(head, &word) < 0)
+	if (init_heredoc(head, &word) < 0)
 		return (-2);
 	if (!ptr->left)
 		ptr->left = node_redirect(head->value, word);
