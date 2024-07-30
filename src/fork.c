@@ -6,64 +6,75 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/26 17:30:18 by eahn             ###   ########.fr       */
+/*   Updated: 2024/07/29 23:02:34 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
+void	backup_stdin_stdout(int *stdin_fd, int *stdout_fd)
+{
+	*stdin_fd = dup(STDIN_FILENO);
+	*stdout_fd = dup(STDOUT_FILENO);
+	if (*stdin_fd < 0 || *stdout_fd < 0)
+		exit_with_err("dup()", strerror(errno), EXIT_FAILURE); // TBD
+}
+
+void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 {
 	int	stdin_backup;
 	int	stdout_backup;
 
 	backup_stdin_stdout(&stdin_backup, &stdout_backup);
-	if (redirect_files_no_fork(cmd_node->left) == -1)
+	if (redirect_files_no_fork(cmd_node->left) == -1) // TBD
 	{
-		restore_stdin_stdout(stdin_backup, stdout_backup);
+		restore_stdin_stdout(stdin_backup, stdout_backup); // TBD
 		return ;
 	}
-	// TBD
+	handle_rdr_exec(cmd_node, cmd_type, stdin_backup, stdout_backup); // TBD
 }
 
-void ft_dup2(int old_fd, int new_fd)
+void	ft_dup2(int old_fd, int new_fd)
 {
-	int ret;
+	int	ret;
+
 	ret = dup2(old_fd, new_fd);
 	if (ret < 0)
 		exit_with_err("dup2()", strerror(errno), EXIT_FAILURE); // TBD
 }
 
-void ft_close(int fd)
+void	ft_close(int fd)
 {
-	int ret;
+	int	ret;
+
 	ret = close(fd);
 	if (ret < 0)
 		exit_with_err("close()", strerror(errno), EXIT_FAILURE); // TBD
 }
 
-void connect_pipes(t_cmd *last_cmd, t_cmd *current_cmd)
+void	setup_pipe(t_cmd *last_cmd, t_cmd *current_cmd)
 {
 	if (last_cmd)
 	{
-		ft_close(last_cmd->fd_out); //wirte_end close
+		ft_close(last_cmd->fd_out);
+		// wirte_end close (cause i've never written)
 		ft_dup2(last_cmd->fd_in, STDIN_FILENO); // duplicate read_end to stdin
-		ft_close(last_cmd->fd_in); // read_end close
+		ft_close(last_cmd->fd_in);              // read_end close
 	}
 	if (current_cmd->fd_out != -1)
 	{
 		ft_close(current_cmd->fd_in); // read_end close
-		ft_dup2(current_cmd->fd_out, STDOUT_FILENO); // duplicate write_end to stdout
+		ft_dup2(current_cmd->fd_out, STDOUT_FILENO);
+		// duplicate write_end to stdout
 		ft_close(current_cmd->fd_out); // write_end close
 	}
 }
 
-
 void	ft_pipe(t_cmd *cmd)
 {
-	int	pipe_fds[2];
 	int	ret;
 
+	int pipe_fds[2]; // 0: read, 1: write
 	ret = pipe(pipe_fds);
 	if (ret < 0)
 		exit_with_err("pipe()", strerror(errno), EXIT_FAILURE); // TBD
@@ -71,7 +82,7 @@ void	ft_pipe(t_cmd *cmd)
 	cmd->fd_out = pipe_fds[1];                                  // write_end
 }
 
-void close_pipes(t_cmd *last_cmd)
+void	close_pipes(t_cmd *last_cmd)
 {
 	if (last_cmd)
 	{
@@ -91,7 +102,7 @@ t_cmd	get_new_cmd(void)
 	return (new_cmd);
 }
 
-void execute_with_fork(t_node *node, t_cmd *last_cmd)
+void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 {
 	t_cmd	*current_cmd;
 
@@ -103,17 +114,17 @@ void execute_with_fork(t_node *node, t_cmd *last_cmd)
 	current_cmd->pid = fork();
 	if (current_cmd->pid < 0)
 		exit_with_error("fork()", strerror(errno), EXIT_FAILURE); // TBD
-	if (current_cmd->pid == 0) // child process
+	if (current_cmd->pid == 0)
+	// child process
 	{
-		connect_pipes(last_cmd, current_cmd); // TBD
+		setup_pipe(last_cmd, current_cmd);     // TBD
 		handle_redirections(node->left->left); // TBD
-		execute_cmd(node->left->right); // TBD
+		execute_cmd(node->left->right);        // TBD
 	}
 	if (node->right)
 		ft_close(current_cmd->fd_out); // close write end
-	close_pipes(last_cmd)//TBD
-
-	// TBD
+	close_pipes(last_cmd)              // TBD
+										// TBD
 }
 
 t_cmd	get_last_cmd(void)
