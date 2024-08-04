@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/29 15:34:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/05 00:37:53 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,19 @@ typedef struct s_token
 /* PARSER */
 typedef enum s_node_type
 {
-	SEQUENCES, // Pipesequence
-	CMD,
-	CMD_STR, // Structure -> Name
-	CMD_NAME,
-	CMD_SUFFIX, // Suffix -> Arg
-	CMD_ARG,
-	RDR,
-	RDR_O,   // >
-	RDR_I,   // <
-	RDR_DO,  // >>
-	RDR_DI,  // <<
-	FILENAME // after RDR
+	SEQUENCES,  // Pipesequence
+	CMD,        // CMD
+	CMD_STR,    // Structure -> Name // SIMPLE_CMD
+	CMD_NAME,   // NAME
+	CMD_SUFFIX, // Suffix -> Arg // ARGV
+	CMD_ARG,    // ARG
+	RDR,        // RDR
+	RDR_O,      // >
+	RDR_I,      // <
+	RDR_DO,     // >>
+	RDR_DI,     // << // HEREDOC
+	FILENAME    // after RDR // FILENAME
+
 }					t_node_type;
 
 typedef struct s_node
@@ -84,8 +85,8 @@ typedef struct s_mini
 typedef struct s_cmd
 {
 	pid_t			pid;
-	int fd_in;  // read_end
-	int fd_out; // write_end
+	int fd_in;  // read
+	int fd_out; // write
 }					t_cmd;
 
 typedef enum s_cmd_type
