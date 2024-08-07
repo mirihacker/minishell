@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/29 15:21:58 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:54:27 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char *process_line(char *line)
         if (copy == '$')
             processed_line = envvar_handler(&copy, processed_line);
         else
-            processed_line = ft_realloc(&processed_line, *copy)
+            processed_line = ft_realloc(&processed_line, *copy);
         copy++;
     }
     free_ptr((void **)line);
