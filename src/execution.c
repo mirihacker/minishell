@@ -6,9 +6,11 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/07 11:54:00 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:24:13 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../inc/minishell.h"
 
 static int count_arg(char **argv)
 {
@@ -33,12 +35,15 @@ void get_cmdline(char ***cmdline, t_node *arg)
 	if (arg->type == CMD_SUFFIX)
 	{
 		new_arg = (char **)ft_calloc(count_arg(*cmdline) + 1, sizeof(char *));
-		i = -1;
-		while ((*arg)[++i])
-			new_arg[i] = (*arg)[i];
-		new_arg[i] = arg->left->value;
+		i = 0;
+		while ((*cmdline)[i])
+        {
+			new_arg[i] = (*cmdline)[i];
+            i++;
+        }
+        new_arg[i] = arg->left->value;
 		free_ptr((void **)arg);
-		*arg = new_arg;
+		*cmdline = new_arg;
 	}
 	get_cmdline(cmdline, arg->right);
 }
@@ -51,17 +56,17 @@ void	execution(t_node *node)
 
     // init execution //
 	arguments = (char **)ft_calloc(2, sizeof(char *));
-	arguments[0] = node->left->data;
+	arguments[0] = node->left->value;
 	get_cmdline(&arguments, node->right);
     // check command type //
-	cmd_type = which_cmd_type(argv[0]);
+	cmd_type = which_cmd_type(arguments[0]);
 	if (cmd_type == GENERAL)
-		execute_general(scmd->left->data, argv);
+		execute_general(node->left->value, arguments);
 	else if (cmd_type == NONE)
 		exit(EXIT_SUCCESS);
 	else
 	{
-		exit_code = execute_builtin(argv, cmd_type);
+		exit_code = execute_builtin(arguments, cmd_type);
 		exit(exit_code);
 	}
 }

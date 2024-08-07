@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/05 01:38:24 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/07 12:01:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 	{
 		setup_pipes(last_cmd, current_cmd);
 		redirect_with_fork(node->left->left); // TBD
-		execute_cmd(node->left->right);       // TBD
+		execute_cmd(node->left->right);       // TBD //execution
 	}
 	if (node->right)
 		ft_close(current_cmd->fd_out); // close write end
