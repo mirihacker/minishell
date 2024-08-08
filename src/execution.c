@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/08 17:00:56 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:24:24 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,19 @@ int	execute_builtin(char **argv, t_cmd_type cmd_type) // TBD
 	int exit_code;
 
 	if (cmd_type == CD)
-		exit_code = ft_cd(argv);
+		exit_code = builtin_cd(argv);
 	else if (cmd_type == ECHO_)
-		exit_code = ft_echo(argv);
+		exit_code = builtin_echo(argv);
 	else if (cmd_type == ENV)
-		exit_code = ft_env(argv);
+		exit_code = builtin_env(argv);
 	else if (cmd_type == EXIT)
-		exit_code = ft_exit(argv, NULL);
+		exit_code = builtin_exit(argv, NULL);
 	else if (cmd_type == EXPORT)
-		exit_code = ft_export(argv);
+		exit_code = builtin_export(argv);
 	else if (cmd_type == PWD)
-		exit_code = ft_pwd(argv);
+		exit_code = builtin_pwd(argv);
 	else
-		exit_code = ft_unset(argv);
+		exit_code = builtin_unset(argv);
 	return (exit_code);
 }
 
@@ -177,8 +177,10 @@ static char	**get_env_list(void)
 	int		i;
 	t_list	*ptr;
 	char	**new_envp;
+	t_mini	*mini1;
 
-	ptr = mini->env_list;
+	mini1 = mini();
+	ptr = mini1->env_list;
 	new_envp = (char **)ft_calloc(ft_lstsize(ptr) + 1, sizeof(char *));
 	i = 0;
 	while (ptr)
