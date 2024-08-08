@@ -6,9 +6,11 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:59:14 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/07 16:27:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/08 12:38:40 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../inc/minishell.h"
 
 static int	is_n_option(const char *str)
 {
