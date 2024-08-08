@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/08 19:24:24 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/08 23:20:58 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	get_cmdline(char ***cmdline, t_node *arg)
 	if (!arg)
 		return ;
 	if (arg->type == CMD_SUFFIX)
-		// check if the current node is a suffix type (is an option to the main cmd)
+	// check if the current node is a suffix type (is an option to the main cmd)
 	{
 		new_arg = (char **)ft_calloc(count_arg(*cmdline) + 1, sizeof(char *));
-			// +1 for the following argument
+		// +1 for the following argument
 		i = 0;
 		while ((*cmdline)[i]) // copy existing arguments
 		{
@@ -48,7 +48,7 @@ void	get_cmdline(char ***cmdline, t_node *arg)
 		*cmdline = new_arg;
 	}
 	get_cmdline(cmdline, arg->right);
-		// recursive call for the next subtree in case there is one
+	// recursive call for the next subtree in case there is one
 }
 
 t_cmd_type	cmd_type_tester(char *cmd_name)
@@ -104,7 +104,7 @@ int	execute_builtin(char **argv, t_cmd_type cmd_type) // TBD
 	else if (cmd_type == ENV)
 		exit_code = builtin_env(argv);
 	else if (cmd_type == EXIT)
-		exit_code = builtin_exit(argv, NULL);
+		exit_code = builtin_exit(argv, 0);
 	else if (cmd_type == EXPORT)
 		exit_code = builtin_export(argv);
 	else if (cmd_type == PWD)
@@ -124,9 +124,9 @@ char	**init_arguments(t_node *node)
 	return (arguments);
 }
 
-void free_paths(char **paths)
+void	free_paths(char **paths)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (paths[i])
@@ -165,11 +165,11 @@ static char	*find_cmd_path(char *command)
 	return (command);
 }
 
-static char *get_path(char *command)
+static char	*get_path(char *command)
 {
-    if (ft_strchr(command, '/'))
-        return (command);
-    return (find_cmd_path(command));
+	if (ft_strchr(command, '/'))
+		return (command);
+	return (find_cmd_path(command));
 }
 
 static char	**get_env_list(void)
@@ -195,7 +195,7 @@ static char	**get_env_list(void)
 static void	execute_general(char *cmd, char **argv)
 {
 	char	**new_envp;
-	char 	*path;
+	char	*path;
 
 	if (!ft_strcmp(".", cmd) || !ft_strcmp("..", cmd))
 		exit_with_err(argv[0], "command not found", 127); // TBD
@@ -220,7 +220,7 @@ void	execution(t_node *node)
 	arguments = init_arguments(node);
 	// check command type //
 	cmd_type = cmd_type_tester(arguments[0]);
-	if (cmd_type == GENERAL) //tbd name
+	if (cmd_type == GENERAL) // tbd name
 		execute_general(node->left->value, arguments);
 	else if (cmd_type == NONE)
 		exit(EXIT_SUCCESS);

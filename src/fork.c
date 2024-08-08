@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/08 12:22:12 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/08 23:34:07 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,7 @@ int	redirect_without_fork(t_node *rdr_node)
 
 	if (!rdr_node) // if there's no redirection
 		return (0);
-	if (rdr_node->type == RDR) // To check with Siria,
-								// if we make IO_RDR or IO_HERE
+	if (rdr_node->type == RDR)
 	{
 		if (redirect_node(rdr_node) == -1)
 			return (-1);
@@ -170,6 +169,35 @@ void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
 	}
 }
 
+char	**prepare_cmd_args(t_node *cmd_node)
+{
+	char	**argv;
+
+	argv = (char **)ft_calloc(2, sizeof(char *));
+	argv[0] = cmd_node->right->left->value;
+	get_cmdline(&argv, cmd_node->right->right);
+	return (argv);
+}
+
+void	execute_if_exit(char **argv, t_cmd_type cmd_type, t_node *cmd_node)
+{
+	int	shoud_exit;
+
+	if (cmd_type == EXIT)
+	{
+		shoud_exit = 1;
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		mini->exit_code = builtin_exit(argv, &shoud_exit);
+		if (shoud_exit)
+		{
+			delete_tmpfile(cmd_node);
+			exit(mini()->exit_code);
+		}
+	}
+	else
+		mini->exit_code = execute_builtin(argv, cmd_type);
+}
+
 void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 {
 	int		stdin_backup;
@@ -188,8 +216,8 @@ void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 		backup_restore_stdio(stdin_backup, stdout_backup, true); // restore
 		return ;
 	}
-	argv = prepare_cmd_args(cmd_node);                // TBD
-	execute_cmd_or_builtin(argv, cmd_type, cmd_node); // TBD
+	argv = prepare_cmd_args(cmd_node);
+	execute_if_exit(argv, cmd_type, cmd_node);
 	free_ptr((void **)&argv);
 	backup_restore_stdio(stdin_backup, stdout_backup, true); // restore
 }
