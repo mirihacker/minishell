@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/05 01:38:24 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/08 12:13:16 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
 	ft_close(file_fd);
 }
 
-void	forked_redirect_input(const char *filename);
+void	forked_redirect_input(const char *filename)
 {
 	forked_set_redirect(filename, O_RDONLY, STDIN_FILENO);
 }
@@ -253,7 +253,7 @@ void	close_pipes(t_cmd *last_cmd)
 }
 
 // initialize a new cmd struct
-t_cmd	get_new_cmd(void)
+t_cmd	*get_new_cmd(void)
 {
 	t_cmd	*new_cmd;
 
@@ -339,8 +339,8 @@ void	free_cmd_list(void)
 
 void	finalize_ast_processing(void)
 {
-	restore_echoctl(); // TBD
-	signal(SIGINT, ignore_signal);
+	enable_ctrl_echo(); // try without this
+	signal(SIGINT, handle_ignored_signal);
 	wait_for_children(); // TBD
 	free_cmd_list();
 }
