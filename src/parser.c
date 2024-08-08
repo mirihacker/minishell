@@ -104,7 +104,7 @@ static int	init_heredoc(t_token *head, char **word)
 {
 	char	*filename;
 
-	if (head->value == "<<")
+	if (!ft_strcmp(head->value, "<<"))
 	{
 		filename = handler_heredoc(*word);
 		free(*word);
@@ -120,7 +120,7 @@ t_node	*node_redirect(char *str, char *word)
 	t_node		*new;
 	t_node_type	rdr;
 
-	if (!ft_strncmp(str, "<<", 3))
+	if (!ft_strcmp(str, "<<"))
 		rdr = RDR_DI;
 	else if (*str == '<')
 		rdr = RDR_I;
