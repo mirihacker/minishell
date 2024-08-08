@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/08 12:17:20 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/08 12:22:12 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
 	ft_close(file_fd);
 }
 
-void	forked_redirect_input(const char *filename)
+void	forked_redirect_input(const char *filename);
 {
 	forked_set_redirect(filename, O_RDONLY, STDIN_FILENO);
 }
@@ -271,7 +271,7 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 	ft_lstadd_back(&(mini()->cmd_list), ft_lstnew(current_cmd));
 	if (node->right) // create pipe
 		ft_pipe(current_cmd);
-	signal(SIGQUIT, ignore_signal); // TBD ignore SIGQUIT
+	signal(SIGQUIT, handle_ignored_signal); // TBD ignore SIGQUIT
 	current_cmd->pid = fork();
 	if (current_cmd->pid < 0)
 		exit_with_error("fork()", strerror(errno), EXIT_FAILURE); // TBD
@@ -287,7 +287,7 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 	close_pipes(last_cmd)
 }
 
-t_cmd	get_last_cmd(void)
+t_cmd	*get_last_cmd(void)
 {
 	t_list	*last_list;
 
@@ -339,7 +339,7 @@ void	free_cmd_list(void)
 
 void	finalize_ast_processing(void)
 {
-	enable_ctrl_echo(); // try without this
+	restore_echoctl(); // TBD
 	signal(SIGINT, handle_ignored_signal);
 	wait_for_children(); // TBD
 	free_cmd_list();
