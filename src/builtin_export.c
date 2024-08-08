@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:31:17 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/08 22:00:38 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/08 22:05:09 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_export(char **argv)
     }
     else
     {
-        if (ft_getenv(argv))
+        if (ft_getenv(argv)) //to do
             ft_setenv(argv, "");
         else
             ft_putenv(argv); //to do : add env to the list
