@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "parser.h"
 
 t_node	*create_node(t_node_type type, char *value)
 {
@@ -233,7 +233,7 @@ void	parser(t_token *tokens)
 	{
 		root = build_ast(tokens);
 		if (root)
-			read_ast(root); // tbd
+			traverse_ast(root);
 		free_token(tokens);
 		free_ast(root); // tbd
 	}

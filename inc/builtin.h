@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/29 12:12:58 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/29 12:18:40 by smiranda         ###   ########.fr       */
+/*   Created: 2024/08/09 16:33:17 by eahn              #+#    #+#             */
+/*   Updated: 2024/08/09 16:34:02 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H  
+# include "minishell.h"
 
-void	free_ptr(void **ptr)
-{
-	if (ptr != NULL && *ptr != NULL)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
-}
+#endif
