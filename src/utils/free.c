@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fake_global.c                                      :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/25 12:58:19 by eahn              #+#    #+#             */
-/*   Updated: 2024/07/25 13:29:52 by eahn             ###   ########.fr       */
+/*   Created: 2024/08/09 16:21:10 by eahn              #+#    #+#             */
+/*   Updated: 2024/08/09 16:21:41 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
-t_mini	*mini(void)
+void	free_ptr(void **ptr)
 {
-	static t_mini	mini;
-
-	return (&mini);
+	if (ptr != NULL && *ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
-// example:
-//	(mini()->in_fd) = STDIN_FILENO;
-//	(mini()->out_fd) = STDOUT_FILENO;
+void	free_list(t_list **head)
+{
+	t_list *tmp;
+	t_list *current;
+
+	if (!head || !*head)
+		return ;
+	current = *head;
+	while (current)
+	{
+		tmp = current->next;
+		free(current->content);
+		free(current);
+		current = tmp;
+	}
+	*head = NULL;
+}

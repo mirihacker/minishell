@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:38:55 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/06 23:55:49 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/09 16:17:38 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "process.h"
 
 void	handle_ignored_signal(int signum)
 {
@@ -24,6 +24,9 @@ void	handle_ignored_signal(int signum)
 // as if they were typed by the user.
 void	handle_sigint(int signum)
 {
+	t_mini	*mini;
+
+	mini = get_mini();
 	if (signum != SIGINT) // only handle (ctrl + c)
 		return ;
 	mini->exit_code = EXIT_FAILURE; // with ctrl+c, process exit with failure
