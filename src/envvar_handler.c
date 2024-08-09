@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/07/25 13:49:31 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:40:48 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,24 @@ void	initialize_env(char **envp) // tb added to main
 // 	return (0);
 // }
 
-char	*get_env(char *key)
+char	*get_var_val(char *key)
 {
 	t_list	*ptr;
 	int		lkey;
 	char	*env_var;
 
+	
 	lkey = ft_strlen(key);
 	ptr = mini->env_list;
+	// Check if key is a special parameter, typically holds the exit code of the last command
+	// if key is equal to "?" then return the exit code
 	if (!ft_strncmp(key, "?", 2))
 		return (ft_itoa(mini->exit_code));
+	// Iterate through the linked list of environment variables
 	while (ptr)
 	{
 		env_var = ptr->content;
+		// Check if the key is equal to the environment variable and the next char is =
 		if (!ft_strncmp(env_var, key, lkey) && env_var[lkey] == '=')
 			return (ft_strchr(ptr->content, '=') + 1);
 		ptr = ptr->next;
@@ -57,18 +62,23 @@ char	*get_env(char *key)
 	return (NULL);
 }
 
-char	*get_substitution(char **start)
+char	*get_var_name(char **start)
 {
 	char	*end;
 	char	*env;
 
+	// Move the end pointer to the next character after the start pointer (pass the '$)
 	end = ++(*start);
+	// Check if the first character is a digit or special char, if so move the end pointer to the next char
 	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
 		end++;
 	else
+		// If the first character is a letter, underscore, or digit, move the end pointer to the next character (until the end)
 		while (*end && (ft_isalnum(*end) || *end == '_'))
 			end++;
+	// Create a substring from the start pointer to the end of var name
 	env = ft_substr(*start, 0, end - *start);
+	// Move the start pointer to the end of var name
 	*start = --end;
 	return (env);
 }
@@ -79,8 +89,8 @@ char	*envvar_handler(char **start, char *str)
 	char	*tmp;
 	char	*env;
 
-	env = get_substitution(start);
-	value = get_env(env);
+	env = get_var_name(start);
+	value = get_var_val(env);
 	if (!value)
 		value = "";
 	if (!str)
