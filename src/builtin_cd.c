@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:22:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/08 21:07:04 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/08 22:23:49 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	set_env(char *key, char *value)
 
 int	print_cd_error(char *arg, char *msg)
 {
-	print_error("cd", arg, msg);
+	builtin_error("cd", arg, msg);
 	return (EXIT_FAILURE);
 }
 
