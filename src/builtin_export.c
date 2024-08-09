@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:31:17 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/09 18:00:31 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:13:52 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int put_env(char *name, char* value)
 
 int empty_env(char **argv)
 {
-    t_list *env_entry;
+    t_list *env_entry; //change improv
     int add_empty_env;
 
     env_entry = search_env(argv);
