@@ -21,11 +21,13 @@ t_list *search_env(char *name)
 
     mini1 = mini();
     lkey = ft_strlen(name);
+    if (!lkey)
+        return NULL;
     ptr = mini1->env_list;
     while (ptr)
     {
-        env_var = ptr->content;
-        if (!ft_strncmp(env_var, name, lkey) && env_var[lkey] == '=')
+        env_var = (char *)ptr->content;
+        if (!ft_strncmp(env_var, name, lkey) && env_var && env_var[lkey] == '=')
             return (ptr);
         ptr = ptr->next;
     }
