@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:31:02 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/11 15:31:02 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 13:31:05 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int builtin_unset(char **argv)
 
     exit_code = EXIT_SUCCESS;
     argv++;
-    mini = mini();
+    mini = get_mini();
     if (*argv && is_option(*argv, "unset"))
         return(EXIT_FAILURE);
     while (*argv)

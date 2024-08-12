@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:31:17 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/09 18:13:52 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:43:26 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_list *search_env(char *name)
     t_list *ptr;
     char *env_var;
     int lkey;
-    t_mini *mini1;
+    t_mini *mini;
 
-    mini1 = mini();
+    mini = get_mini();
     lkey = ft_strlen(name);
     if (!lkey)
         return NULL;
-    ptr = mini1->env_list;
+    ptr = mini->env_list;
     while (ptr)
     {
         env_var = (char *)ptr->content;
@@ -64,7 +64,7 @@ int put_env(char *name, char* value)
     free(temp);
     if (!new_env_var)
         return (EXIT_FAILURE);
-    ft_listadd_back(&(mini->env_list), ft_lstnew(new_env_var));
+    ft_lstadd_back(&(mini->env_list), ft_lstnew(new_env_var));
     return (EXIT_SUCCESS);
 }
 
@@ -73,10 +73,10 @@ int empty_env(char **argv)
     t_list *env_entry; //change improv
     int add_empty_env;
 
-    env_entry = search_env(argv);
+    env_entry = search_env(*argv);
     if (!env_entry)
     {
-        add_empty_env = put_env(argv, "");
+        add_empty_env = put_env(*argv, "");
         if (add_empty_env == EXIT_FAILURE)
             return (EXIT_FAILURE);
     }
@@ -108,34 +108,30 @@ int add_env(char *argv)
 
 int handle_export(char *argv)
 {
-    char *name;
-    char *value;
-    t_list *env_entry;
     int flag_em;
 
     if (ft_strchr(argv, '='))
         flag_em = add_env(argv);
     else
-        flag_em = empty_env(argv);
+        flag_em = empty_env(&argv);
     if (flag_em == EXIT_FAILURE)
         return (EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
 
-int ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-    t_list *temp;
+	t_list	*tmp;
 
-    if (!lst || !del)
-        return (EXIT_FAILURE);
-    while (*lst)
-    {
-        temp = *lst;
-        *lst = (*lst)->next;
-        del(temp->content);
-        free(temp);
-    }
-    return (EXIT_SUCCESS);
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		tmp = *lst;
+		del(tmp->content);
+		*lst = (*lst)->next;
+		free(tmp);
+	}
 }
 
 t_list *ft_lstsort(t_list *list)
@@ -161,6 +157,16 @@ t_list *ft_lstsort(t_list *list)
         ptr = ptr->next;
     }
     return (list);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && (s1[i] == s2[i]))
+		i++;
+	return (s1[i] - s2[i]);
 }
 
 t_list *copy_list(t_list *list)
@@ -226,4 +232,3 @@ int builtin_export(char **argv)
     }
     return(EXIT_SUCCESS);  
 }
-
