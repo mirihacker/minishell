@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 19:26:34 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:03:45 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	delete_tmpfile(t_ast *rdr) // TBD
+void	delete_tmpfile(t_ast *rdr) 
 {
-	// if (!rdr || rdr->type == SIMPLE_CMD)
-	// 	return ;
-	// if (rdr->type == IO_HERE)
-	// 	unlink(rdr->right->data);
-	// delete_tmpfile(rdr->left);
-	// delete_tmpfile(rdr->right);
+	if (!rdr || rdr->type == SIMPLE_CMD)
+		return ;
+	if (rdr->type == IO_HERE)
+		unlink(rdr->right->data);
+	delete_tmpfile(rdr->left);
+	delete_tmpfile(rdr->right);
 }
 
 static void	process_heredoc(char *lim, char *temp_fpath, int temp_fd)
