@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 17:28:41 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 14:57:52 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static t_token	*create_new_token(char *value)
 
 static char	*get_token_value(char **input, t_token *tokens)
 {
-	char	*token_value;
 	char	*end;
 
 	end = *input;

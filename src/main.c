@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 14:09:36 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:56:58 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **envp)
 		exit_error(av[1], strerror(ENOTSUP), EXIT_FAILURE);
 	t_mini *mini;
 	mini = get_mini();
-	init_mini(&mini, envp);
+	init_mini(mini, envp);
 	ascii_art = "Your ASCII art"; //TBD
 	main_loop(mini);
 	// free_list(&(mini->env_list)); //TBC

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/09 16:42:51 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 15:17:11 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>             // printf, perror
 # include <errno.h>             // errno
 # include <fcntl.h>             // open
 # include <readline/readline.h> // readline, rl_clear_history, rl_on_new_line
+#include <readline/history.h>
 # include <signal.h>            // signal, sigaction, sigemptyset, sigaddset
-# include <stdio.h>             // printf, perror
 # include <stdlib.h>            // malloc, free, exit, getenv
 # include <string.h>            // strerror
 # include <sys/ioctl.h>         // ioctl
@@ -25,7 +26,8 @@
 # include <sys/wait.h>          // wait, waitpid, wait3, wait4
 # include <term.h>              // tgetent, tgetflag, tgetnum, tgetstr, tgoto
 # include <termios.h>           // tcsetattr, tcgetattr
-# include <unistd.h>           
+# include <unistd.h>   
+# include <stdbool.h>        
 # include "../libft/libft.h"
 # include "builtin.h"
 # include "execution.h"
@@ -69,22 +71,15 @@ typedef enum s_cmd_type
 //     "|  (*)  |\n"
 //     " \\_____/\n";
 
-// utils.c //
-void		free_ptr(void **ptr);
+/* utils.c */
+void exit_error (char *arg, char *msg, int exit_code);
+void	print_error(const char *cmd, const char *arg, const char *msg);
 
-// envvar_handler.c //
-char		*envvar_handler(char **start, char *str);
-char		*get_substitution(char **start);
-char		*get_env(char *key);
-void		initialize_env(char **envp);
+/* free.c */
+void	free_ptr(void **ptr);
+void	free_list(t_list **head);
 
-// heredoc_handler.c //
-char		*heredoc_handler(char *lim);
-void		process_heredoc(char *lim, char *temp_fpath, int temp_fd);
-void		delete_file(char **filename);
-void		input_temp_fd(char *str, int tmp_fd);
-char		*process_line(char *line);
-char		*init_tempfile(int *temp_fd);
-static char	*get_path(char *temp_dir, int i);
+/* utils.c */
+t_mini	*get_mini(void);
 
 #endif

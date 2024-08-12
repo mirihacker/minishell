@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.h                                          :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/09 13:55:18 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 15:25:23 by smiranda         ###   ########.fr       */
+/*   Created: 2024/08/12 15:02:58 by smiranda          #+#    #+#             */
+/*   Updated: 2024/08/12 15:03:08 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROCESS_H
-# define PROCESS_H
-# include "minishell.h"
-# include "parser.h"
+char	*ft_realloc(char *prev, char word)
+{
+	char	*new_buffer;
+	int		old_length;
+	int		i;
 
-struct s_node;
-typedef struct s_node t_node;
-
-/* process_ast.c */
-void	traverse_ast(t_node *tree);
-
-/* signal_handler.c */
-void	handle_ignored_signal(int signum);
-void	handle_sigint(int signum);
-void	setup_signal_handler(void);
-void	disable_ctrl_echo(void);
-void	enable_ctrl_echo(void);
-#endif
+	old_length = 0;
+	if (prev)
+	{
+		while (prev[old_length])
+			old_length++;
+	}
+	new_buffer = ft_calloc((old_length + 2), 1);
+	i = 0;
+	while (i < old_length)
+	{
+		new_buffer[i] = prev[i];
+		i++;
+	}
+	if (prev)
+		free(prev);
+	new_buffer[i] = word;
+	return (new_buffer);
+}
