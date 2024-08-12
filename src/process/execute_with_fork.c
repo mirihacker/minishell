@@ -6,31 +6,19 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:34:17 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 18:02:29 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 19:52:24 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-void	ft_dup2(int old_fd, int new_fd)
-{
-	int	ret;
-
-	ret = dup2(old_fd, new_fd);
-	if (ret < 0)
-		exit_error("dup2()", strerror(errno), EXIT_FAILURE); // TBD
-}
-
-void	ft_close(int fd)
-{
-	int	ret;
-
-	ret = close(fd);
-	if (ret < 0)
-		exit_error("close()", strerror(errno), EXIT_FAILURE); // TBD
-}
-
-void	setup_pipes(t_cmd *last_cmd, t_cmd *current_cmd)
+/**
+ * - If last_cmd exists, this cmd is part of a pipeline.
+ * - rd_end of last_cmd is duplicated to stdin, fd closed to prevent leaks.
+ * - If current_cmd has a wr_end, it will output to next cmd in pipeline.
+ * - The wr_end is duplicated to stdout, fd closed to prevent leaks.
+ */
+static void	setup_pipes(t_cmd *last_cmd, t_cmd *current_cmd)
 {
 	if (last_cmd)
 	{
@@ -49,19 +37,10 @@ void	setup_pipes(t_cmd *last_cmd, t_cmd *current_cmd)
 	}
 }
 
-void	ft_pipe(t_cmd *cmd)
-{
-	int	ret;
-
-	int pipe_fds[2]; // 0: read, 1: write
-	ret = pipe(pipe_fds);
-	if (ret < 0)
-		exit_error("pipe()", strerror(errno), EXIT_FAILURE); 
-	cmd->fd_in = pipe_fds[0];                                   // read_end
-	cmd->fd_out = pipe_fds[1];                                  // write_end
-}
-
-void	close_pipes(t_cmd *last_cmd)
+/**
+ * @brief Closes pipes associated with the previous command.
+ */
+static void	close_pipes(t_cmd *last_cmd)
 {
 	if (last_cmd)
 	{
@@ -70,6 +49,16 @@ void	close_pipes(t_cmd *last_cmd)
 	}
 }
 
+/**
+ * @brief Executes command by forking new process and setting up pipes
+ * - If command is part of pipeline, a pipe is created.
+ * - In the child process:
+ *  - Pipes are set up to redirect input/output.
+ *  - Command is executed with appropriate redirection.
+ * - In the parent process:
+ * 	- wr_end of current pipe is closed.
+ *  - Pipes associated with last command are closed.
+ */
 void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 {
 	t_cmd	*current_cmd;
@@ -83,7 +72,7 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 	signal(SIGQUIT, &handle_ignored_signal);
 	current_cmd->pid = fork();
 	if (current_cmd->pid < 0)
-		exit_error("fork()", strerror(errno), EXIT_FAILURE); 
+		exit_error("fork()", strerror(errno), EXIT_FAILURE);
 	if (current_cmd->pid == 0)
 	// child process
 	{
@@ -95,4 +84,3 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 		ft_close(current_cmd->fd_out); // close write end
 	close_pipes(last_cmd);
 }
-

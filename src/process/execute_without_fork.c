@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork_execute_without.c                             :+:      :+:    :+:   */
+/*   execute_without_fork.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:10:30 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 19:52:16 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
+/**
+ * @brief Backup or restore standard input/output fds.
+ */
+static void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
 {
 	if (restore)
 	{
@@ -30,17 +33,29 @@ void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
 	}
 }
 
-char	**prepare_cmd_args(t_node *cmd_node)
+/**
+ * @brief Prepares command argument from AST node.
+ * - Allocates memory for argument array and populates it based on command node.
+ * - First argument is command itself, additional arguments are parsed from cmdline.
+ */
+static char	**prepare_cmd_args(t_node *cmd_node)
 {
 	char	**argv;
 
 	argv = (char **)ft_calloc(2, sizeof(char *));
+	if (!argv)
+		exit_error("malloc()", strerror(errno), EXIT_FAILURE);
 	argv[0] = cmd_node->right->left->value;
 	get_cmdline(&argv, cmd_node->right->right);
 	return (argv);
 }
 
-void	execute_if_exit(char **argv, t_cmd_type cmd_type, t_node *cmd_node)
+/**
+ * @brief Executes command if it is an exit or builtin command.
+ * - If command is exit, handles exit process and shell.
+ * - For other builtin, delegates execution to builtin handler.
+ */
+static void	execute_if_exit(char **argv, t_cmd_type cmd_type, t_node *cmd_node)
 {
 	int		shoud_exit;
 	t_mini	*mini;
@@ -61,6 +76,11 @@ void	execute_if_exit(char **argv, t_cmd_type cmd_type, t_node *cmd_node)
 		mini->exit_code = execute_builtin(argv, cmd_type);
 }
 
+/**
+ * @brief Executes command without forking a new process (builtin)
+ * - Handles std input/output redirection and then executes command.
+ * - After execution, restores std input/output.
+ */
 void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 {
 	t_mini	*mini;

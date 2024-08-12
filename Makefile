@@ -6,7 +6,7 @@
 #    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/12 14:20:42 by eahn             ###   ########.fr        #
+#    Updated: 2024/08/12 16:35:02 by eahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ NAME = minishell
 INC_DIR = ./inc/
 LIB_DIR	=	./libft/
 LIB		=	$(LIB_DIR)libft.a
-
 
 SRCS	 	= src/main.c \
 			src/lexer/lexer.c \
