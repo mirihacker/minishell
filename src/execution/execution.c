@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 19:54:49 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:08:35 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	execute_general(char *cmd, char **argv)
 		cmd = find_abs_path(cmd);
 		new_envp = get_var_val_list();
 		execve(cmd, argv, new_envp);
-		if (errno == ENOENT) //shell command not found
+		if (errno == ENOENT) // shell command not found
 			exit_error(argv[0], "command not found", 127);
 		exit_error(argv[0], strerror(errno), EXIT_FAILURE);
 	}

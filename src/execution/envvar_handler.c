@@ -6,17 +6,16 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 19:29:07 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:08:12 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_mini	*mini;
-
 void	initialize_env(char **envp) // tb added to main
 {
 	char *copy;
+	t_mini *mini;
 
 	mini = (t_mini *)ft_calloc(1, sizeof(t_mini));
 	while (*envp)
@@ -42,11 +41,13 @@ char	*get_var_val(char *key)
 	t_list	*ptr;
 	int		lkey;
 	char	*env_var;
+	t_mini	*mini;
 
-	
 	lkey = ft_strlen(key);
+	mini = get_mini();
 	ptr = mini->env_list;
-	// Check if key is a special parameter, typically holds the exit code of the last command
+	// Check if key is a special parameter,
+	//	typically holds the exit code of the last command
 	// if key is equal to "?" then return the exit code
 	if (!ft_strncmp(key, "?", 2))
 		return (ft_itoa(mini->exit_code));
@@ -69,11 +70,13 @@ static char	*get_var_name(char **start)
 
 	// Move the end pointer to the next character after the start pointer (pass the '$)
 	end = ++(*start);
-	// Check if the first character is a digit or special char, if so move the end pointer to the next char
+	// Check if the first character is a digit or special char,
+	//	if so move the end pointer to the next char
 	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
 		end++;
 	else
-		// If the first character is a letter, underscore, or digit, move the end pointer to the next character (until the end)
+		// If the first character is a letter, underscore, or digit,
+		//	move the end pointer to the next character (until the end)
 		while (*end && (ft_isalnum(*end) || *end == '_'))
 			end++;
 	// Create a substring from the start pointer to the end of var name

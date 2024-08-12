@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:30:11 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 19:59:10 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:08:27 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ static char	*get_path1(char *command)
 
 char	**get_var_val_list(void)
 {
-	int		i;
-	t_list	*ptr;
-	char	**new_envp;
-	t_mini	*mini;
+	int i;
+	t_list *ptr;
+	char **new_envp;
+	t_mini *mini;
 
 	mini = get_mini();
 	ptr = mini->env_list;

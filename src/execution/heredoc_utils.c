@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:48:41 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 17:51:24 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:08:50 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*get_path(char *temp_dir, int i)
 	free_ptr((void **)&version);
 	return (f_path);
 }
-
 
 char	*process_line(char *line)
 {
