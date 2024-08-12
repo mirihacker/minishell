@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:08:35 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:51:19 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	execute_builtin(char **argv, t_cmd_type cmd_type) // TBD
 	return (exit_code);
 }
 
-static t_cmd_type	cmd_type_tester(char *cmd_name)
+t_cmd_type	cmd_type_tester(char *cmd_name)
 {
 	t_cmd_type	type;
 

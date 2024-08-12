@@ -6,18 +6,18 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:03:45 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 20:12:53 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	delete_tmpfile(t_ast *rdr) 
+void	delete_tmpfile(t_node *rdr) 
 {
-	if (!rdr || rdr->type == SIMPLE_CMD)
+	if (!rdr || rdr->type == CMD)
 		return ;
-	if (rdr->type == IO_HERE)
-		unlink(rdr->right->data);
+	if (rdr->type == RDR_DI)
+		unlink(rdr->right->value);
 	delete_tmpfile(rdr->left);
 	delete_tmpfile(rdr->right);
 }

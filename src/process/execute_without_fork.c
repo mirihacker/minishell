@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 19:52:16 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 21:09:09 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
 {
 	if (restore)
 	{
-		ft_dup2(stdin_fd, STDIN_FILENO);   // duplicate stdin
-		ft_close(stdin_fd);                // close duplicated stdin
-		ft_dup2(stdout_fd, STDOUT_FILENO); // duplicate stdout
-		ft_close(stdout_fd);               // close duplicated stdout
+		ft_dup2(*stdin_fd, STDIN_FILENO);   // duplicate stdin
+		ft_close(*stdin_fd);                // close duplicated stdin
+		ft_dup2(*stdout_fd, STDOUT_FILENO); // duplicate stdout
+		ft_close(*stdout_fd);               // close duplicated stdout
 	}
 	else // backup
 	{

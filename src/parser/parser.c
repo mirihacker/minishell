@@ -48,7 +48,7 @@ static t_node	*build_ast(t_token *tokens)
 {
 	t_node	*root;
 	t_node	*ptr;
-	bool	flag;
+	int	flag;
 	t_mini *mini;
 
 	root = node_sequence();
@@ -62,7 +62,7 @@ static t_node	*build_ast(t_token *tokens)
 				ft_syntax_error(tokens);
 			free_ast(root);
 			mini = get_mini();
-			mini->exit_code = SYNTAX_ERR;
+			mini->exit_code = SYNTAX_ERROR;
 			return (NULL);
 		}
 		tokens = tokens->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:03:51 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 15:09:23 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:57:15 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_node	*node_redirect(char *str, char *word)
 	new = create_node(RDR, NULL);
 	new->left = create_node(rdr, NULL);
 	new->right = create_node(FILENAME, word);
+	return (new);
 }
 
 t_node	*node_cmd(t_node_type cmd, char *value)
