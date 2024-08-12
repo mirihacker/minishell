@@ -6,11 +6,11 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/09 13:40:48 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:29:07 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "execution.h"
 
 t_mini	*mini;
 
@@ -62,7 +62,7 @@ char	*get_var_val(char *key)
 	return (NULL);
 }
 
-char	*get_var_name(char **start)
+static char	*get_var_name(char **start)
 {
 	char	*end;
 	char	*env;

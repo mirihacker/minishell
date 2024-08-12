@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:22:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:39:09 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 19:26:34 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	cd_to_oldpwd(void)
 {
 	char	*oldpwd;
 
-	oldpwd = get_env("OLDPWD");
+	oldpwd = get_var_val("OLDPWD");
 	if (!oldpwd)
 		return (print_cd_error(NULL, "OLDPWD not set"));
 	if (change_directory(oldpwd) == EXIT_SUCCESS)
@@ -38,7 +38,7 @@ static int	cd_to_home(void)
 {
 	char	*home;
 
-	home = get_env("HOME");
+	home = get_var_val("HOME");
 	if (!home)
 		return (print_cd_error(NULL, "HOME not set"));
 	return (change_directory(home));

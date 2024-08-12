@@ -12,14 +12,26 @@
 
 #include "parser.h"
 
+static void ft_syntax_error(t_token *token)
+{
+	ft_putstr_fd("limonshello: syntax error near unexpected token `", STDERR_FILENO);
+	if (token->type == TOKEN_PIPE)
+		ft_putstr_fd("|", STDERR_FILENO);
+	else if (token->next)
+		ft_putstr_fd(token->next->value, STDERR_FILENO);
+	else
+		ft_putstr_fd("newline", STDERR_FILENO);
+	ft_putendl_fd("'", STDERR_FILENO);
+}
+
 static int	sort_node(t_token **head, t_node **ptr_sort)
 {
-	bool	result;
+	int	result;
 
 	if ((*head)->type == TOKEN_PIPE)
 	{
 		result = init_pipe(*head, *ptr_sort);
-		ptr_sort = (&ptr_sort)->right;
+		ptr_sort = &((*ptr_sort)->right);
 	}
 	else if ((*head)->type == TOKEN_SYMBOL)
 	{
@@ -37,13 +49,22 @@ static t_node	*build_ast(t_token *tokens)
 	t_node	*root;
 	t_node	*ptr;
 	bool	flag;
+	t_mini *mini;
 
 	root = node_sequence();
 	ptr = root;
 	while (tokens)
 	{
 		flag = sort_node(&tokens, &ptr);
-		// error handler missing
+		if (flag < 0)
+		{
+			if (flag == -1)
+				ft_syntax_error(tokens);
+			free_ast(root);
+			mini = get_mini();
+			mini->exit_code = SYNTAX_ERR;
+			return (NULL);
+		}
 		tokens = tokens->next;
 	}
 	return (root);
@@ -58,7 +79,7 @@ void	parser(t_token *tokens)
 		root = build_ast(tokens);
 		if (root)
 			traverse_ast(root);
-		free_token(tokens);
-		free_ast(root); // tbd
+		free_tokens(tokens);
+		free_ast(root);
 	}
 }

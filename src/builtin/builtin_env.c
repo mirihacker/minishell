@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:10:33 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/08 19:23:41 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:40:29 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ int is_option(char *str, char *cmd)
 int	builtin_env(char **argv)
 {
 	t_list	*ptr;
-    t_mini	*mini1;
+    t_mini	*mini;
 
-    mini1 = mini();
-	ptr = mini1->env_list;
+    mini = get_mini();
+	ptr = mini->env_list;
 	if (argv[1])
 	{
 		if (is_option(argv[1], "env"))
