@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork_redirect_with.c                               :+:      :+:    :+:   */
+/*   redirect_forked.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:50:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:10:52 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 16:39:58 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
+static void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
 {
 	int	file_fd;
 
@@ -21,12 +21,12 @@ void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
 	ft_close(file_fd);
 }
 
-void	forked_redirect_input(const char *filename)
+static void	forked_redirect_input(const char *filename)
 {
 	forked_set_redirect(filename, O_RDONLY, STDIN_FILENO);
 }
 
-void	forked_redirect_output(t_token_type rdr_type, const char *filename)
+static void	forked_redirect_output(t_token_type rdr_type, const char *filename)
 {
 	int	open_flag;
 
@@ -37,7 +37,7 @@ void	forked_redirect_output(t_token_type rdr_type, const char *filename)
 	forked_set_redirect(filename, open_flag, STDOUT_FILENO);
 }
 
-void	forked_redirect_node(t_node *rdr_node)
+static void	forked_redirect_node(t_node *rdr_node)
 {
 	t_token_type	rdr_type;
 	char			*filename;
@@ -55,9 +55,7 @@ void	redirect_with_fork(t_node *rdr_node)
 	if (!rdr_node)
 		return ;
 	if (rdr_node->type == RDR) // To check with Siria,
-	{
 		forked_redirect_node(rdr_node);
-	}
 	if (rdr_node->left)
 		redirect_with_fork(rdr_node->left);
 	if (rdr_node->right)

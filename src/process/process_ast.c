@@ -6,15 +6,15 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 17:58:47 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 19:26:44 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
 /**
- * Fork not needed: built-in command with no following
- * Fork needed: general commands (ls, grep) or pipes
+ * - Fork not needed: built-in command with no prev, following cmd
+ * - Fork needed: general commands (ls, grep) or pipes
  */
 static bool	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 {
@@ -26,6 +26,9 @@ static bool	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 	return (true);
 }
 
+/**
+ * @brief Determines if a fork is needed to execute the command
+ */
 static void	process_ast_node(t_node *tree)
 {
 	t_cmd	*last_cmd;
@@ -39,6 +42,9 @@ static void	process_ast_node(t_node *tree)
 		execute_without_fork(tree->left, get_cmd_type(tree->left->value));
 }
 
+/**
+ * @brief Finalizes AST processing, clean up and restore terminal settings
+ */
 static void	finalize_ast_processing(void)
 {
 	enable_echoctl();
@@ -47,6 +53,9 @@ static void	finalize_ast_processing(void)
 	free_cmd_list();
 }
 
+/**
+ * @brief Traverses the AST and processes each node
+ */
 void	traverse_ast(t_node *tree)
 {
 	if (tree)

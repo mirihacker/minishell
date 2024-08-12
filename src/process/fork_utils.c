@@ -6,11 +6,43 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:33:03 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 17:47:11 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 19:58:53 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
+
+
+/**
+ * @brief Retrieves the last command from the command list
+ */
+t_cmd	*get_last_cmd(void)
+{
+	t_list	*last_list;
+	t_mini	*mini;
+
+	mini = get_mini();
+	last_list = ft_lstlast(mini->cmd_list);
+	if (last_list)
+		return ((t_cmd *)(last_list->content));
+	else
+		return (NULL);
+}
+
+/**
+ * @brief Initializes a new command structure ('t_cmd')
+ * - Allocates memory for a new t_cmd structure
+ * - Default value for fd_in and fd_out is -1
+ */
+t_cmd	*get_new_cmd(void)
+{
+	t_cmd	*new_cmd;
+
+	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	new_cmd->fd_in = -1;
+	new_cmd->fd_out = -1;
+	return (new_cmd);
+}
 
 void	free_cmd_list(void)
 {
@@ -29,31 +61,7 @@ void	free_cmd_list(void)
 	}
 }
 
-t_cmd	*get_last_cmd(void)
-{
-	t_list	*last_list;
-	t_mini	*mini;
-
-	mini = get_mini();
-	last_list = ft_lstlast(mini->cmd_list);
-	if (last_list)
-		return ((t_cmd *)(last_list->content));
-	else
-		return (NULL);
-}
-
-// initialize a new cmd struct
-t_cmd	*get_new_cmd(void)
-{
-	t_cmd *new_cmd;
-
-	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	new_cmd->fd_in = -1;
-	new_cmd->fd_out = -1;
-	return (new_cmd);
-}
-
-void free_ast (t_node *node)
+void	free_ast(t_node *node)
 {
 	if (!node)
 		return ;
@@ -69,4 +77,3 @@ void free_ast (t_node *node)
 	free(node);
 	node = NULL;
 }
-

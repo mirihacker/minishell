@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait_hander.c                                      :+:      :+:    :+:   */
+/*   wait_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 23:08:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:47:08 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 17:58:17 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-// wait until all children have finished
-// pid_t waitpid(pid_t pid, int *status, int options);
-// pid: -1 wait for any child process
-// status: finished child process status (WINEXITED, WIFSIGNALED)
-// options: 0 wait until the child process is finished
-// return: pointer to exit status of final child process
-int	wait_for_all_children(pid_t final_pid, int *final_child_status)
+/**
+ * @brief Waits until all child processes have finished.
+ * @param final_pid PID of the final child process to wait for
+ * @param final_child_status Pointer to store the exit status of final child process
+ * @return The exit status of final child process
+ * - Uses waitpid with PID -1 to wait for any child process
+ * - Loop continues until waitpid return -1,
+	meaning all child processes finished
+ */
+static int	wait_for_all_children(pid_t final_pid, int *final_child_status)
 {
 	int		child_status;
 	pid_t	current_pid;
@@ -33,12 +36,18 @@ int	wait_for_all_children(pid_t final_pid, int *final_child_status)
 	return (*final_child_status);
 }
 
-// WIFEXITED returns true if child terminated normally
-// WIFFSIGNALED returns true if child terminated by signal
-// WTERMSIG returns nb of signal that caused child to terminate
+/**
+ * @brief Handles the exit status of the final child process.
+ * @param final_child_status The exit status of the final child process
+ * - If child process exited normally, exit code is child's exit status
+ * - If child process exited by signal, exit code is set to 128 + signal number
+ * For example, if exited by SIGQUIT, exit code is 128 + 3 = 131
+ * - WTERMSIG returns nb of signal that caused child to terminate
+ */
 void	handle_final_child(int final_child_status)
 {
 	t_mini	*mini;
+
 	mini = get_mini();
 	if (WIFEXITED(final_child_status)) // successful exit
 		mini->exit_code = WEXITSTATUS(final_child_status);

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:27:46 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/08 23:35:07 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 17:26:50 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,21 @@ static int	get_exit_code(char *str)
 // then make print_error function only for builtin_exit
 int	builtin_exit(char **av, int *exit_requested)
 {
-	int	exit_code;
+	int		exit_code;
+	t_mini	*mini;
 
+	mini = get_mini();
 	if (!av[1])
 		return (mini->exit_code);
 	if (!is_number(av[1]))
 	{
-		builtin_error("exit", av[1], "numeric argument required");
+		print_error("exit", av[1], "numeric argument required");
 		return (255);
 	}
 	exit_code = get_exit_code(av[1]);
 	if (av[2])
 	{
-		builtin_error("exit", NULL, "too many arguments");
+		print_error("exit", NULL, "too many arguments");
 		if (exit_requested)
 			*exit_requested = 0;
 		return (EXIT_FAILURE);
