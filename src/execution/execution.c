@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:52:53 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 18:40:11 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,27 +105,3 @@ void	execution(t_node *node)
 		exit(exit_code);
 	}
 }
-
-// void	execution(t_node *node)
-// {
-// 	char		**arguments;
-// 	t_cmd_type	cmd_type;
-// 	int			exit_code;
-
-//     // init execution //
-// 	// Gather all arguments to form the comand line //
-// 	arguments = (char **)ft_calloc(2, sizeof(char *));
-// 	arguments[0] = node->left->value;
-// 	get_cmdline(&arguments, node->right);
-//     // check command type //
-// 	cmd_type = cmd_type_tester(arguments[0]);
-// 	if (cmd_type == GENERAL)
-// 		execute_general(node->left->value, arguments);
-// 	else if (cmd_type == NONE)
-// 		exit(EXIT_SUCCESS);
-// 	else
-// 	{
-// 		exit_code = execute_builtin(arguments, cmd_type);
-// 		exit(exit_code);
-// 	}
-// }
