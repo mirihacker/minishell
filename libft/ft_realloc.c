@@ -6,9 +6,11 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:02:58 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 15:03:08 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:29:35 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_realloc(char *prev, char word)
 {

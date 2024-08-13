@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:33:42 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:53:27 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 12:17:53 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void					get_cmdline(char ***cmdline, t_node *arg);
 /*  envvar_handler.c */
 void					initialize_env(char **envp);
 char					*envvar_handler(char **start, char *str);
+char					*get_var_val(char *key);
 
 /*  heredoc_handler.c */
 char					*heredoc_handler(char *lim);

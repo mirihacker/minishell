@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:24:43 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:43:11 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:28:27 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ char	*ft_realloc(char *prev, char word);
 
 /* PRINT */
 void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
+void	ft_putstr_fd(const char *s, int fd);
+void	ft_putendl_fd(const char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
 /* ETC */
@@ -79,5 +79,6 @@ void ft_lstadd_front(t_list **lst, t_list *new);
 t_list *ft_lstlast(t_list *lst);
 t_list *ft_lstsort(t_list *list);
 void	ft_lstclear(t_list **lst, void (*del)(void *));
+int	ft_lstsize(t_list *lst);
 
 #endif

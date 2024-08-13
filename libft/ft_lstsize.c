@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 14:20:16 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 12:25:43 by smiranda         ###   ########.fr       */
+/*   Created: 2024/08/13 12:07:54 by smiranda          #+#    #+#             */
+/*   Updated: 2024/08/13 12:08:07 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-int	builtin_pwd(char **av)
+int	ft_lstsize(t_list *lst)
 {
-	char	*cwd;
+	int	lst_len;
 
-	if (av[1] && av[1][0] != '\0')
+	lst_len = 0;
+	while (lst)
 	{
-		ft_putstr_fd("pwd: too many arguments\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		lst_len++;
+		lst = lst->next;
 	}
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		print_error("pwd", NULL, strerror(errno));
-		return (EXIT_FAILURE);
-	}
-	ft_putendl_fd(cwd, STDOUT_FILENO);
-	free(cwd);
-	return (EXIT_SUCCESS);
+	return (lst_len);
 }

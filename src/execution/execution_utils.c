@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:30:11 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:56:17 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 12:19:23 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ char	*find_cmd_path(char *command)
 	return (command);
 }
 
-static char	*get_path_execution(char *command)
-{
-	if (ft_strchr(command, '/'))
-		return (command);
-	return (find_cmd_path(command));
-}
+// static char	*get_path_execution(char *command)
+// {
+// 	if (ft_strchr(command, '/'))
+// 		return (command);
+// 	return (find_cmd_path(command));
+// }
 
 char	**get_var_val_list(void)
 {

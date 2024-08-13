@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:35:39 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 15:34:33 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 12:24:26 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	add_env_var(t_list **env_list, char *key, char *value)
 		free(new_env_var);
 		return (-1);
 	}
-	ft_listadd_back(env_list, new_node);
+	ft_lstadd_back(env_list, new_node);
 	return (0);
 }
 

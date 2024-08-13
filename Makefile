@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
+#    By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/12 20:53:30 by eahn             ###   ########.fr        #
+#    Updated: 2024/08/13 14:28:17 by smiranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 NAME = minishell
 
 INC_DIR = ./inc/
@@ -48,6 +48,7 @@ SRCS	 	= src/main.c \
 			src/builtin/builtin_pwd.c \
 			src/builtin/builtin_unset.c \
 			src/builtin/builtin_export.c \
+			src/builtin/builtin_export_utils.c \
 			src/builtin/builtin_env.c \
 			src/utils/error.c \
 			src/utils/utils.c \
@@ -59,7 +60,7 @@ OBJS = $(SRCS:%.c=%.o)
 	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) -c $< -o $@
 
 $(NAME)	: $(OBJS) $(LIB)
-		@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME) -lreadline
 		
 $(LIB)	:
 	@make -C $(LIB_DIR)

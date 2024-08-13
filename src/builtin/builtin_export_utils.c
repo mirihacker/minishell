@@ -6,13 +6,13 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:45:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:58:50 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:26:32 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-t_list *search_env(char *name)
+t_list *ft_search_env(char *name)
 {
     t_list *ptr;
     char *env_var;
@@ -68,12 +68,12 @@ static int put_env(char *name, char* value)
     return (EXIT_SUCCESS);
 }
 
-int empty_env(char **argv)
+int ft_empty_env(char **argv)
 {
     t_list *env_entry; //change improv
     int add_empty_env;
 
-    env_entry = search_env(*argv);
+    env_entry = ft_search_env(*argv);
     if (!env_entry)
     {
         add_empty_env = put_env(*argv, "");
@@ -83,7 +83,7 @@ int empty_env(char **argv)
     return (EXIT_SUCCESS);
 }
 
-int add_env(char *argv)
+int ft_add_env(char *argv)
 {
     char *name;
     char *value;
@@ -94,7 +94,7 @@ int add_env(char *argv)
     value = ft_strdup(ft_strchr(argv, '=') + 1);
     if (!name || !value)
             return (EXIT_FAILURE);
-    env_entry = search_env(name);
+    env_entry = ft_search_env(name);
     if (env_entry) //check if the name is already an env var
         flag = set_env_export(env_entry, name, value); //add the new value to the env var
     else

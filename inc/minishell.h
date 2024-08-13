@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:13:26 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 12:27:38 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void		free_list(t_list **head);
 
 /* utils.c */
 t_mini		*get_mini(void);
+int	count_arg(char **argv);
 
 #endif

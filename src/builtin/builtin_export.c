@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:31:17 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:50:38 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:25:48 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int handle_export(char *argv)
     int flag_em;
 
     if (ft_strchr(argv, '='))
-        flag_em = add_env(argv);
+        flag_em = ft_add_env(argv);
     else
-        flag_em = empty_env(&argv);
+        flag_em = ft_empty_env(&argv);
     if (flag_em == EXIT_FAILURE)
         return (EXIT_FAILURE);
     return (EXIT_SUCCESS);
