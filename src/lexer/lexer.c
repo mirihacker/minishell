@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 18:49:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 20:31:39 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,53 @@ static t_token	*create_new_token(char *value)
 
 static char	*get_token_value(char **input, t_token *tokens)
 {
+	char	*start;
 	char	*end;
 	char *start;
 	char *token_value;
 
 	start = *input;
-	end = *input;
+	end = start;
 	while (*end && !ft_strchr(SYMBOLS WHITESPACE, *end))
 	{
-		if (ft_strchr("'\"", *end))
+		if (ft_strchr("'\"", *end)) // Handling quotes
 		{
 			if (check_quote(&end, tokens))
 				return (NULL);
 		}
-		end++;
-	}
-	if (*end && ft_strchr(SYMBOLS, *start))
-	{
-		if (*start == *++end && *start != '|')
+		else
 			end++;
 	}
-	token_value = ft_substr(start, 0, (end - start));
-	*input = end;
-	return (token_value);
+	
+	if (ft_strchr(SYMBOLS, *start))
+	{
+		// Handle cases like <<, >>
+		if (*end && *start == *end && *start != '|')
+			end++;
+	}
+	
+	*input = end;  // Update input pointer to after the extracted token
+	return (ft_substr(start, 0, (end - start)));
 }
+
+// static char	*get_token_value(char **input, t_token *tokens)
+// {
+// 	char	*end;
+
+// 	end = *input;
+// 	while (*end && !ft_strchr(SYMBOLS WHITESPACE, *end))
+// 	{
+// 		if (ft_strchr("'\"", *end))
+// 			if (check_quote(&end, tokens))
+// 				return (NULL);
+// 		end++;
+// 	}
+// 	if (*end && ft_strchr(SYMBOLS, **input))
+// 		if (**input == *++end && **input != '|')
+// 			end++;
+// 	*input = end;
+// 	return (ft_substr(*input, 0, (end - *input)));
+// }
 
 static t_token	*extract_token(char *input)
 {
@@ -87,6 +110,11 @@ t_token	*lexer(char *input)
 	t_token	*tokens;
 
 	tokens = extract_token(input);
+	// while (tokens)
+	// {
+	// 	printf("%d", tokens->type);
+	// 	tokens = tokens->next;
+	// }
 	if (tokens)
 		parser(tokens);
 	return (tokens);
