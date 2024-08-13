@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:55:18 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 16:56:58 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 20:37:40 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 struct s_node;
 typedef struct s_node	t_node;
+
+struct s_cmd;
+typedef struct s_cmd	t_cmd;
 
 /* execute_with_fork.c */
 void					execute_with_fork(t_node *node, t_cmd *last_cmd);

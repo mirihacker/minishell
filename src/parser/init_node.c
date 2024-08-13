@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:05:16 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 15:07:21 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:07:02 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_heredoc(t_token *head, char **word)
 
 	if (!ft_strcmp(head->value, "<<"))
 	{
-		filename = handler_heredoc(*word);
+		filename = heredoc_handler(*word);
 		free(*word);
 		if (filename == NULL)
 			return (-2);
@@ -43,7 +43,7 @@ int	init_redirect(t_token *head, t_node *ptr)
 
 	if (!(head->next) || head->next->type != TOKEN_STRING)
 		return (-1);
-	word = remove_quote(head, head->next->value);
+	word = remove_quote(head->type, head->next->value);
 	if (init_heredoc(head, &word) < 0)
 		return (-2);
 	if (!ptr->left)

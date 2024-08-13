@@ -6,7 +6,7 @@
 #    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/12 16:35:02 by eahn             ###   ########.fr        #
+#    Updated: 2024/08/12 20:53:30 by eahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,17 +24,22 @@ SRCS	 	= src/main.c \
 			src/lexer/lexer_utils.c \
 			src/parser/parser.c \
 			src/parser/parser_utils.c \
+			src/parser/create_node.c \
+			src/parser/init_node.c \
 			src/process/process_ast.c \
 			src/process/execute_with_fork.c \
 			src/process/execute_without_fork.c \
 			src/process/fork_utils.c \
+			src/process/pipe_utils.c \
 			src/process/redirect_forked.c \
 			src/process/redirect_utils.c \
 			src/process/redirect.c \
 			src/process/signal_handler.c \
 			src/process/wait_handler.c \
 			src/execution/execution.c \
+			src/execution/execution_utils.c \
 			src/execution/heredoc_handler.c \
+			src/execution/heredoc_utils.c \
 			src/execution/envvar_handler.c \
 			src/builtin/builtin_cd.c \
 			src/builtin/builtin_cd_utils.c \

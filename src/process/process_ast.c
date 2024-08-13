@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 19:26:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/12 20:53:54 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 {
 	t_cmd_type	cmd_type;
 
-	cmd_type = get_cmd_type(tree->left->value);
+	cmd_type = cmd_type_tester(tree->left->value);
 	if (!last_cmd && cmd_type != GENERAL && !tree->right)
 		return (false);
 	return (true);
@@ -39,7 +39,7 @@ static void	process_ast_node(t_node *tree)
 	if (fork_needed)
 		execute_with_fork(tree, last_cmd);
 	else
-		execute_without_fork(tree->left, get_cmd_type(tree->left->value));
+		execute_without_fork(tree->left, cmd_type_tester(tree->left->value));
 }
 
 /**
@@ -47,7 +47,7 @@ static void	process_ast_node(t_node *tree)
  */
 static void	finalize_ast_processing(void)
 {
-	enable_echoctl();
+	enable_ctrl_echo();
 	signal(SIGINT, &handle_ignored_signal);
 	wait_for_children();
 	free_cmd_list();
