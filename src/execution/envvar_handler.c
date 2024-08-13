@@ -6,25 +6,11 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:08:12 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:36:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-void	initialize_env(char **envp) // tb added to main
-{
-	char *copy;
-	t_mini *mini;
-
-	mini = (t_mini *)ft_calloc(1, sizeof(t_mini));
-	while (*envp)
-	{
-		copy = ft_strdup(*envp);
-		ft_lstadd_back(&(mini->env_list), ft_lstnew(copy));
-		envp++;
-	}
-}
 
 // int	is_same_key(char *str, char *key)
 // {

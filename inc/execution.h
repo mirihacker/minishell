@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:33:42 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 12:17:53 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:36:11 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char					**get_var_val_list(void);
 void					get_cmdline(char ***cmdline, t_node *arg);
 
 /*  envvar_handler.c */
-void					initialize_env(char **envp);
 char					*envvar_handler(char **start, char *str);
 char					*get_var_val(char *key);
 
