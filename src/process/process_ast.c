@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 20:53:54 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 19:36:42 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	finalize_ast_processing(void)
 	enable_ctrl_echo();
 	signal(SIGINT, &handle_ignored_signal);
 	wait_for_children();
-	free_cmd_list();
+	// free_cmd_list();
 }
 
 /**
@@ -62,7 +62,11 @@ void	traverse_ast(t_node *tree)
 	{
 		process_ast_node(tree);
 		traverse_ast(tree->right);
+
 	}
 	else
+	{
 		finalize_ast_processing();
+		return ;
+	}
 }

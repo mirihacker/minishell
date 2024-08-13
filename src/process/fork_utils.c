@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:33:03 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 20:08:50 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 20:24:13 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,22 @@ t_cmd	*get_new_cmd(void)
  * @brief Frees all commands in the command list
  * Also frees the list nodes themselves
  */
-void	free_cmd_list(void)
-{
-	t_list	*current_cmd;
-	t_mini	*mini;
+// void	free_cmd_list(void)
+// {
+// 	t_list	*current_cmd;
+// 	t_mini	*mini;
 
-	mini = get_mini();
-	if (!mini->cmd_list)
-		return ;
-	while (mini->cmd_list)
-	{
-		current_cmd = mini->cmd_list;
-		mini->cmd_list = mini->cmd_list->next;
-		free((void **)&(current_cmd->content));
-		free((void **)&current_cmd);
-	}
-}
+// 	mini = get_mini();
+// 	if (!mini->cmd_list)
+// 		return ;
+// 	while (mini->cmd_list)
+// 	{
+// 		current_cmd = mini->cmd_list;
+// 		mini->cmd_list = (mini->cmd_list)->next;
+// 		// free((void **)&(current_cmd->content));
+// 		// free((void **)&current_cmd);
+// 	}
+// }
 
 /**
  * @brief Frees AST node and its children

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:34:17 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 19:52:24 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 20:15:06 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	setup_pipes(t_cmd *last_cmd, t_cmd *current_cmd)
 		// duplicate read_end to stdin
 		ft_close(last_cmd->fd_in); // read_end close
 	}
-	if (current_cmd->fd_out != -1)
+	if (current_cmd->fd_in != -1)
 	{
 		ft_close(current_cmd->fd_in); // read_end close
 		ft_dup2(current_cmd->fd_out, STDOUT_FILENO);
@@ -73,14 +73,18 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 	current_cmd->pid = fork();
 	if (current_cmd->pid < 0)
 		exit_error("fork()", strerror(errno), EXIT_FAILURE);
-	if (current_cmd->pid == 0)
+	if (!current_cmd->pid)
 	// child process
 	{
+		printf("child process\n");
 		setup_pipes(last_cmd, current_cmd);
 		redirect_with_fork(node->left->left);
 		execution(node->left->right);
 	}
 	if (node->right)
+	{
 		ft_close(current_cmd->fd_out); // close write end
+		printf("close process\n");
+	}
 	close_pipes(last_cmd);
 }

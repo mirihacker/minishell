@@ -6,37 +6,40 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:38:50 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 20:20:57 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
 /**
- * @brief Backup or restore standard input/output fds.
+ * @brief backup standard input/output fds.
  */
-static void	backup_restore_stdio(int *stdin_fd, int *stdout_fd, bool restore)
+
+static void	backup_stdio(int *stdin_fd, int *stdout_fd)
 {
-	if (restore)
-	{
-		ft_dup2(*stdin_fd, STDIN_FILENO);   // duplicate stdin
-		ft_close(*stdin_fd);                // close duplicated stdin
-		ft_dup2(*stdout_fd, STDOUT_FILENO); // duplicate stdout
-		ft_close(*stdout_fd);               // close duplicated stdout
-	}
-	else // backup
-	{
-		*stdin_fd = dup(STDIN_FILENO);   // duplicate stdin
-		*stdout_fd = dup(STDOUT_FILENO); // duplicate stdout
-		if (*stdin_fd < 0 || *stdout_fd < 0)
-			exit_error("dup()", strerror(errno), EXIT_FAILURE); // TBD
-	}
+	*stdin_fd = dup(STDIN_FILENO);
+	*stdout_fd = dup(STDOUT_FILENO);
+	if (*stdin_fd < 0 || *stdout_fd < 0)
+		exit_error("dup()", strerror(errno), EXIT_FAILURE);
+}
+
+/**
+ * @brief restore standard input/output fds.
+ */
+static void	restore_stdio(int stdin_fd, int stdout_fd)
+{
+	ft_dup2(stdin_fd, STDIN_FILENO);   // duplicate stdin
+	ft_close(stdin_fd);                // close duplicated stdin
+	ft_dup2(stdout_fd, STDOUT_FILENO); // duplicate stdout
+	ft_close(stdout_fd);               // close duplicated stdout
 }
 
 /**
  * @brief Prepares command argument from AST node.
  * - Allocates memory for argument array and populates it based on command node.
- * - First argument is command itself, additional arguments are parsed from cmdline.
+ * - First argument is command itself,
+	additional arguments are parsed from cmdline.
  */
 static char	**prepare_cmd_args(t_node *cmd_node)
 {
@@ -89,20 +92,20 @@ void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 	char	**argv;
 
 	mini = get_mini();
-	backup_restore_stdio(&stdin_backup, &stdout_backup, false); // backup
+	backup_stdio(&stdin_backup, &stdout_backup);
 	if (redirect_without_fork(cmd_node->left) == -1)
 	{
-		backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
+		restore_stdio(stdin_backup, stdout_backup); 
 		return ;
 	}
 	if (cmd_type == NONE) // when there's no CMD
 	{
 		mini->exit_code = EXIT_SUCCESS;
-		backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
+		restore_stdio(stdin_backup, stdout_backup);
 		return ;
 	}
 	argv = prepare_cmd_args(cmd_node);
 	execute_if_exit(argv, cmd_type, cmd_node);
 	free_ptr((void **)&argv);
-	backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
+	restore_stdio(stdin_backup, stdout_backup);
 }

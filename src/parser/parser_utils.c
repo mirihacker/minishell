@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:07:10 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 21:06:03 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 19:15:22 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_param(char *str)
 	return (*str && (ft_isalnum(*str) || ft_strchr("!#$*-?@_", *str)));
 }
 
-char	*remove_quote(t_token_type token, char *value)
+char	*remove_quote(char *value)
 {
 	char *result;
 	char quote;
@@ -33,7 +33,7 @@ char	*remove_quote(t_token_type token, char *value)
 			quote = 0;
 		else
 		{
-			if (token != RDR_DI)
+			if (ft_strcmp(value, "<<"))
 			{
 				if (*value == '$' && quote != '\'' && check_param(value))
 					result = envvar_handler(&value, result);

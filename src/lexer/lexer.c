@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 14:57:52 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:49:44 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,28 @@ static t_token	*create_new_token(char *value)
 static char	*get_token_value(char **input, t_token *tokens)
 {
 	char	*end;
+	char *start;
+	char *token_value;
 
+	start = *input;
 	end = *input;
 	while (*end && !ft_strchr(SYMBOLS WHITESPACE, *end))
 	{
 		if (ft_strchr("'\"", *end))
+		{
 			if (check_quote(&end, tokens))
 				return (NULL);
+		}
 		end++;
 	}
-	if (*end && ft_strchr(SYMBOLS, **input))
-		if (**input == *++end && **input != '|')
+	if (*end && ft_strchr(SYMBOLS, *start))
+	{
+		if (*start == *++end && *start != '|')
 			end++;
+	}
+	token_value = ft_substr(start, 0, (end - start));
 	*input = end;
-	return (ft_substr(*input, 0, (end - *input)));
+	return (token_value);
 }
 
 static t_token	*extract_token(char *input)

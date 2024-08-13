@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:36:48 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:36:46 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 19:15:44 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_node						*create_node(t_node_type type, char *value);
 
 /* parser_utils.c */
 int							check_param(char *str);
-char						*remove_quote(t_token_type token, char *value);
+char						*remove_quote(char *value);
 
 /* init_node.c */
 int							init_pipe(t_token *head, t_node *ptr);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_with_fork_utils.c                          :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:45:13 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 15:49:17 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 19:55:11 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_close(int fd)
 
 	ret = close(fd);
 	if (ret < 0)
-		exit_error("close()", strerror(errno), EXIT_FAILURE); 
+		perror("close() error");
+		// exit_error("close()", strerror(errno), EXIT_FAILURE); 
 }
 
 void	ft_pipe(t_cmd *cmd)
