@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:52:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:12:35 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:49:51 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	verify_system_call(int res, char *str)
 	mini = get_mini();
 	if (res < 0)
 	{
-		print_err(str, NULL, strerror(errno));
+		print_error(str, NULL, strerror(errno));
 		mini->exit_code = EXIT_FAILURE;
 		return (-1);
 	}

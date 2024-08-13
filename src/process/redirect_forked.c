@@ -6,13 +6,13 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:50:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 16:39:58 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:49:32 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-static void	forked_set_redirect(const char *filename, int open_flag, int target_fd)
+static void	forked_set_redirect(char *filename, int open_flag, int target_fd)
 {
 	int	file_fd;
 
@@ -21,12 +21,12 @@ static void	forked_set_redirect(const char *filename, int open_flag, int target_
 	ft_close(file_fd);
 }
 
-static void	forked_redirect_input(const char *filename)
+static void	forked_redirect_input(char *filename)
 {
 	forked_set_redirect(filename, O_RDONLY, STDIN_FILENO);
 }
 
-static void	forked_redirect_output(t_token_type rdr_type, const char *filename)
+static void	forked_redirect_output(t_node_type rdr_type, char *filename)
 {
 	int	open_flag;
 
@@ -39,7 +39,7 @@ static void	forked_redirect_output(t_token_type rdr_type, const char *filename)
 
 static void	forked_redirect_node(t_node *rdr_node)
 {
-	t_token_type	rdr_type;
+	t_node_type	rdr_type;
 	char			*filename;
 
 	rdr_type = rdr_node->left->type;
