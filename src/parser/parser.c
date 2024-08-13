@@ -14,7 +14,7 @@
 
 static void ft_syntax_error(t_token *token)
 {
-	ft_putstr_fd("limonshello: syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
 	if (token->type == TOKEN_PIPE)
 		ft_putstr_fd("|", STDERR_FILENO);
 	else if (token->next)
@@ -29,18 +29,23 @@ static int	sort_node(t_token **head, t_node **ptr_sort)
 	int	result;
 
 	if ((*head)->type == TOKEN_PIPE)
-	{
+	{	
+		write(1, "DEBUGG_PIPE\n", 12);
 		result = init_pipe(*head, *ptr_sort);
-		ptr_sort = &((*ptr_sort)->right);
+		*ptr_sort = (*ptr_sort)->right;
 	}
 	else if ((*head)->type == TOKEN_SYMBOL)
-	{
+	{	
+		write(1, "DEBUGG_RDR\n", 11);
 		result = init_redirect(*head, (*ptr_sort)->left);
 		if (!result)
 			*head = (*head)->next;
 	}
 	else
+	{
+		write(1, "DEBUGG_WORD\n", 12);
 		result = init_word(*head, (*ptr_sort)->left);
+	}
 	return (result);
 }
 

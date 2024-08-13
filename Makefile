@@ -6,13 +6,13 @@
 #    By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/13 14:28:17 by smiranda         ###   ########.fr        #
+#    Updated: 2024/08/13 17:24:07 by smiranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 
 INC_DIR = ./inc/
@@ -57,13 +57,13 @@ SRCS	 	= src/main.c \
 OBJS = $(SRCS:%.c=%.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) -c $< -o $@
+		@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) -c $< -o $@
 
 $(NAME)	: $(OBJS) $(LIB)
 		@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME) -lreadline
 		
 $(LIB)	:
-	@make -C $(LIB_DIR)
+		@make -C $(LIB_DIR)
 
 all: $(NAME)
 
