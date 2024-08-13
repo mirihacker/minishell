@@ -3,15 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:33:17 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 16:34:02 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:40:27 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H  
 # include "minishell.h"
+
+/*  buitlin_cd_utils.c */
+int	print_cd_error(char *arg, char *msg);
+int	add_env_var(t_list **env_list, char *key, char *value);
+void	update_dir_env(char *old_pwd);
+int	set_env(char *key, char *value);
+
+/*  builtin_cd.c */
+int	builtin_cd(char **av);
+
+/*  builtin_echo.c */
+int	builtin_echo(char **av);
+
+/*  builtin_env.c */
+int is_option(char *str, char *cmd);
+int	builtin_env(char **argv);
+
+/*  builtin_exit.c */
+int	builtin_exit(char **av, int *exit_requested);
+
+/*  builtin_export.c */
+int builtin_export(char **argv);
+
+/*  builtin_pwd.c */
+int	builtin_pwd(char **av);
+
+/*  builtin_unset.c */
+int builtin_unset(char **argv);
 
 #endif
