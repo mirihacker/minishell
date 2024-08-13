@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:33:17 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:40:27 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:57:07 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	builtin_env(char **argv);
 
 /*  builtin_exit.c */
 int	builtin_exit(char **av, int *exit_requested);
+
+/*  builtin_export_utils.c */
+int add_env(char *argv);
+int empty_env(char **argv);
+t_list *search_env(char *name);
 
 /*  builtin_export.c */
 int builtin_export(char **argv);

@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:10:33 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 17:40:29 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:22:07 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	builtin_env(char **argv)
 	{
 		if (is_option(argv[1], "env"))
 			return (EXIT_FAILURE);
-		print_err("env", argv[1], strerror(EINVAL));
+		print_error("env", argv[1], strerror(EINVAL));
 		ft_putendl_fd("env: usage: env", STDERR_FILENO);
 		return (127);
 	}

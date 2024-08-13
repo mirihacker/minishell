@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:24:43 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 21:07:53 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:43:11 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ t_list *ft_lstnew (void *content);
 void ft_lstadd_back(t_list **lst, t_list *new);   
 void ft_lstadd_front(t_list **lst, t_list *new);
 t_list *ft_lstlast(t_list *lst);
+t_list *ft_lstsort(t_list *list);
+void	ft_lstclear(t_list **lst, void (*del)(void *));
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:31:02 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 13:31:05 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:39:23 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void free_node(t_list **ptr)
+static void free_node(t_list **ptr)
 {
     if (*ptr)
     {
@@ -23,7 +23,7 @@ void free_node(t_list **ptr)
     }
 }
 
-void delete_env(char *argv, t_mini *mini) 
+static void delete_env(char *argv, t_mini *mini) 
 {
     t_list *env;
     t_list *prev;
