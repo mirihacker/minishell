@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:05:16 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 17:04:13 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:33:08 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	init_redirect(t_token *head, t_node *ptr)
 
 	if (!(head->next) || head->next->type != TOKEN_STRING)
 		return (-1);
-	word = remove_quote(head->type, head->next->value);
+	word = remove_quote(head->next->value);
 	if (init_heredoc(head, &word) < 0)
 		return (-2);
 	if (!ptr->left)
@@ -63,7 +63,7 @@ int	init_word(t_token *head, t_node *ptr)
 {
 	char *word; // value or string
 
-	word = remove_quote(head->type, head->value);
+	word = remove_quote(head->value);
 	while (ptr->right != NULL)
 		ptr = ptr->right;
 	if (ptr->type == CMD)
