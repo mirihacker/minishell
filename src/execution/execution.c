@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:51:19 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:52:53 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	execute_general(char *cmd, char **argv)
 		exit_error(argv[0], "command not found", 127);
 	else
 	{
-		cmd = find_abs_path(cmd);
+		cmd = find_cmd_path(cmd);
 		new_envp = get_var_val_list();
 		execve(cmd, argv, new_envp);
 		if (errno == ENOENT) // shell command not found

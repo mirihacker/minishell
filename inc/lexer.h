@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:19:12 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/09 17:18:57 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:37:33 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define LEXER_H
 # include "minishell.h"
 
-#define SYMBOLS "<>|"
-#define WHITESPACE " \t\n\v\f\r"
+# define SYMBOLS "<>|"
+# define WHITESPACE " \t\n\v\f\r"
 
-typedef enum e_token_type
+typedef enum s_token_type
 {
 	TOKEN_STRING,
 	TOKEN_SYMBOL,

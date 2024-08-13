@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 14:56:58 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:27:54 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_mini(t_mini *mini, char **envp)
 	mini->exit_code = 0;
 	while (*envp)
 	{
-		ft_listadd_back(&mini->env_list, ft_lstnew(*envp));
+		ft_lstadd_back(&mini->env_list, ft_lstnew(*envp));
 		envp++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:33:42 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:52:03 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:53:27 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,31 @@
 # include "minishell.h"
 # include "parser.h"
 
-struct s_node;
+typedef enum s_cmd_type	t_cmd_type;
 typedef struct s_node	t_node;
 
-enum s_cmd_type;
-typedef enum s_cmd_type	t_cmd_type;
-
 /*  execution.c */
-t_cmd_type	cmd_type_tester(char *cmd_name);
-int	execute_builtin(char **argv, t_cmd_type cmd_type);
-void	execution(t_node *node);
+t_cmd_type				cmd_type_tester(char *cmd_name);
+int						execute_builtin(char **argv, t_cmd_type cmd_type);
+void					execution(t_node *node);
 
 /*  execution_utils.c */
-char	**get_var_val_list(void);
-void	get_cmdline(char ***cmdline, t_node *arg);
-
+char					*find_cmd_path(char *command);
+char					**get_var_val_list(void);
+void					get_cmdline(char ***cmdline, t_node *arg);
 
 /*  envvar_handler.c */
-void	initialize_env(char **envp);
-char	*envvar_handler(char **start, char *str);
+void					initialize_env(char **envp);
+char					*envvar_handler(char **start, char *str);
 
 /*  heredoc_handler.c */
-char	*heredoc_handler(char *lim);
-void	delete_tmpfile(t_node *rdr);
+char					*heredoc_handler(char *lim);
+void					delete_tmpfile(t_node *rdr);
 
 /*  heredoc_utils.c */
-void	delete_file(char **filename);
-void	input_temp_fd(char *str, int tmp_fd);
-char	*process_line(char *line);
-char	*get_path(char *temp_dir, int i);
+void					delete_file(char **filename);
+void					input_temp_fd(char *str, int tmp_fd);
+char					*process_line(char *line);
+char					*get_path(char *temp_dir, int i);
 
 #endif

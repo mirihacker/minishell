@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 21:09:09 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:38:50 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,17 @@ void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 	backup_restore_stdio(&stdin_backup, &stdout_backup, false); // backup
 	if (redirect_without_fork(cmd_node->left) == -1)
 	{
-		backup_restore_stdio(stdin_backup, stdout_backup, true); // restore
+		backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
 		return ;
 	}
 	if (cmd_type == NONE) // when there's no CMD
 	{
 		mini->exit_code = EXIT_SUCCESS;
-		backup_restore_stdio(stdin_backup, stdout_backup, true); // restore
+		backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
 		return ;
 	}
 	argv = prepare_cmd_args(cmd_node);
 	execute_if_exit(argv, cmd_type, cmd_node);
 	free_ptr((void **)&argv);
-	backup_restore_stdio(stdin_backup, stdout_backup, true); // restore
+	backup_restore_stdio(&stdin_backup, &stdout_backup, true); // restore
 }

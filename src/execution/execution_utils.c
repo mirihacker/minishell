@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:30:11 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/12 20:08:27 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:56:17 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	free_paths(char **paths)
 	free_ptr((void **)&paths);
 }
 
-static char	*find_cmd_path(char *command)
+char	*find_cmd_path(char *command)
 {
 	char	*path;
 	char	*full_path;
@@ -79,7 +79,7 @@ static char	*find_cmd_path(char *command)
 	return (command);
 }
 
-static char	*get_path1(char *command)
+static char	*get_path_execution(char *command)
 {
 	if (ft_strchr(command, '/'))
 		return (command);

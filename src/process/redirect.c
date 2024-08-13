@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:49:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 16:38:23 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/13 11:51:08 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // 6: owner read & write (4 + 2)
 // 4: group, others read-only
-static int	set_redirect(const char *filename, int open_flag, int target_fd)
+static int	set_redirect(char *filename, int open_flag, int target_fd)
 {
 	int	file_fd;
 	int	res;
@@ -36,7 +36,7 @@ static int	redirect_input(char *filename) // <
 	return (set_redirect(filename, O_RDONLY, STDIN_FILENO));
 }
 
-static int	redirect_output(t_token_type rdr_type, char *filename)
+static int	redirect_output(t_node_type rdr_type, char *filename)
 {
 	int	open_flag;
 
@@ -49,8 +49,8 @@ static int	redirect_output(t_token_type rdr_type, char *filename)
 
 static int	redirect_node(t_node *rdr_node)
 {
-	t_token_type	rdr_type;
-	char			*filename;
+	t_node_type	rdr_type;
+	char		*filename;
 
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
