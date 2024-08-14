@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:19:12 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 02:02:37 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 02:10:38 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 typedef enum s_token_type
 {
-	TOKEN_STRING,
-	TOKEN_SYMBOL,
-	TOKEN_HEREDOC,
-	TOKEN_PIPE
+	TOKEN_STRING,  // WORD
+	TOKEN_SYMBOL,  // <, >, >>
+	TOKEN_HEREDOC, // <<
+	TOKEN_PIPE     // |
 }					t_token_type;
 
 typedef struct s_token
