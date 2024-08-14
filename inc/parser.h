@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:36:48 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 13:35:15 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:41:09 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef enum s_node_type
 	CMD_SUFFIX, // Suffix -> Arg // ARGV
 	CMD_ARG,    // ARG
 	RDR,        // RDR
-	P_RDR,		// IO_RDR
-	P_HD,    // HEREDOC, IO_HERE
+	P_RDR,      // IO_RDR
+	P_HD,       // HEREDOC, IO_HERE
 	RDR_O,      // >, SYMBOL_GREATER
 	RDR_I,      // <, SYMBOL_LESS
 	RDR_DO,     // >>, SYMBOL_DGREAT

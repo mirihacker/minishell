@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 14:36:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:24:44 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 // 	return (0);
 // }
 
-char	*get_var_val(char *key)
+char	*get_var_val(char *key) // DONE
 {
-	t_list	*ptr;
-	int		lkey;
-	char	*env_var;
-	t_mini	*mini;
+	t_list *ptr;
+	int lkey;
+	char *env_var;
+	t_mini *mini;
 
 	lkey = ft_strlen(key);
 	mini = get_mini();
@@ -49,36 +49,43 @@ char	*get_var_val(char *key)
 	return (NULL);
 }
 
-static char	*get_var_name(char **start)
-{
-	char	*end;
-	char	*env;
+// static char	*get_var_name(char **start)
+// {
+// 	char	*end;
+// 	char	*env;
 
-	// Move the end pointer to the next character after the start pointer (pass the '$)
-	end = ++(*start);
-	// Check if the first character is a digit or special char,
-	//	if so move the end pointer to the next char
-	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
-		end++;
-	else
-		// If the first character is a letter, underscore, or digit,
-		//	move the end pointer to the next character (until the end)
-		while (*end && (ft_isalnum(*end) || *end == '_'))
-			end++;
-	// Create a substring from the start pointer to the end of var name
-	env = ft_substr(*start, 0, end - *start);
-	// Move the start pointer to the end of var name
-	*start = --end;
-	return (env);
-}
+// 	// Move the end pointer to the next character after the start pointer (pass the '$)
+// 	end = ++(*start);
+// 	// Check if the first character is a digit or special char,
+// 	//	if so move the end pointer to the next char
+// 	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
+// 		end++;
+// 	else
+// 		// If the first character is a letter, underscore, or digit,
+// 		//	move the end pointer to the next character (until the end)
+// 		while (*end && (ft_isalnum(*end) || *end == '_'))
+// 			end++;
+// 	// Create a substring from the start pointer to the end of var name
+// 	env = ft_substr(*start, 0, end - *start);
+// 	// Move the start pointer to the end of var name
+// 	*start = --end;
+// 	return (env);
+// }
 
-char	*envvar_handler(char **start, char *str)
+char	*envvar_handler(char **start, char *str) //DONE
 {
 	char	*value;
 	char	*tmp;
 	char	*env;
+	char	*end;
 
-	env = get_var_name(start);
+	end = ++(*start);
+	if (ft_isdigit(*end) || ft_strchr("!#$*-?@_", *end))
+		end++;
+	else
+		while (*end && (ft_isalnum(*end) || *end == '_'))
+			end++;
+	env = ft_substr(*start, 0, end - *start);
 	value = get_var_val(env);
 	if (!value)
 		value = "";
