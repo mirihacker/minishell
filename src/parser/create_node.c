@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:03:51 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 12:21:21 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:38:26 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ t_node	*node_redirect(char *str, char *word)
 
 	if (!ft_strcmp(str, "<<"))
 	{
-		rdr = RDR_HD;
+		rdr = P_HD;
 		type = RDR_DI;
 	}
 	else
 	{
-		rdr = RDR;
+		rdr = P_RDR;
 		if (*str == '<')
 			type = RDR_I;
 		else if (!ft_strcmp(str, ">"))
