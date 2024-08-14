@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 12:20:06 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:42:27 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	delete_tmpfile(t_node *rdr) 
+void	delete_tmpfile(t_node *rdr)
 {
 	if (!rdr || rdr->type == CMD)
 		return ;
@@ -25,7 +25,7 @@ void	delete_tmpfile(t_node *rdr)
 static void	process_heredoc(char *lim, char *temp_fpath, int temp_fd)
 {
 	char	*line;
-	t_mini *mini;
+	t_mini	*mini;
 
 	mini = get_mini();
 	line = readline("hdoc> ");
@@ -72,7 +72,7 @@ char	*heredoc_handler(char *lim)
 {
 	char	*temp_fpath;
 	int		temp_fd;
-	t_mini *mini;
+	t_mini	*mini;
 
 	temp_fd = -1;
 	mini = get_mini();
