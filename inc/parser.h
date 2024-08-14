@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:36:48 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 15:45:50 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 19:54:57 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char						*remove_quote(t_token_type type, char *value);
 
 /* init_node.c */
 int							init_pipe(t_token *head, t_node *ptr);
-int							init_heredoc(t_token *head, char **word);
 int							init_redirect(t_token *head, t_node *ptr);
 int							init_word(t_token *head, t_node *ptr);
 

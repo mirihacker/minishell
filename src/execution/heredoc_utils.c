@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:48:41 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 14:34:30 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:33:01 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*process_line(char *line) //DONE
 	return (processed_line);
 }
 
-void	input_temp_fd(char *str, int tmp_fd) //DONE`
+void	input_temp_fd(char *str, int tmp_fd) //DONE
 {
 	char	*tmp_str;
 

@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:05:16 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 12:26:32 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:55:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,6 @@ int	init_pipe(t_token *head, t_node *ptr)
 		|| !(ptr->left->left || ptr->left->right))
 		return (-1);
 	ptr->right = node_sequence();
-	return (0);
-}
-
-int	init_heredoc(t_token *head, char **word)
-{
-	char	*filename;
-
-	if (!ft_strcmp(head->value, "<<"))
-	{
-		filename = heredoc_handler(*word);
-		free(*word);
-		if (filename == NULL)
-			return (-2);
-		*word = filename;
-	}
 	return (0);
 }
 
@@ -50,6 +35,7 @@ int	init_redirect(t_token *head, t_node *ptr)
 		free(word);
 		if (fname == NULL)
 			return (-2);
+		word = fname;
 	}
 	if (!ptr->left)
 		ptr->left = node_redirect(head->value, word);

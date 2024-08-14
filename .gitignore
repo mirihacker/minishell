@@ -11,5 +11,7 @@
 # Executables
 *.out
 
+file.txt
+
 # # Git
 # .gitignore

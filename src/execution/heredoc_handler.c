@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 14:59:01 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:28:52 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*init_tempfile(int *temp_fd) //DONE
 
 	temp_dir = get_var_val("TMPDIR"); // get_env DONE
 	if (!temp_dir)
-		temp_dir = "/temp/";
+		temp_dir = "/tmp/";
 	while (*temp_fd < 0)
 	{
 		temp_fpath = get_path(temp_dir, i); //get_tmpfile_path DONE
