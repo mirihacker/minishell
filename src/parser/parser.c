@@ -34,7 +34,7 @@ static int	sort_node(t_token **head, t_node **ptr_sort)
 		result = init_pipe(*head, *ptr_sort);
 		*ptr_sort = (*ptr_sort)->right;
 	}
-	else if ((*head)->type == TOKEN_SYMBOL)
+	else if ((*head)->type == TOKEN_SYMBOL || (*head)->type == TOKEN_HEREDOC)
 	{	
 		write(1, "DEBUGG_RDR\n", 11);
 		result = init_redirect(*head, (*ptr_sort)->left);

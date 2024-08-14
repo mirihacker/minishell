@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:36:48 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 19:15:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 12:23:50 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ typedef enum s_node_type
 	CMD_SUFFIX, // Suffix -> Arg // ARGV
 	CMD_ARG,    // ARG
 	RDR,        // RDR
-	RDR_O,      // >
-	RDR_I,      // <
-	RDR_DO,     // >>
-	RDR_DI,     // << // HEREDOC
+	RDR_HD,    // HEREDOC, IO_HERE
+	RDR_O,      // >, SYMBOL_GREATER
+	RDR_I,      // <, SYMBOL_LESS
+	RDR_DO,     // >>, SYMBOL_DGREAT
+	RDR_DI,     // << // HEREDOC, SYMBOL_DLESS
 	FILENAME    // after RDR // FILENAME
 
 }							t_node_type;
@@ -54,7 +55,7 @@ t_node						*create_node(t_node_type type, char *value);
 
 /* parser_utils.c */
 int							check_param(char *str);
-char						*remove_quote(char *value);
+char						*remove_quote(t_token_type type, char *value);
 
 /* init_node.c */
 int							init_pipe(t_token *head, t_node *ptr);

@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:03:51 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 17:04:34 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:21:21 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_node	*create_node(t_node_type type, char *value)
 	new->type = type;
 	new->value = value;
 	write(1, "DEBUGG2\n", 8);
+	printf("new->type: %d\n", new->type);
+	printf("new->value: %s\n", new->value);
 	return (new);
 }
 
@@ -37,18 +39,27 @@ t_node	*node_redirect(char *str, char *word)
 {
 	t_node		*new;
 	t_node_type	rdr;
+	t_node_type type;
 
 	if (!ft_strcmp(str, "<<"))
-		rdr = RDR_DI;
-	else if (*str == '<')
-		rdr = RDR_I;
-	else if (*str == '>')
-		rdr = RDR_O;
+	{
+		rdr = RDR_HD;
+		type = RDR_DI;
+	}
 	else
-		rdr = RDR_DO;
+	{
+		rdr = RDR;
+		if (*str == '<')
+			type = RDR_I;
+		else if (!ft_strcmp(str, ">"))
+			type = RDR_O;
+		else
+			type = RDR_DO;
+	}
 	new = create_node(RDR, NULL);
 	new->left = create_node(rdr, NULL);
-	new->right = create_node(FILENAME, word);
+	new->left->left = create_node(type, NULL);
+	new->left->right = create_node(FILENAME, word);
 	return (new);
 }
 
@@ -58,6 +69,7 @@ t_node	*node_cmd(t_node_type cmd, char *value)
 	t_node_type type;
 
 	write(1, "DEBUGG1\n", 8);
+	printf("value: %s\n", value);
 	if (cmd == CMD_STR)
 		type = CMD_NAME;
 	else

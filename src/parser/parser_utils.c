@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:07:10 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 19:15:22 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 12:24:22 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_param(char *str)
 	return (*str && (ft_isalnum(*str) || ft_strchr("!#$*-?@_", *str)));
 }
 
-char	*remove_quote(char *value)
+char	*remove_quote(t_token_type type,char *value)
 {
 	char *result;
 	char quote;
@@ -33,11 +33,9 @@ char	*remove_quote(char *value)
 			quote = 0;
 		else
 		{
-			if (ft_strcmp(value, "<<"))
-			{
-				if (*value == '$' && quote != '\'' && check_param(value))
-					result = envvar_handler(&value, result);
-			}
+			if (type != TOKEN_HEREDOC && *value == '$' && quote != '\''
+				&& check_param(value))
+				result = envvar_handler(&value, result);
 			else
 				result = ft_realloc(result, *value);
 		}
