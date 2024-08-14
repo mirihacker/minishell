@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:50:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:49:32 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 15:39:47 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static void	forked_redirect_output(t_node_type rdr_type, char *filename)
 static void	forked_redirect_node(t_node *rdr_node)
 {
 	t_node_type	rdr_type;
-	char			*filename;
+	char		*filename;
 
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
-	if (rdr_type == RDR_O || rdr_type == RDR_DO) // if it's > or >>
+	if (rdr_type == RDR_I || rdr_type == RDR_DI) // if it's > or >>
 		forked_redirect_output(rdr_type, filename);
 	else // if it's <
 		forked_redirect_input(filename);
@@ -54,7 +54,7 @@ void	redirect_with_fork(t_node *rdr_node)
 {
 	if (!rdr_node)
 		return ;
-	if (rdr_node->type == RDR) // To check with Siria,
+	if (rdr_node->type == P_RDR || rdr_node->type == P_HD)
 		forked_redirect_node(rdr_node);
 	if (rdr_node->left)
 		redirect_with_fork(rdr_node->left);
