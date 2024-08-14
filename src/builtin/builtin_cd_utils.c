@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:35:39 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 12:24:26 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:54:55 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	print_cd_error(char *arg, char *msg)
 	print_error("cd", arg, msg);
 	return (EXIT_FAILURE);
 }
-
 
 int	add_env_var(t_list **env_list, char *key, char *value)
 {
@@ -50,9 +49,9 @@ void	update_dir_env(char *old_pwd)
 
 int	set_env(char *key, char *value)
 {
-	t_list *ptr;
-	t_mini *mini;
-	int lkey;
+	t_list	*ptr;
+	t_mini	*mini;
+	int		lkey;
 
 	mini = get_mini();
 	lkey = ft_strlen(key);
@@ -62,7 +61,7 @@ int	set_env(char *key, char *value)
 		if (!ft_strncmp(ptr->content, key, lkey)
 			&& ((char *)ptr->content)[lkey] == '=')
 		{
-			free(ptr->content);
+			// free(ptr->content);
 			ptr->content = ft_strjoin3(key, "=", value);
 			if (!ptr->content)
 				return (-1);
