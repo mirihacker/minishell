@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:30:11 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 12:19:23 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:30:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_cmdline(char ***cmdline, t_node *arg)
 			i++;
 		}
 		new_arg[i] = arg->left->value; // add the new argument
-		free_ptr((void **)arg);
+		free_ptr((void **)cmdline);
 		*cmdline = new_arg;
 	}
 	get_cmdline(cmdline, arg->right);

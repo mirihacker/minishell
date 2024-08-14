@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 11:23:54 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:30:41 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	execution(t_node *node)
 		exit(exit_code);
 	}
 }
+
 // void	execution(t_node *node)
 // {
 // 	char		**arguments;
@@ -115,7 +116,7 @@ void	execution(t_node *node)
 // 	// Gather all arguments to form the comand line //
 // 	arguments = (char **)ft_calloc(2, sizeof(char *));
 // 	arguments[0] = node->left->value;
-// 	get_cmdline(&arguments, node->right);
+// 	get_cmdline(&arguments, node->right); // make_argv
 //     // check command type //
 // 	cmd_type = cmd_type_tester(arguments[0]);
 // 	if (cmd_type == GENERAL)
