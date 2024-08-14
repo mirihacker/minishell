@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 14:24:44 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:53:45 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*envvar_handler(char **start, char *str) //DONE
 		while (*end && (ft_isalnum(*end) || *end == '_'))
 			end++;
 	env = ft_substr(*start, 0, end - *start);
+	*start = --end;
 	value = get_var_val(env);
 	if (!value)
 		value = "";
