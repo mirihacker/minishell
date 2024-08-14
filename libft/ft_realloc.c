@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:02:58 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 12:29:35 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:13:05 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 char	*ft_realloc(char *prev, char word)
 {
 	char	*new_buffer;
-	int		old_length;
+	int		length;
 	int		i;
 
-	old_length = 0;
-	if (prev)
-	{
-		while (prev[old_length])
-			old_length++;
-	}
-	new_buffer = ft_calloc((old_length + 2), 1);
+	if (!prev)
+		length = 0;
+	else
+		length = ft_strlen(prev);
+	new_buffer = ft_calloc((length + 2), 1);
 	i = 0;
-	while (i < old_length)
-	{
-		new_buffer[i] = prev[i];
-		i++;
-	}
 	if (prev)
+	{
+		while (prev[i])
+		{
+			new_buffer[i] = prev[i];
+			i++;
+		}
 		free(prev);
+	}
 	new_buffer[i] = word;
 	return (new_buffer);
 }

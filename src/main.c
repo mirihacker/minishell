@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 19:26:45 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 13:19:31 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	main_loop(t_mini *mini)
 
 int	main(int ac, char **av, char **envp)
 {
-	// char	*ascii_art;
 	t_mini	*mini;
 
+	// char	*ascii_art;
 	if (ac >= 2)
 		exit_error(av[1], strerror(ENOENT), EXIT_FAILURE);
 	mini = get_mini();
