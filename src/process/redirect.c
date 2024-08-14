@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:49:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 15:49:21 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 16:26:14 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ static int	redirect_node(t_node *rdr_node)
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
 	if (rdr_type == RDR_I || rdr_type == RDR_DI)
-		return (redirect_output(rdr_type, filename));
-	return (redirect_input(filename)); // <
-										// herdoc will be treated seperately
+		return (redirect_input(filename));
+	return (redirect_output(rdr_type, filename)); // <
+													// herdoc will be treated seperately
 }
-
 int	redirect_without_fork(t_node *rdr_node)
 {
 	if (!rdr_node)
@@ -75,3 +74,26 @@ int	redirect_without_fork(t_node *rdr_node)
 		return (-1);
 	return (0);
 }
+// int	redirect_without_fork(t_node *rdr_node)
+// {
+// 	t_node_type	type;
+// 	char		*filename;
+// 	int			result;
+
+// 	if (!rdr_node)
+// 		return (0);
+// 	if (rdr_node->type == P_RDR || rdr_node->type == P_HD)
+// 	{
+// 		type = rdr_node->left->type;
+// 		filename = rdr_node->right->value;
+// 		if (type == RDR_I || type == RDR_DI)
+// 			result = redirect_output(type, filename);
+// 		else
+// 			result = redirect_input(filename);
+// 	}
+// 	if (redirect_without_fork(rdr_node->left) == -1)
+// 		return (-1);
+// 	if (redirect_without_fork(rdr_node->right) == -1)
+// 		return (-1);
+// 	return (0);
+// }
