@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:19:12 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:37:33 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 02:02:37 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef enum s_token_type
 {
 	TOKEN_STRING,
 	TOKEN_SYMBOL,
+	TOKEN_HEREDOC,
 	TOKEN_PIPE
 }					t_token_type;
 
@@ -34,7 +35,6 @@ typedef struct s_token
 /* lexer_utils.c */
 void				free_tokens(t_token *list);
 void				add_token(t_token **list, t_token *new);
-void				skip_whitespace(char **input);
 int					check_quote(char **end, t_token *tokens);
 
 /* lexer.c */
