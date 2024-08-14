@@ -6,7 +6,7 @@
 #    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/13 20:32:14 by eahn             ###   ########.fr        #
+#    Updated: 2024/08/14 01:30:45 by eahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,16 +42,29 @@ SRCS        = $(addprefix $(SRC_DIR), main.c) \
               builtin_unset.c builtin_export.c builtin_export_utils.c builtin_env.c) \
               $(addprefix $(UTILS_DIR), error.c utils.c free.c)
 
+ARCH := $(shell arch)
+GITUSER := $(USER)
+ifeq ($(GITUSER), runner)
+	RDLN_LFLAGS	= -l readline -L/usr/local/opt/readline/lib
+	RDLN_INC	= -I/usr/local/opt/readline/include
+else ifeq ($(ARCH), i386)
+	RDLN_LFLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
+	RDLN_INC	= -I$(HOME)/.brew/opt/readline/include
+else ifeq ($(ARCH), arm64)
+	RDLN_LFLAGS	= -l readline -L /opt/homebrew/opt/readline/lib
+	RDLN_INC	= -I /opt/homebrew/opt/readline/include
+endif
+
 # Object files
 OBJS        = $(SRCS:%.c=%.o)
 
 # Compilation rules
 %.o: %.c
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) $(RDLN_INC) -c $< -o $@
 
 # Linking rule
 $(NAME): $(OBJS) $(LIB)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME) -lreadline
+	@$(CC) $(CFLAGS) $(RDLN_LFLAGS) $(OBJS) $(LIB) -o $(NAME) -lreadline
 
 # Library build rule
 $(LIB):
@@ -71,4 +84,3 @@ re: fclean all
 
 # Phony targets
 .PHONY: all clean fclean re
-

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:28:41 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 18:50:11 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 02:03:41 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_quote(char **end, t_token *tokens)
 {
 	char	quote;
 	char	*str;
-	t_mini *mini;
+	t_mini	*mini;
 
 	mini = get_mini();
 	quote = **end;
@@ -30,12 +30,6 @@ int	check_quote(char **end, t_token *tokens)
 	ft_putendl_fd("Syntax error: unmatched quote", STDERR_FILENO);
 	mini->exit_code = SYNTAX_ERROR;
 	return (-1);
-}
-
-void	skip_whitespace(char **input)
-{
-	while (**input && ft_strchr(WHITESPACE, **input))
-		(*input)++;
 }
 
 void	add_token(t_token **list, t_token *new)
