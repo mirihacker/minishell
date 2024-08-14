@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:55:18 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:51:32 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 14:24:10 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef enum s_node_type	t_node_type;
 typedef struct s_cmd		t_cmd;
-typedef enum s_cmd_type	t_cmd_type;
+typedef enum s_cmd_type		t_cmd_type;
 
 /* execute_with_fork.c */
 void						execute_with_fork(t_node *node, t_cmd *last_cmd);
@@ -29,7 +29,7 @@ void						execute_without_fork(t_node *cmd_node,
 /* fork_utils.c */
 t_cmd						*get_last_cmd(void);
 t_cmd						*get_new_cmd(void);
-void						free_cmd_list(void);
+void						reset_cmd_list(void);
 void						free_ast(t_node *node);
 
 /* pipe_utils.c */

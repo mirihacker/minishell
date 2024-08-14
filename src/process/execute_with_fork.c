@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:34:17 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 20:15:06 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 14:00:08 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,6 @@ void	execute_with_fork(t_node *node, t_cmd *last_cmd)
 		setup_pipes(last_cmd, current_cmd);
 		redirect_with_fork(node->left->left);
 		execution(node->left->right);
-	}
-	if (node->right)
-	{
-		ft_close(current_cmd->fd_out); // close write end
-		printf("close process\n");
 	}
 	close_pipes(last_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:33:03 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 20:24:13 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/14 14:23:22 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ t_cmd	*get_last_cmd(void)
 {
 	t_list	*last_list;
 	t_mini	*mini;
+	t_cmd	*last_cmd;
 
 	mini = get_mini();
 	last_list = ft_lstlast(mini->cmd_list);
 	if (last_list)
-		return ((t_cmd *)(last_list->content));
+		last_cmd = (t_cmd *)(last_list->content);
 	else
-		return (NULL);
+		last_cmd = NULL;
+	return (last_cmd);
 }
 
 /**
@@ -47,22 +49,23 @@ t_cmd	*get_new_cmd(void)
  * @brief Frees all commands in the command list
  * Also frees the list nodes themselves
  */
-// void	free_cmd_list(void)
-// {
-// 	t_list	*current_cmd;
-// 	t_mini	*mini;
+void	reset_cmd_list(void)
+{
+	t_list	*current_cmd;
+	t_mini	*mini;
 
-// 	mini = get_mini();
-// 	if (!mini->cmd_list)
-// 		return ;
-// 	while (mini->cmd_list)
-// 	{
-// 		current_cmd = mini->cmd_list;
-// 		mini->cmd_list = (mini->cmd_list)->next;
-// 		// free((void **)&(current_cmd->content));
-// 		// free((void **)&current_cmd);
-// 	}
-// }
+	mini = get_mini();
+	if (!mini->cmd_list)
+		return ;
+	while (mini->cmd_list)
+	{
+		current_cmd = mini->cmd_list;
+		mini->cmd_list = (mini->cmd_list)->next;
+		free_ptr((void **)&(current_cmd->content));
+		free_ptr((void **)&current_cmd);
+	}
+	mini->cmd_list = NULL;
+}
 
 /**
  * @brief Frees AST node and its children
@@ -73,7 +76,7 @@ void	free_ast(t_node *node)
 {
 	if (!node)
 		return ;
-	if (node->type == RDR_DI)
+	if (node->type == P_HD)
 		unlink(node->right->value);
 	free_ast(node->left);
 	free_ast(node->right);
