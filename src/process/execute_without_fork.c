@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 20:20:57 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:28:01 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void	backup_stdio(int *stdin_fd, int *stdout_fd)
  */
 static void	restore_stdio(int stdin_fd, int stdout_fd)
 {
-	ft_dup2(stdin_fd, STDIN_FILENO);   // duplicate stdin
-	ft_close(stdin_fd);                // close duplicated stdin
-	ft_dup2(stdout_fd, STDOUT_FILENO); // duplicate stdout
-	ft_close(stdout_fd);               // close duplicated stdout
+	ft_dup2(stdin_fd, STDIN_FILENO);
+	ft_close(stdin_fd);
+	ft_dup2(stdout_fd, STDOUT_FILENO);
+	ft_close(stdout_fd);
 }
 
 /**
@@ -93,9 +93,9 @@ void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 
 	mini = get_mini();
 	backup_stdio(&stdin_backup, &stdout_backup);
-	if (redirect_without_fork(cmd_node->left) == -1)
+	if (handle_redirection(cmd_node->left) == -1)
 	{
-		restore_stdio(stdin_backup, stdout_backup); 
+		restore_stdio(stdin_backup, stdout_backup);
 		return ;
 	}
 	if (cmd_type == NONE) // when there's no CMD

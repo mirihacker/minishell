@@ -6,15 +6,21 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:49:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 16:26:14 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:29:56 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-// 6: owner read & write (4 + 2)
-// 4: group, others read-only
-static int	set_redirect(char *filename, int open_flag, int target_fd)
+/**
+ * @brief Redirects a file to a file descriptor (STDIN or STDOUT).
+ * Opens a file with given flags and filename.
+ * Redirects target fd to the opened fd using dup2().
+ * @param filename Name of file to redirect.
+ * @param open_flag Flags to open file with.
+ * @param target_fd File descriptor to redirect to.
+ */
+static int	redirect_to_file(char *filename, int open_flag, int target_fd)
 {
 	int	file_fd;
 	int	res;
@@ -31,12 +37,24 @@ static int	set_redirect(char *filename, int open_flag, int target_fd)
 	return (0);
 }
 
-static int	redirect_input(char *filename) // <
+/**
+ * @brief Redirects input from a file to STDIN.
+ * @param filename Name of file to read input from.
+ * - Uses redirect_to_file() to open file and redirect stdin to this file.
+ */
+static int	redirect_input_from_file(char *filename) // <
 {
-	return (set_redirect(filename, O_RDONLY, STDIN_FILENO));
+	return (redirect_to_file(filename, O_RDONLY, STDIN_FILENO));
 }
 
-static int	redirect_output(t_node_type rdr_type, char *filename)
+/**
+ * @brief Redirects output to file, overwritting of appending.
+ * @return 0 on success, -1 on failure.
+ * @param rdr_type Type of redirection (> or >>).
+ * @param filename Name of file to redirect output to.
+ * - Uses redirect_to_file() to open file and redirect output.
+ */
+static int	redirect_output_to_file(t_node_type rdr_type, char *filename)
 {
 	int	open_flag;
 
@@ -44,9 +62,13 @@ static int	redirect_output(t_node_type rdr_type, char *filename)
 		open_flag = O_WRONLY | O_CREAT | O_TRUNC;
 	else // if it's >>, append
 		open_flag = O_WRONLY | O_CREAT | O_APPEND;
-	return (set_redirect(filename, open_flag, STDOUT_FILENO));
+	return (redirect_to_file(filename, open_flag, STDOUT_FILENO));
 }
 
+/**
+ * @brief Redirects input/output based on the RDR type.
+ * - Defines RDR type and filename.
+ */
 static int	redirect_node(t_node *rdr_node)
 {
 	t_node_type	rdr_type;
@@ -54,12 +76,17 @@ static int	redirect_node(t_node *rdr_node)
 
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
-	if (rdr_type == RDR_I || rdr_type == RDR_DI)
-		return (redirect_input(filename));
-	return (redirect_output(rdr_type, filename)); // <
-													// herdoc will be treated seperately
+	if (rdr_type == RDR_O || rdr_type == RDR_DO) // > or >>
+		return (redirect_output_to_file(rdr_type, filename));
+	return (redirect_input_from_file(filename)); // < or <<
 }
-int	redirect_without_fork(t_node *rdr_node)
+
+/**
+ * @brief Recursievely traverses AST to apply all rdr in command.
+ * - redirection without fork - redirection with builtin commands
+ *   e.g. echo "Hello, World" > file.txt 
+ */
+int	handle_redirection(t_node *rdr_node)
 {
 	if (!rdr_node)
 		return (0);
@@ -68,32 +95,9 @@ int	redirect_without_fork(t_node *rdr_node)
 		if (redirect_node(rdr_node) == -1)
 			return (-1);
 	}
-	if (redirect_without_fork(rdr_node->left) == -1)
+	if (handle_redirection(rdr_node->left) == -1)
 		return (-1);
-	if (redirect_without_fork(rdr_node->right) == -1)
+	if (handle_redirection(rdr_node->right) == -1)
 		return (-1);
 	return (0);
 }
-// int	redirect_without_fork(t_node *rdr_node)
-// {
-// 	t_node_type	type;
-// 	char		*filename;
-// 	int			result;
-
-// 	if (!rdr_node)
-// 		return (0);
-// 	if (rdr_node->type == P_RDR || rdr_node->type == P_HD)
-// 	{
-// 		type = rdr_node->left->type;
-// 		filename = rdr_node->right->value;
-// 		if (type == RDR_I || type == RDR_DI)
-// 			result = redirect_output(type, filename);
-// 		else
-// 			result = redirect_input(filename);
-// 	}
-// 	if (redirect_without_fork(rdr_node->left) == -1)
-// 		return (-1);
-// 	if (redirect_without_fork(rdr_node->right) == -1)
-// 		return (-1);
-// 	return (0);
-// }

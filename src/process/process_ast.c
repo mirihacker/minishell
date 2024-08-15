@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 14:39:08 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:23:04 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * - Fork not needed: built-in command with no prev, following cmd
- * - Fork needed: general commands (ls, grep) or pipes
+ * - Fork needed: external commands (ls, grep) or pipes
  */
 static int	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 {
@@ -22,7 +22,7 @@ static int	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 
 	cmd_type = cmd_type_tester(tree->left->value);
 	printf("cmd_type: %d\n", cmd_type);
-	if (!last_cmd && cmd_type != GENERAL && !tree->right)
+	if (!last_cmd && cmd_type != EXTERNAL && !tree->right)
 		return (cmd_type); // fork not needed
 	return (-1);
 }

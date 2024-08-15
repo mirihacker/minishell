@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 16:07:08 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:22:46 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_cmd_type	cmd_type_tester(char *cmd_name)
 	else if (!ft_strcmp(cmd_name, "unset"))
 		type = UNSET;
 	else
-		type = GENERAL;
+		type = EXTERNAL;
 	return (type);
 }
 
-static void	execute_general(char *cmd, char **argv)
+static void	execute_external(char *cmd, char **argv)
 {
 	char	**new_envp;
 
@@ -95,8 +95,8 @@ void	execution(t_node *node)
 	arguments = init_arguments(node);
 	// check command type //
 	cmd_type = cmd_type_tester(arguments[0]);
-	if (cmd_type == GENERAL) // tbd name
-		execute_general(node->left->value, arguments);
+	if (cmd_type == EXTERNAL) // tbd name
+		execute_external(node->left->value, arguments);
 	else if (cmd_type == NONE)
 		exit(EXIT_SUCCESS);
 	else
