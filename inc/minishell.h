@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/15 20:22:02 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:36:41 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ typedef struct s_mini
 
 typedef struct s_env
 {
-	char *key;
-	char *value;
-} t_env;
+	char	*key;
+	char	*value;
+}			t_env;
 // const char *ascii_art =
 //     " _____\n"
 //     "/     \\\n"
@@ -88,6 +88,6 @@ void		free_list(t_list **head);
 
 /* utils.c */
 t_mini		*get_mini(void);
-int	count_arg(char **argv);
+int			count_arg(char **argv);
 
 #endif

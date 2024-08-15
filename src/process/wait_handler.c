@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 23:08:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 17:58:17 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:37:34 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * @brief Waits until all child processes have finished.
  * @param final_pid PID of the final child process to wait for
- * @param final_child_status Pointer to store the exit status of final child process
+ * @param final_child_status Pointer to store the exit status
+ * of final child process
  * @return The exit status of final child process
  * - Uses waitpid with PID -1 to wait for any child process
  * - Loop continues until waitpid return -1,

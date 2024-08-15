@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:55:18 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:27:36 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 20:36:56 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void						ft_pipe(t_cmd *cmd);
 void						traverse_ast(t_node *tree);
 
 /* redirect.c */
-int	handle_redirection(t_node *rdr_node);
+int							handle_redirection(t_node *rdr_node);
 
 /* redirect_forked.c */
 void						forked_handle_redirection(t_node *rdr_node);
