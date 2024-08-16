@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:31:02 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 17:00:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:49:28 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_unset(char **argv)
 	{
 		if (!ft_search_env(*argv) || ft_strchr(*argv, '='))
 		{
-			print_error("unset", *argv, "environmental variable not found");
+			print_error("unset", *argv, "not a valid identifier");
 			exit_code = EXIT_FAILURE;
 		}
 		else
