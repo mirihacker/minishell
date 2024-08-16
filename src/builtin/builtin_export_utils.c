@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:45:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 11:41:52 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:22:08 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_empty_env(char **argv)
 	env_entry = ft_search_env(*argv);
 	if (!env_entry)
 	{
-		add_empty_env = put_env(*argv, "\'\'");
+		add_empty_env = put_env(*argv, "");
 		if (add_empty_env == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}

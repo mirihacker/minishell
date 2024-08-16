@@ -6,29 +6,30 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:10:33 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 11:22:07 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:34:22 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int is_option_echo(char *str)
+static int	is_option_echo(char *str)
 {
-    if (str[0] == '-')
-    {
-        if (str[1] != 'n')
-        {
-            ft_putstr_fd("limonshello: echo: ", STDERR_FILENO);
-            write(STDERR_FILENO, str, 2);
-            ft_putstr_fd(": invalid option\n", STDERR_FILENO);
-            ft_putstr_fd("echo: usage: echo [-n] [string ...]\n", STDERR_FILENO);
-            return (1);
-        }
-    }
-    return (0);
+	if (str[0] == '-')
+	{
+		if (str[1] != 'n')
+		{
+			ft_putstr_fd("limonshello: echo: ", STDERR_FILENO);
+			write(STDERR_FILENO, str, 2);
+			ft_putstr_fd(": invalid option\n", STDERR_FILENO);
+			ft_putstr_fd("echo: usage: echo [-n] [string ...]\n",
+				STDERR_FILENO);
+			return (1);
+		}
+	}
+	return (0);
 }
 
-static	void	print_usage(char *cmd)
+static void	print_usage(char *cmd)
 {
 	if (!ft_strcmp(cmd, "cd"))
 		ft_putendl_fd("cd [directory]", STDERR_FILENO);
@@ -42,40 +43,41 @@ static	void	print_usage(char *cmd)
 		ft_putendl_fd("unset [name ...]", STDERR_FILENO);
 }
 
-int is_option(char *str, char *cmd)
+int	is_option(char *str, char *cmd)
 {
-    int ret;
+	int	ret;
 
-    ret = 0;
-    if (!ft_strcmp(cmd, "echo"))
-        ret = is_option_echo(str);
-    else
-    {
-        if (str[0] == '-')
-        {
-            if (str[1])
-            {
-                ft_putstr_fd("limonshello: ", STDERR_FILENO);
-                ft_putstr_fd(cmd, STDERR_FILENO);
-                ft_putstr_fd(": ", STDERR_FILENO);
-                write(STDERR_FILENO, str, 2);
-                ft_putstr_fd(": option not allowed\n", STDERR_FILENO);
-                ft_putstr_fd(cmd, STDERR_FILENO);
-                ft_putstr_fd(": usage: ", STDERR_FILENO);
-                print_usage(cmd);
-                ret = 1;
-            }
-        }
-    }
-    return (ret);
+	ret = 0;
+	if (!ft_strcmp(cmd, "echo"))
+		ret = is_option_echo(str);
+	else
+	{
+		if (str[0] == '-')
+		{
+			if (str[1])
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd(cmd, STDERR_FILENO);
+				ft_putstr_fd(": ", STDERR_FILENO);
+				write(STDERR_FILENO, str, 2);
+				ft_putstr_fd(": option not allowed\n", STDERR_FILENO);
+				ft_putstr_fd(cmd, STDERR_FILENO);
+				ft_putstr_fd(": usage: ", STDERR_FILENO);
+				print_usage(cmd);
+				ret = 1;
+			}
+		}
+	}
+	return (ret);
 }
 
 int	builtin_env(char **argv)
 {
 	t_list	*ptr;
-    t_mini	*mini;
+	t_mini	*mini;
+	char	*val;
 
-    mini = get_mini();
+	mini = get_mini();
 	ptr = mini->env_list;
 	if (argv[1])
 	{
@@ -87,7 +89,8 @@ int	builtin_env(char **argv)
 	}
 	while (ptr)
 	{
-		if (ft_strchr(ptr->content, '='))
+		val = ft_strchr(ptr->content, '=');
+		if (val && val[1])
 			ft_putendl_fd((char *)ptr->content, STDOUT_FILENO);
 		ptr = ptr->next;
 	}

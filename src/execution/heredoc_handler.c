@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 15:12:47 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:14:15 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	delete_tmpfile(t_node *rdr)
 // 	mini->h_flag = 0;
 // }
 
-static char	*init_tempfile(int *temp_fd)
 static char	*init_tempfile(int *temp_fd) // DONE
 {
 	static int i;
@@ -57,7 +56,7 @@ static char	*init_tempfile(int *temp_fd) // DONE
 		temp_dir = "/tmp/";
 	while (*temp_fd < 0)
 	{
-		temp_fpath = get_path(temp_dir, i);
+	
 		temp_fpath = get_path(temp_dir, i); // get_tmpfile_path DONE
 		*temp_fd = open(temp_fpath, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC,
 				0600);
@@ -86,10 +85,6 @@ static char	*init_tempfile(int *temp_fd) // DONE
 
 char	*heredoc_handler(char *lim) // DONE
 {
-	char *temp_fpath;
-	int temp_fd;
-	char *line;
-	t_mini *mini;
 	char *temp_fpath;
 	int temp_fd;
 	char *line;
