@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 11:08:29 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 17:21:57 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 	t_cmd_type	cmd_type;
 
 	cmd_type = cmd_type_tester(tree->left->value);
-	printf("cmd_type: %d\n", cmd_type);
 	if (!last_cmd && cmd_type != EXTERNAL && !tree->right)
 		return (cmd_type);
 	return (-1);
