@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 14:50:15 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 15:24:44 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static void	init_mini(t_mini *mini, char **envp)
 	{
 		env_var_copy = ft_strdup(*envp);
 		if (!env_var_copy)
-			exit_error("init_mini Memory Alloc failed", strerror(errno), EXIT_FAILURE);
+			exit_error("Memory Alloc failed", strerror(errno), EXIT_FAILURE);
 		new_node = ft_lstnew(env_var_copy);
 		if (!new_node)
-			exit_error("init_mini Memory Alloc failed", strerror(errno), EXIT_FAILURE);
+			exit_error("Memory Alloc failed", strerror(errno), EXIT_FAILURE);
 		ft_lstadd_back(&mini->env_list, new_node);
 		envp++;
 	}
@@ -75,6 +75,30 @@ static void	main_loop(t_mini *mini)
 	}
 }
 
+/**
+ * @brief Frees the entire environment list.
+ *
+ * This function iterates through the `env_list` linked list, freeing each node's content
+ * and the node itself. This ensures that all dynamically allocated memory is properly
+ * released to prevent memory leaks.
+ *
+ * @param env_list The pointer to the first node of the environment list.
+ */
+
+static void free_env_list(t_list *env_list)
+{
+    t_list *temp;
+
+    while (env_list)
+    {
+        temp = env_list->next;     
+        free(env_list->content);    
+        free(env_list);              
+        env_list = temp;             
+    }
+}
+
+
 int	main(int ac, char **av, char **envp)
 {
 	t_mini	*mini;
@@ -86,5 +110,6 @@ int	main(int ac, char **av, char **envp)
 	init_mini(mini, envp);
 	// ascii_art = "Your ASCII art"; // TBD
 	main_loop(mini);
+	free_env_list(mini->env_list);
 	return (EXIT_SUCCESS);
 }

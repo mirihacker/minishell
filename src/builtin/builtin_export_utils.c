@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:45:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 15:22:08 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:30:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_list	*ft_search_env(char *name)
 		env_var = (char *)ptr->content;
 		if (!ft_strncmp(env_var, name, lkey) && env_var && env_var[lkey] == '=')
 			return (ptr);
-		if (ptr->next) //add to minishell 1.0
+		if (ptr->next)
 			ptr = ptr->next;
 		else
 			return (NULL);

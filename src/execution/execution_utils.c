@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:30:11 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 15:30:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:48:39 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,33 +51,76 @@ static void	free_paths(char **paths)
 	free_ptr((void **)&paths);
 }
 
+static char	*search_in_paths(char **paths, char *command)
+{
+    char	*path;
+    char	*full_path;
+
+    while (*paths)
+    {
+        path = ft_strjoin(*paths, "/");
+        full_path = ft_strjoin(path, command);
+        free_ptr((void **)&path);
+        if (!access(full_path, X_OK))
+            return (full_path);
+        free_ptr((void **)&full_path);
+        paths++;
+    }
+    return (NULL);
+}
+
 char	*find_cmd_path(char *command)
 {
-	char	*path;
-	char	*full_path;
-	char	**paths;
-	char	**tmp;
+    char	*path;
+    char	**paths;
+    char	*full_path;
 
-	path = get_var_val("PATH");
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (command);
-	tmp = paths;
-	while (*paths)
-	{
-		path = ft_strjoin(*paths, "/");
-		full_path = ft_strjoin(path, command);
-		free_ptr((void **)&path);
-		if (!access(full_path, X_OK))
-			break ;
-		free_ptr((void **)&full_path);
-		paths++;
-	}
-	free_paths(tmp);
-	if (full_path)
-		return (full_path);
-	return (command);
+    path = get_var_val("PATH");
+    if (!path)
+        return (command);
+
+    paths = ft_split(path, ':');
+    if (!paths)
+        return (command);
+
+    full_path = search_in_paths(paths, command);
+    free_paths(paths);
+
+    if (full_path)
+        return (full_path);
+    return (command);
 }
+
+// char	*find_cmd_path(char *command)
+// {
+// 	char	*path;
+// 	char	*full_path;
+// 	char	**paths;
+// 	char	**tmp;
+
+// 	full_path = NULL;
+// 	path = get_var_val("PATH");
+// 	if (!path)
+// 		return (command);
+// 	paths = ft_split(path, ':');
+// 	if (!paths)
+// 		return (command);
+// 	tmp = paths;
+// 	while (*paths)
+// 	{
+// 		path = ft_strjoin(*paths, "/");
+// 		full_path = ft_strjoin(path, command);
+// 		free_ptr((void **)&path);
+// 		if (!access(full_path, X_OK))
+// 			break ;
+// 		free_ptr((void **)&full_path);
+// 		paths++;
+// 	}
+// 	free_paths(tmp);
+// 	if (full_path)
+// 		return (full_path);
+// 	return (command);
+// }
 
 // static char	*get_path_execution(char *command)
 // {
