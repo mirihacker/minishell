@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:20:16 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 12:25:43 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 11:16:52 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/**
+ * @brief Retrieves current working directory using getcwd(), print it to STOUT.
+ */
 int	builtin_pwd(char **av)
 {
 	char	*cwd;

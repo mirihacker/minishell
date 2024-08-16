@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/13 12:27:38 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:36:41 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef enum s_cmd_type
 	UNSET,
 	ENV,
 	EXIT,
-	GENERAL,
+	EXTERNAL,
 	NONE
 }			t_cmd_type;
 
@@ -67,6 +67,11 @@ typedef struct s_mini
 	t_list	*cmd_list;
 }			t_mini;
 
+typedef struct s_env
+{
+	char	*key;
+	char	*value;
+}			t_env;
 // const char *ascii_art =
 //     " _____\n"
 //     "/     \\\n"
@@ -83,6 +88,6 @@ void		free_list(t_list **head);
 
 /* utils.c */
 t_mini		*get_mini(void);
-int	count_arg(char **argv);
+int			count_arg(char **argv);
 
 #endif

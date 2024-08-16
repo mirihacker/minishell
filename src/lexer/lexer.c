@@ -6,12 +6,17 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 02:08:27 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 15:18:44 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+/**
+ * @brief Creates a new token based on the value.
+ * - If value is symbol (|, <, >), sets token type accordingly.
+ * - Otherwise, sets token type as TOKEN_STRING.
+ */
 static t_token	*create_new_token(char *value)
 {
 	t_token	*new;
@@ -28,19 +33,46 @@ static t_token	*create_new_token(char *value)
 		else
 			new->type = TOKEN_SYMBOL;
 		new->value = value;
-		printf("new->type (SYMBOLS): %d\n", new->type);
-		printf("new->value (SYMBOLS): %s\n", new->value);
+		// printf("new->type (SYMBOLS): %d\n", new->type);
+		// printf("new->value (SYMBOLS): %s\n", new->value);
 	}
 	else
 	{
 		new->type = TOKEN_STRING;
 		new->value = value;
-		printf("new->type (TOKEN_STRING): %d\n", new->type);
-		printf("new->value (TOKEN_STRING): %s\n", new->value);
+		// printf("new->type (TOKEN_STRING): %d\n", new->type);
+		// printf("new->value (TOKEN_STRING): %s\n", new->value);
 	}
 	return (new);
 }
 
+/**
+ * @brief Finds end of current token in input.
+ * @return A pointer to end of current token or NULL if umatched quote.
+ */
+static char	*find_token_end(char *input, t_token *tokens)
+{
+	char	*end;
+
+	end = input;
+	while (*end && !ft_strchr(SYMBOLS WHITESPACE, *end))
+	{
+		if (ft_strchr("'\"", *end))
+			if (check_quote(&end, tokens))
+				return (NULL);
+		end++;
+	}
+	if (*end && ft_strchr(SYMBOLS, *input))
+		if (*input == *++end && *input != '|')
+			end++;
+	return (end);
+}
+
+/**
+ * @brief Extracts tokens from input string.
+ * @return A pointer to token list.
+ * - Iterates through input string and extracts tokens.
+ */
 static t_token	*extract_token(char *input)
 {
 	t_token	*tokens;
@@ -51,21 +83,14 @@ static t_token	*extract_token(char *input)
 	{
 		while (*input && ft_strchr(WHITESPACE, *input))
 			input++;
-		end = input;
-		while (*end && !ft_strchr(SYMBOLS WHITESPACE, *end))
+		if (*input)
 		{
-			if (ft_strchr("'\"", *end))
-				if (check_quote(&end, tokens))
-					return (NULL);
-			end++;
+			end = find_token_end(input, tokens);
+			if (end && input < end)
+				add_token(&tokens, create_new_token(ft_substr(input, 0, (end
+								- input))));
+			input = end;
 		}
-		if (*end && ft_strchr(SYMBOLS, *input))
-			if (*input == *++end && *input != '|')
-				end++;
-		if (input < end)
-			add_token(&tokens, create_new_token(ft_substr(input, 0, (end
-							- input))));
-		input = end;
 	}
 	return (tokens);
 }
