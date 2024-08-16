@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:42:25 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 15:14:15 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:35:59 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,6 @@ void	delete_tmpfile(t_node *rdr)
 	delete_tmpfile(rdr->left);
 	delete_tmpfile(rdr->right);
 }
-
-// static void	process_heredoc(char *lim, char *temp_fpath, int temp_fd)
-// {
-// 	char	*line;
-// 	t_mini	*mini;
-
-// 	mini = get_mini();
-// 	line = readline("hdoc> ");
-// 	while (line && mini->h_flag)
-// 	{
-// 		line = process_line(line);
-// 		if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
-// 			break ;
-// 		input_temp_fd(line, temp_fd);
-// 		free_ptr((void **)&line);
-// 		line = readline("hdoc> ");
-// 	}
-// 	free_ptr((void **)&line);
-// 	close(temp_fd);
-// 	if (!mini->h_flag)
-// 		delete_file(&temp_fpath);
-// 	mini->h_flag = 0;
-// }
 
 static char	*init_tempfile(int *temp_fd) // DONE
 {
@@ -69,45 +46,31 @@ static char	*init_tempfile(int *temp_fd) // DONE
 	return (temp_fpath);
 }
 
-// char	*heredoc_handler(char *lim)
-// {
-// 	char	*temp_fpath;
-// 	int		temp_fd;
-// 	t_mini *mini;
-
-// 	temp_fd = -1;
-// 	mini = get_mini();
-// 	mini->h_flag = 1;
-// 	temp_fpath = init_tempfile(&temp_fd);
-// 	process_heredoc(lim, temp_fpath, temp_fd);
-// 	return (temp_fpath);
-// }
-
-char	*heredoc_handler(char *lim) // DONE
+char	*heredoc_handler(char *lim)
 {
-	char *temp_fpath;
-	int temp_fd;
-	char *line;
-	t_mini *mini;
+	char	*temp_fpath;
+	int		temp_fd;
+	char	*line;
+	t_mini	*mini;
 
 	temp_fd = -1;
 	mini = get_mini();
 	mini->h_flag = 1;
-	temp_fpath = init_tempfile(&temp_fd); // create_tempfile DONE
+	temp_fpath = init_tempfile(&temp_fd);
 	line = readline("hdoc> ");
 	while (line && mini->h_flag)
 	{
-		line = process_line(line); // get_replaced_line DONE
+		line = process_line(line);
 		if (!ft_strcmp(line, lim))
 			break ;
-		input_temp_fd(line, temp_fd); // write_on_tempfile DONE
+		input_temp_fd(line, temp_fd);
 		free_ptr((void **)&line);
 		line = readline("hdoc> ");
 	}
 	free_ptr((void **)&line);
 	close(temp_fd);
 	if (!mini->h_flag)
-		delete_file(&temp_fpath); // delete_tempfile DONE
+		delete_file(&temp_fpath); // delete_file DONE
 	mini->h_flag = 0;
 	return (temp_fpath);
 }

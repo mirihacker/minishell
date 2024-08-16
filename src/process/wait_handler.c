@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 23:08:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:37:34 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:17:07 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	handle_final_child(int final_child_status)
 	t_mini	*mini;
 
 	mini = get_mini();
-	if (WIFEXITED(final_child_status)) // successful exit
+	if (WIFEXITED(final_child_status))
 		mini->exit_code = WEXITSTATUS(final_child_status);
 	else if (WIFSIGNALED(final_child_status))
 	{
 		mini->exit_code = WTERMSIG(final_child_status) + 128;
-		if (mini->exit_code == 131) // 128 + 3 SIGQUIT
+		if (mini->exit_code == 131)
 			ft_putendl_fd("SIGQUT", STDERR_FILENO);
 	}
 	else

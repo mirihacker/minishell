@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:49:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 11:09:18 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:18:36 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	redirect_to_file(char *filename, int open_flag, int target_fd)
  * @param filename Name of file to read input from.
  * - Uses redirect_to_file() to open file and redirect stdin to this file.
  */
-static int	redirect_input_from_file(char *filename) // <
+static int	redirect_input_from_file(char *filename)
 {
 	return (redirect_to_file(filename, O_RDONLY, STDIN_FILENO));
 }
@@ -58,9 +58,9 @@ static int	redirect_output_to_file(t_node_type rdr_type, char *filename)
 {
 	int	open_flag;
 
-	if (rdr_type == RDR_O) // if it's >, overwrite with TRUNC
+	if (rdr_type == RDR_O)
 		open_flag = O_WRONLY | O_CREAT | O_TRUNC;
-	else // if it's >>, append
+	else
 		open_flag = O_WRONLY | O_CREAT | O_APPEND;
 	return (redirect_to_file(filename, open_flag, STDOUT_FILENO));
 }
@@ -76,9 +76,9 @@ static int	redirect_node(t_node *rdr_node)
 
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
-	if (rdr_type == RDR_O || rdr_type == RDR_DO) // > or >>
+	if (rdr_type == RDR_O || rdr_type == RDR_DO)
 		return (redirect_output_to_file(rdr_type, filename));
-	return (redirect_input_from_file(filename)); // < or <<
+	return (redirect_input_from_file(filename));
 }
 
 /**
