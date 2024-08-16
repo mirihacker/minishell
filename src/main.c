@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 16:21:40 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:57:51 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,14 @@ static void	main_loop(t_mini *mini)
 	}
 }
 
-
 int	main(int ac, char **av, char **envp)
 {
 	t_mini	*mini;
 
-	// char	*ascii_art;
 	if (ac >= 2)
 		exit_error(av[1], strerror(ENOENT), EXIT_FAILURE);
 	mini = get_mini();
 	init_mini(mini, envp);
-	// ascii_art = "Your ASCII art"; // TBD
 	main_loop(mini);
 	free_env_list(mini->env_list);
 	return (EXIT_SUCCESS);

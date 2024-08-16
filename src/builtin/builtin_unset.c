@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:31:02 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 16:38:24 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:00:04 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static void	free_node(t_list **ptr)
 {
 	if (*ptr)
 	{
-        if ((*ptr)->content)
-        {
-		    free((*ptr)->content);
-		    (*ptr)->content = NULL;
-        }
+		if ((*ptr)->content)
+		{
+			free((*ptr)->content);
+			(*ptr)->content = NULL;
+		}
 		free(*ptr);
 		*ptr = NULL;
 	}
@@ -41,10 +41,9 @@ static void	delete_env(char *argv, t_mini *mini)
 			&& env_var[ft_strlen(argv)] == '=')
 		{
 			if (prev)
-				prev->next = env->next; // Link previous node to the next node
+				prev->next = env->next;
 			else
 				mini->env_list = env->next;
-					// Update head if deleting the first node
 			free_node(&env);
 			return ;
 		}

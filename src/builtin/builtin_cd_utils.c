@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:35:39 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 15:54:55 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:58:43 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	set_env(char *key, char *value)
 		if (!ft_strncmp(ptr->content, key, lkey)
 			&& ((char *)ptr->content)[lkey] == '=')
 		{
-			// free(ptr->content);
 			ptr->content = ft_strjoin3(key, "=", value);
 			if (!ptr->content)
 				return (-1);

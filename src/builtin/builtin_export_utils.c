@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:45:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 16:30:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:59:34 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,9 @@ int	ft_add_env(char *argv)
 		return (EXIT_FAILURE);
 	env_entry = ft_search_env(name);
 	if (env_entry)
-		// check if the name is already an env var
 		flag = set_env_export(env_entry, name, value);
-	// add the new value to the env var
 	else
-		flag = put_env(name, value); // if the name is not an env var,
-										// add it to the list
+		flag = put_env(name, value);
 	free(name);
 	free(value);
 	if (flag == EXIT_FAILURE)
