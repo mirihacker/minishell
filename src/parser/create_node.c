@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:03:51 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 16:25:42 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 17:07:23 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_node	*create_node(t_node_type type, char *value)
 	new = ft_calloc(1, sizeof(t_node));
 	new->type = type;
 	new->value = value;
-	printf("new->type: %d\n", new->type);
-	printf("new->value: %s\n", new->value);
 	return (new);
 }
 
