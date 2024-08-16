@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+         #
+#    By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/09 16:54:59 by eahn              #+#    #+#              #
-#    Updated: 2024/08/14 19:07:54 by smiranda         ###   ########.fr        #
+#    Updated: 2024/08/15 20:24:42 by eahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,30 +43,17 @@ SRCS        = $(addprefix $(SRC_DIR), main.c) \
               builtin_unset.c builtin_export.c builtin_export_utils.c builtin_env.c) \
               $(addprefix $(UTILS_DIR), error.c utils.c free.c)
 
-SYSTEM_ARCH := $(shell arch)
-CURRENT_USER := $(USER)
-ifeq ($(CURRENT_USER), runner)
-	READLINE_FLAGS	= -l readline -L/usr/local/opt/readline/lib
-	READLINE_INC	= -I/usr/local/opt/readline/include
-else ifeq ($(SYSTEM_ARCH), i386)
-	READLINE_FLAGS	= -l readline -L$(HOME)/.brew/opt/readline/lib
-	READLINE_INC	= -I$(HOME)/.brew/opt/readline/include
-else ifeq ($(SYSTEM_ARCH), arm64)
-	READLINE_FLAGS	= -l readline -L /opt/homebrew/opt/readline/lib
-	READLINE_INC	= -I /opt/homebrew/opt/readline/include
-endif
-
 # Object files
 OBJS        = $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
 # Compilation rules
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) $(READLINE_INC) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIB_DIR) -c $< -o $@
 
 # Linking rule
 $(NAME): $(OBJS) $(LIB)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME) $(READLINE_FLAGS) -lreadline
+	@$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME) -lreadline
 	@echo "$(NAME) compiled"
 
 # Library build rule

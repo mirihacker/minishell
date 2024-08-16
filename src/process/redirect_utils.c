@@ -6,19 +6,22 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:52:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/13 11:49:51 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 11:10:45 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-// redirect_files_no_fork.c
-int	verify_system_call(int res, char *str)
+/**
+ * @brief Checks result of a system call
+ * - If result is negative, prints an error message with system's error message
+ */
+int	verify_system_call(int result, char *str)
 {
 	t_mini	*mini;
 
 	mini = get_mini();
-	if (res < 0)
+	if (result < 0)
 	{
 		print_error(str, NULL, strerror(errno));
 		mini->exit_code = EXIT_FAILURE;
@@ -27,7 +30,10 @@ int	verify_system_call(int res, char *str)
 	return (0);
 }
 
-// redirect_files.c or redirect_with_fork from execute_with_fork.c
+/**
+ * @brief Opens a file with given flags and filename.
+ * @return File descriptor if the file is opened successfully.
+ */
 int	ft_open(char *filename, int open_flag, int mode)
 {
 	int	fd;

@@ -6,12 +6,16 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:28:41 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/14 02:03:41 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/15 16:42:05 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+/**
+ * @brief Checks if the quoted string is properly closed.
+ * @return 0 if the quote is closed, -1 if the syntax error occurs.
+ */
 int	check_quote(char **end, t_token *tokens)
 {
 	char	quote;
@@ -32,6 +36,11 @@ int	check_quote(char **end, t_token *tokens)
 	return (-1);
 }
 
+/**
+ * @brief Adds a new token to the end of the token list.
+ * @param list A pointer to the head of the token list.
+ * @param new The new token to be added to the list.
+ */
 void	add_token(t_token **list, t_token *new)
 {
 	t_token	*tmp;
@@ -47,6 +56,9 @@ void	add_token(t_token **list, t_token *new)
 	tmp->next = new;
 }
 
+/**
+ * @brief Frees a linked list of tokens.
+ */
 void	free_tokens(t_token *list)
 {
 	t_token	*temp;
