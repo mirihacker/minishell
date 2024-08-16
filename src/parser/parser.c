@@ -12,9 +12,10 @@
 
 #include "parser.h"
 
-static void ft_syntax_error(t_token *token)
+static void	ft_syntax_error(t_token *token)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected token `",
+		STDERR_FILENO);
 	if (token->type == TOKEN_PIPE)
 		ft_putstr_fd("|", STDERR_FILENO);
 	else if (token->next)
@@ -29,12 +30,12 @@ static int	sort_node(t_token **head, t_node **ptr_sort)
 	int	result;
 
 	if ((*head)->type == TOKEN_PIPE)
-	{	
+	{
 		result = init_pipe(*head, *ptr_sort);
 		*ptr_sort = (*ptr_sort)->right;
 	}
 	else if ((*head)->type == TOKEN_SYMBOL || (*head)->type == TOKEN_HEREDOC)
-	{	
+	{
 		result = init_redirect(*head, (*ptr_sort)->left);
 		if (!result)
 			*head = (*head)->next;
@@ -48,8 +49,8 @@ static t_node	*build_ast(t_token *tokens)
 {
 	t_node	*root;
 	t_node	*ptr;
-	int	flag;
-	t_mini *mini;
+	int		flag;
+	t_mini	*mini;
 
 	root = node_sequence();
 	ptr = root;
@@ -72,7 +73,7 @@ static t_node	*build_ast(t_token *tokens)
 
 void	parser(t_token *tokens)
 {
-	t_node *root;
+	t_node	*root;
 
 	if (tokens)
 	{

@@ -3,26 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   envvar_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:20:50 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 16:53:45 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:30:35 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// int	is_same_key(char *str, char *key)
-// {
-// 	int	key_len;
 
-// 	key_len = ft_strlen(key);
-// 	if (!ft_strncmp(str, key, key_len) && str[key_len] == '=')
-// 		return (1);
-// 	return (0);
-// }
-
-char	*get_var_val(char *key) // DONE
+char	*get_var_val(char *key)
 {
 	t_list *ptr;
 	int lkey;
@@ -32,12 +23,9 @@ char	*get_var_val(char *key) // DONE
 	lkey = ft_strlen(key);
 	mini = get_mini();
 	ptr = mini->env_list;
-	// Check if key is a special parameter,
-	//	typically holds the exit code of the last command
-	// if key is equal to "?" then return the exit code
+
 	if (!ft_strncmp(key, "?", 2))
 		return (ft_itoa(mini->exit_code));
-	// Iterate through the linked list of environment variables
 	while (ptr)
 	{
 		env_var = ptr->content;

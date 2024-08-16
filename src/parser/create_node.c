@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:03:51 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 15:03:41 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:25:42 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_node	*node_redirect(char *str, char *word)
 {
 	t_node		*new;
 	t_node_type	rdr;
-	t_node_type type;
+	t_node_type	type;
 
 	if (!ft_strcmp(str, "<<"))
 	{
@@ -63,8 +63,8 @@ t_node	*node_redirect(char *str, char *word)
 
 t_node	*node_cmd(t_node_type cmd, char *value)
 {
-	t_node *new;
-	t_node_type type;
+	t_node		*new;
+	t_node_type	type;
 
 	if (cmd == CMD_STR)
 		type = CMD_NAME;

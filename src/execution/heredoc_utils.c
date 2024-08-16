@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:48:41 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 19:33:01 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:26:11 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-char	*get_path(char *temp_dir, int i) //DONE
+char	*get_path(char *temp_dir, int i)
 {
 	char	*d_path;
 	char	*f_path;
@@ -26,7 +26,7 @@ char	*get_path(char *temp_dir, int i) //DONE
 	return (f_path);
 }
 
-char	*process_line(char *line) //DONE
+char	*process_line(char *line)
 {
 	char	*processed_line;
 	char	*copy;
@@ -47,7 +47,7 @@ char	*process_line(char *line) //DONE
 	return (processed_line);
 }
 
-void	input_temp_fd(char *str, int tmp_fd) //DONE
+void	input_temp_fd(char *str, int tmp_fd)
 {
 	char	*tmp_str;
 
@@ -57,7 +57,7 @@ void	input_temp_fd(char *str, int tmp_fd) //DONE
 	tmp_str = NULL;
 }
 
-void	delete_file(char **filename) //DONE
+void	delete_file(char **filename)
 {
 	unlink(*filename);
 	free(*filename);

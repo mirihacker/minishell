@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 16:21:10 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:37:12 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:22:00 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void	free_ptr(void **ptr)
 	}
 }
 
-// void	free_list(t_list **head)
-// {
-// 	t_list *tmp;
-// 	t_list *current;
+/**
+ * @brief Frees the entire environment list.
+ * @param env_list The pointer to the first node of the environment list.
+ */
 
-// 	if (!head || !*head)
-// 		return ;
-// 	current = *head;
-// 	while (current)
-// 	{
-// 		tmp = current->next;
-// 		free(current->content);
-// 		free(current);
-// 		current = tmp;
-// 	}
-// 	*head = NULL;
-// }
+void	free_env_list(t_list *env_list)
+{
+	t_list	*temp;
+
+	while (env_list)
+	{
+		temp = env_list->next;
+		free(env_list->content);
+		free(env_list);
+		env_list = temp;
+	}
+}
