@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 16:40:00 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:23:04 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 11:08:29 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 /**
  * - Fork not needed: built-in command with no prev, following cmd
+ *   e.g. echo, pwd, cd, export, unset, env, exit
  * - Fork needed: external commands (ls, grep) or pipes
+ *   e.g. ls | grep, echo hello | wc -c
  */
 static int	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 {
@@ -23,12 +25,13 @@ static int	is_fork_needed(t_cmd *last_cmd, t_node *tree)
 	cmd_type = cmd_type_tester(tree->left->value);
 	printf("cmd_type: %d\n", cmd_type);
 	if (!last_cmd && cmd_type != EXTERNAL && !tree->right)
-		return (cmd_type); // fork not needed
+		return (cmd_type);
 	return (-1);
 }
 
 /**
- * @brief Finalizes AST processing, clean up and restore terminal settings
+ * @brief Finalizes AST processing
+ * clean up and restore terminal settings
  */
 static void	finalize_ast_processing(void)
 {

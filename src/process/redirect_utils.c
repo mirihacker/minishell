@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:52:31 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:10:45 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 11:10:45 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
  * @brief Checks result of a system call
  * - If result is negative, prints an error message with system's error message
  */
-int	verify_system_call(int res, char *str)
+int	verify_system_call(int result, char *str)
 {
 	t_mini	*mini;
 
 	mini = get_mini();
-	if (res < 0)
+	if (result < 0)
 	{
 		print_error(str, NULL, strerror(errno));
 		mini->exit_code = EXIT_FAILURE;

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:41:50 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:28:01 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 11:06:55 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	execute_without_fork(t_node *cmd_node, t_cmd_type cmd_type)
 		restore_stdio(stdin_backup, stdout_backup);
 		return ;
 	}
-	if (cmd_type == NONE) // when there's no CMD
+	if (cmd_type == NONE)
 	{
 		mini->exit_code = EXIT_SUCCESS;
 		restore_stdio(stdin_backup, stdout_backup);

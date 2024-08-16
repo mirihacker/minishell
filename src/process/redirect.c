@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:49:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:29:56 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 11:09:18 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	redirect_to_file(char *filename, int open_flag, int target_fd)
 	int	file_fd;
 	int	res;
 
-	file_fd = open(filename, open_flag, 0644); // 0644: rw-r--r--
+	file_fd = open(filename, open_flag, 0644);
 	if (verify_system_call(file_fd, filename) == -1)
 		return (-1);
 	res = dup2(file_fd, target_fd);
@@ -84,7 +84,7 @@ static int	redirect_node(t_node *rdr_node)
 /**
  * @brief Recursievely traverses AST to apply all rdr in command.
  * - redirection without fork - redirection with builtin commands
- *   e.g. echo "Hello, World" > file.txt 
+ *   e.g. echo "Hello, World" > file.txt
  */
 int	handle_redirection(t_node *rdr_node)
 {
