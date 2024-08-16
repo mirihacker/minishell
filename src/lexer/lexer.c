@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 16:19:07 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 20:35:29 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static t_token	*extract_token(char *input)
 			if (end && input < end)
 				add_token(&tokens, create_new_token(ft_substr(input, 0, (end
 								- input))));
+			else if (!end)
+				return (NULL);
 			input = end;
 		}
 	}
