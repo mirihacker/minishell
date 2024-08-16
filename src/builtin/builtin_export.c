@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:31:17 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 18:06:25 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:43:51 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static int	print_list(t_list *list)
 {
 	t_list	*ptr;
-
+	
 	ptr = list;
 	while (ptr)
 	{
