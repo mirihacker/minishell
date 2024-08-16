@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:50:02 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:24:29 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:18:11 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ static void	forked_redirect_node(t_node *rdr_node)
 
 	rdr_type = rdr_node->left->type;
 	filename = rdr_node->right->value;
-	if (rdr_type == RDR_O || rdr_type == RDR_DO) // > or >>
+	if (rdr_type == RDR_O || rdr_type == RDR_DO)
 		forked_redirect_output(rdr_type, filename);
-	else // if it's <
+	else
 		forked_redirect_input(filename);
 }
 
 /**
  * @brief Traverses AST nodes and recursively handles redirections.
  * - External commands with direction
- * 	 e.g. ls -l > output.txt
- * 		  grep "pattern" file.txt < input.txt
+ * 		e.g. ls -l > output.txt
+ * 			grep "pattern" file.txt < input.txt
  */
 void	forked_handle_redirection(t_node *rdr_node)
 {

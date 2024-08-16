@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:05:16 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 19:55:04 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:25:30 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	init_pipe(t_token *head, t_node *ptr)
 {
-	if (!(head)->next || head->next->type == TOKEN_PIPE
-		|| !(ptr->left->left || ptr->left->right))
+	if (!(head)->next || head->next->type == TOKEN_PIPE || !(ptr->left->left
+			|| ptr->left->right))
 		return (-1);
 	ptr->right = node_sequence();
 	return (0);
@@ -44,7 +44,6 @@ int	init_redirect(t_token *head, t_node *ptr)
 		ptr = ptr->left;
 		while (ptr->right != NULL)
 			ptr = ptr->right;
-		// ensure that the node will be added to the last node
 		ptr->right = node_redirect(head->value, word);
 	}
 	return (0);
@@ -52,7 +51,7 @@ int	init_redirect(t_token *head, t_node *ptr)
 
 int	init_word(t_token *head, t_node *ptr)
 {
-	char *word; // value or string
+	char	*word;
 
 	word = remove_quote(head->type, head->value);
 	while (ptr->right != NULL)

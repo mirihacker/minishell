@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:07:10 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/14 12:24:22 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:24:15 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int	check_param(char *str)
 	return (*str && (ft_isalnum(*str) || ft_strchr("!#$*-?@_", *str)));
 }
 
-char	*remove_quote(t_token_type type,char *value)
+char	*remove_quote(t_token_type type, char *value)
 {
-	char *result;
-	char quote;
+	char	*result;
+	char	quote;
 
 	result = ft_calloc(1, 1);
-	quote = 0; // Initialize quote to 0 (no quote)
+	quote = 0;
 	while (*value)
 	{
-		if (!quote && ft_strchr("'\"", *value)) // if value contains quote
+		if (!quote && ft_strchr("'\"", *value))
 			quote = *value;
-		else if (quote == *value) // if quote found, quote = 0;
+		else if (quote == *value)
 			quote = 0;
 		else
 		{

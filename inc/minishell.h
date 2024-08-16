@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:48:54 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/15 20:36:41 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:23:11 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,16 @@
 # include "lexer.h"
 # include "parser.h"
 # include "process.h"
-# include <errno.h>  // errno
-# include <fcntl.h>  // open
-# include <limits.h> // PATH_MAX
+# include <errno.h> 
+# include <fcntl.h> 
+# include <limits.h> 
 # include <readline/history.h>
-# include <readline/readline.h> // readline, rl_clear_history, rl_on_new_line
-# include <signal.h>            // signal, sigaction, sigemptyset, sigaddset
-# include <stdbool.h>
-# include <stdbool.h>   // bool, true, false
-# include <stdio.h>     // printf, perror
-# include <stdlib.h>    // malloc, free, exit, getenv
-# include <string.h>    // strerror
-# include <sys/ioctl.h> // ioctl
+# include <readline/readline.h> 
+# include <signal.h>             
+# include <stdio.h>     
+# include <stdlib.h>    
+# include <string.h>    
+# include <sys/ioctl.h> 
 # include <sys/stat.h>  // stat, lstat, fstat
 # include <sys/wait.h>  // wait, waitpid, wait3, wait4
 # include <term.h>      // tgetent, tgetflag, tgetnum, tgetstr, tgoto
@@ -42,8 +40,8 @@
 typedef struct s_cmd
 {
 	pid_t	pid;
-	int fd_in;  // read
-	int fd_out; // write
+	int		fd_in;
+	int		fd_out;
 }			t_cmd;
 
 typedef enum s_cmd_type
@@ -84,7 +82,7 @@ void		print_error(const char *cmd, const char *arg, const char *msg);
 
 /* free.c */
 void		free_ptr(void **ptr);
-void		free_list(t_list **head);
+void		free_env_list(t_list *env_list);
 
 /* utils.c */
 t_mini		*get_mini(void);

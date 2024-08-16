@@ -6,29 +6,16 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:56 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 15:24:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:21:40 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	init_mini(t_mini *mini, char **envp)
-// {
-// 	mini->env_list = NULL;
-// 	mini->cmd_list = NULL;
-// 	mini->exit_code = 0;
-// 	mini->h_flag = 0;
-// 	while (*envp)
-// 	{
-// 		ft_lstadd_back(&mini->env_list, ft_lstnew(*envp));
-// 		envp++;
-// 	}
-// }
-
 static void	init_mini(t_mini *mini, char **envp)
 {
 	char	*env_var_copy;
-	t_list  *new_node;
+	t_list	*new_node;
 
 	mini->env_list = NULL;
 	mini->cmd_list = NULL;
@@ -38,10 +25,10 @@ static void	init_mini(t_mini *mini, char **envp)
 	{
 		env_var_copy = ft_strdup(*envp);
 		if (!env_var_copy)
-			exit_error("Memory Alloc failed", strerror(errno), EXIT_FAILURE);
+			exit_error("malloc()", strerror(errno), EXIT_FAILURE);
 		new_node = ft_lstnew(env_var_copy);
 		if (!new_node)
-			exit_error("Memory Alloc failed", strerror(errno), EXIT_FAILURE);
+			exit_error("malloc()", strerror(errno), EXIT_FAILURE);
 		ft_lstadd_back(&mini->env_list, new_node);
 		envp++;
 	}
@@ -56,8 +43,7 @@ static void	main_loop(t_mini *mini)
 	{
 		disable_ctrl_echo();
 		signal(SIGINT, &handle_sigint);
-		// Handle SIGINT(Ctrl-C)with control_sigint
-		signal(SIGQUIT, SIG_IGN); // Ignore SIGQUIT (Ctrl-\)
+		signal(SIGQUIT, SIG_IGN);
 		if (input)
 			free_ptr((void **)&input);
 		input = readline("minishell$ ");
@@ -66,36 +52,13 @@ static void	main_loop(t_mini *mini)
 			ft_putendl_fd("exit", STDERR_FILENO);
 			exit(mini->exit_code);
 		}
-		if (input && *input) // If the line is not empty
+		if (input && *input)
 		{
-			add_history(input); // Add the line to the history
-			lexer(input);       // Lexer the line and handle the input
+			add_history(input);
+			lexer(input);
 		}
 		free_ptr((void **)&input);
 	}
-}
-
-/**
- * @brief Frees the entire environment list.
- *
- * This function iterates through the `env_list` linked list, freeing each node's content
- * and the node itself. This ensures that all dynamically allocated memory is properly
- * released to prevent memory leaks.
- *
- * @param env_list The pointer to the first node of the environment list.
- */
-
-static void free_env_list(t_list *env_list)
-{
-    t_list *temp;
-
-    while (env_list)
-    {
-        temp = env_list->next;     
-        free(env_list->content);    
-        free(env_list);              
-        env_list = temp;             
-    }
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:38:55 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 17:57:59 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:17:53 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,20 @@ void	handle_sigint(int signum)
 	t_mini	*mini;
 
 	mini = get_mini();
-	if (signum != SIGINT) // only handle (ctrl + c)
+	if (signum != SIGINT)
 		return ;
-	mini->exit_code = EXIT_FAILURE; // with ctrl+c, process exit with failure
+	mini->exit_code = EXIT_FAILURE;
 	if (mini->h_flag == 0)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		rl_on_new_line();       // prepare for a new line
-		rl_replace_line("", 0); // clear current input line
-		rl_redisplay();         // redisplay the prompt
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	else // handling for heredoc mode
+	else
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// simulate a new line to break the heredoc
 		ft_putstr_fd("\033[1A", STDOUT_FILENO);
-		// move the cursor up one line (prevent leaving an empty line on terminal)
 		mini->h_flag = 0;
 	}
 }
@@ -65,7 +63,6 @@ void	handle_sigint(int signum)
 void	setup_signal_handler(void)
 {
 	disable_ctrl_echo();
-	// to check if it works correctly (comment in/out)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }

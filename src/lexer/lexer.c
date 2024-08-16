@@ -6,7 +6,7 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:23:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 15:18:44 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:19:07 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,11 @@ static t_token	*create_new_token(char *value)
 		else
 			new->type = TOKEN_SYMBOL;
 		new->value = value;
-		// printf("new->type (SYMBOLS): %d\n", new->type);
-		// printf("new->value (SYMBOLS): %s\n", new->value);
 	}
 	else
 	{
 		new->type = TOKEN_STRING;
 		new->value = value;
-		// printf("new->type (TOKEN_STRING): %d\n", new->type);
-		// printf("new->value (TOKEN_STRING): %s\n", new->value);
 	}
 	return (new);
 }

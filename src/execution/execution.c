@@ -6,15 +6,15 @@
 /*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:27:59 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/15 20:22:46 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:29:54 by eahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	execute_builtin(char **argv, t_cmd_type cmd_type) // TBD
+int	execute_builtin(char **argv, t_cmd_type cmd_type)
 {
-	int exit_code;
+	int	exit_code;
 
 	if (cmd_type == CD)
 		exit_code = builtin_cd(argv);
@@ -69,7 +69,7 @@ static void	execute_external(char *cmd, char **argv)
 		cmd = find_cmd_path(cmd);
 		new_envp = get_var_val_list();
 		execve(cmd, argv, new_envp);
-		if (errno == ENOENT) // shell command not found
+		if (errno == ENOENT)
 			exit_error(argv[0], "command not found", 127);
 		exit_error(argv[0], strerror(errno), EXIT_FAILURE);
 	}
@@ -91,11 +91,9 @@ void	execution(t_node *node)
 	t_cmd_type	cmd_type;
 	int			exit_code;
 
-	// init execution //
 	arguments = init_arguments(node);
-	// check command type //
 	cmd_type = cmd_type_tester(arguments[0]);
-	if (cmd_type == EXTERNAL) // tbd name
+	if (cmd_type == EXTERNAL)
 		execute_external(node->left->value, arguments);
 	else if (cmd_type == NONE)
 		exit(EXIT_SUCCESS);
@@ -105,27 +103,3 @@ void	execution(t_node *node)
 		exit(exit_code);
 	}
 }
-
-// void	execution(t_node *node)
-// {
-// 	char		**arguments;
-// 	t_cmd_type	cmd_type;
-// 	int			exit_code;
-
-//     // init execution //
-// 	// Gather all arguments to form the comand line //
-// 	arguments = (char **)ft_calloc(2, sizeof(char *));
-// 	arguments[0] = node->left->value;
-// 	get_cmdline(&arguments, node->right); // make_argv
-//     // check command type //
-// 	cmd_type = cmd_type_tester(arguments[0]);
-// 	if (cmd_type == GENERAL)
-// 		execute_general(node->left->value, arguments);
-// 	else if (cmd_type == NONE)
-// 		exit(EXIT_SUCCESS);
-// 	else
-// 	{
-// 		exit_code = execute_builtin(arguments, cmd_type);
-// 		exit(exit_code);
-// 	}
-// }
