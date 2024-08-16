@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:36:48 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:36:45 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:44:52 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,26 @@ typedef enum s_token_type	t_token_type;
 
 typedef enum s_node_type
 {
-	SEQUENCES,  // Pipesequence
-	CMD,        // CMD
-	CMD_STR,    // Structure -> Name // SIMPLE_CMD
-	CMD_NAME,   // NAME
-	CMD_SUFFIX, // Suffix -> Arg // ARGV
-	CMD_ARG,    // ARG
-	RDR,        // RDR
-	P_RDR,      // IO_RDR // >, <, >>
-	P_HD,       // HEREDOC, IO_HERE
-	RDR_O,      // >, SYMBOL_GREATER
-	RDR_I,      // <, SYMBOL_LESS
-	RDR_DO,     // >>, SYMBOL_DGREAT
-	RDR_DI,     // << // HEREDOC, SYMBOL_DLESS
-	FILENAME    // after RDR // FILENAME
-
+	SEQUENCES,
+	CMD,
+	CMD_STR,
+	CMD_NAME,
+	CMD_SUFFIX,
+	CMD_ARG,
+	RDR,
+	P_RDR,
+	P_HD,
+	RDR_O,
+	RDR_I,
+	RDR_DO,
+	RDR_DI,
+	FILENAME
 }							t_node_type;
 
 typedef struct s_node
 {
 	t_node_type				type;
-	char *value; // Used for WORD and ASSIGNMENT_WORD
+	char					*value;
 	struct s_node			*left;
 	struct s_node			*right;
 }							t_node;

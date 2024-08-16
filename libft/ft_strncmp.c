@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:30:59 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/16 11:37:26 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:52:27 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	if (n == 0)
 		return (0);
-	while ((unsigned char)s1[i] == (unsigned char)s2[i] && s1[i] != '\0' && i < n - 1)
+	while ((unsigned char)s1[i] == (unsigned char)s2[i] && s1[i] != '\0'
+		&& i < n - 1)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

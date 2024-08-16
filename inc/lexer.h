@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:19:12 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/15 20:36:38 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:42:56 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 typedef enum s_token_type
 {
-	TOKEN_STRING,  // WORD
-	TOKEN_SYMBOL,  // <, >, >>
-	TOKEN_HEREDOC, // <<
-	TOKEN_PIPE     // |
+	TOKEN_STRING,
+	TOKEN_SYMBOL,
+	TOKEN_HEREDOC,
+	TOKEN_PIPE
 }					t_token_type;
 
 typedef struct s_token

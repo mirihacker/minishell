@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eahn <eahn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:34:35 by eahn              #+#    #+#             */
-/*   Updated: 2024/08/12 15:34:58 by eahn             ###   ########.fr       */
+/*   Updated: 2024/08/16 16:51:51 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 {
-	char *new_str;
-	size_t s1_len;
-	size_t s2_len;
-	size_t s3_len;
+	char	*new_str;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	s3_len;
 
 	if (!s1 || !s2 || !s3)
 		return (NULL);
