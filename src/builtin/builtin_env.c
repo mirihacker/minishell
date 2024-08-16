@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 17:10:33 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 15:34:22 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:00:30 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	builtin_env(char **argv)
 	while (ptr)
 	{
 		val = ft_strchr(ptr->content, '=');
-		if (val && val[1])
+		if (val && val[1] != '\'' && val[2] != '\'')
 			ft_putendl_fd((char *)ptr->content, STDOUT_FILENO);
 		ptr = ptr->next;
 	}
