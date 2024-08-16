@@ -6,7 +6,7 @@
 /*   By: smiranda <smiranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 15:31:02 by smiranda          #+#    #+#             */
-/*   Updated: 2024/08/16 11:39:57 by smiranda         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:38:24 by smiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	delete_env(char *argv, t_mini *mini)
 	while (env)
 	{
 		env_var = (char *)env->content;
-		if (!strncmp(env_var, argv, ft_strlen(argv))
+		if (!ft_strncmp(env_var, argv, ft_strlen(argv))
 			&& env_var[ft_strlen(argv)] == '=')
 		{
 			if (prev)
